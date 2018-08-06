@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>AlisaBen的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="AlisaBen的博客">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="AlisaBen的博客">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AlisaBen的博客">
+  
+    <link rel="alternate" href="/atom.xml" title="AlisaBen的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">AlisaBen的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-《快学scala》学习笔记-第14章 模式匹配和样例类" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/06/《快学scala》学习笔记-第14章 模式匹配和样例类/" class="article-date">
+  <time datetime="2018-08-06T02:17:57.000Z" itemprop="datePublished">2018-08-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/06/《快学scala》学习笔记-第14章 模式匹配和样例类/">《快学scala》学习笔记--第14章 模式匹配和样例类</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="14-1-更好的switch"><a href="#14-1-更好的switch" class="headerlink" title="14.1 更好的switch"></a>14.1 更好的switch</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val ch: Char = &apos;*&apos;</span><br><span class="line">ch match &#123;</span><br><span class="line">  case &apos;+&apos; =&gt; println(&quot;加法&quot;)</span><br><span class="line">  case &apos;*&apos; =&gt; println(&quot;乘法&quot;)</span><br><span class="line">  case _ =&gt; println(&quot;木有&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>match是一个表达式，而不是语句，会有返回值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val ch: Char = &apos;*&apos;</span><br><span class="line">val x:Int = ch match &#123;</span><br><span class="line">  case &apos;+&apos; =&gt; 0</span><br><span class="line">  case &apos;*&apos; =&gt; 1</span><br><span class="line">  case _ =&gt; 2</span><br><span class="line">&#125;</span><br><span class="line">println(x)</span><br></pre></td></tr></table></figure>
+<h2 id="14-2-守卫"><a href="#14-2-守卫" class="headerlink" title="14.2 守卫"></a>14.2 守卫</h2><p>守卫可以是任何布尔条件，在下面的例子中，只有在守卫模式不能匹配的情况下才执行所有模式匹配</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">val ch:Char = 3</span><br><span class="line">var sign:Int = 0</span><br><span class="line">ch match &#123;</span><br><span class="line">  case &apos;+&apos; =&gt; println(&quot;++++&quot;)</span><br><span class="line">  case &apos;*&apos; =&gt; println(&quot;====&quot;)</span><br><span class="line">  case _ if ch &gt;= 0 &amp;&amp; ch &lt;= 9 =&gt; sign = ch</span><br><span class="line">  case _ =&gt; println(&quot;---&quot;)</span><br><span class="line">&#125;</span><br><span class="line">println(sign)</span><br></pre></td></tr></table></figure>
+<h2 id="14-3-模式中的变量"><a href="#14-3-模式中的变量" class="headerlink" title="14.3 模式中的变量"></a>14.3 模式中的变量</h2><figure class="highlight plain"><figcaption><span>_```是这种特性的特殊情况，变量名是```_```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">    val c: Char = &apos;+&apos;</span><br><span class="line">    val ch:Char = 9</span><br><span class="line">    var sign:Int = 0</span><br><span class="line">    ch match &#123;</span><br><span class="line">      case &apos;+&apos; =&gt; println(&quot;++++&quot;)</span><br><span class="line">      case &apos;*&apos; =&gt; println(&quot;====&quot;)</span><br><span class="line">      case c if c &gt;= 0 &amp;&amp; c &lt;= 9 =&gt; sign = c</span><br><span class="line">      case _ =&gt; println(&quot;---&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    println(sign)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>变量必须以小写字母开头</li>
+<li>如果有一个小写字母开头的常量，则需要将它包在反引号中。</li>
+</ul>
+<h2 id="14-4-类型模式"><a href="#14-4-类型模式" class="headerlink" title="14.4 类型模式"></a>14.4 类型模式</h2><p>匹配列表中的每一个元素的类型，将每一个元素映射成<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<pre><code>val ls = List(1,3,4,&quot;one&quot;,&quot;two&quot;,4.5)
+val l = ls.map(_ match {
+  case x:Int =&gt; &quot;int x:&quot; + x
+  case s:String =&gt; &quot;string s:&quot; + s
+  case _ =&gt; &quot;other&quot;
+})
+l.foreach(println)
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">14.5 匹配组、列表和元组</span><br><span class="line">--</span><br><span class="line"></span><br><span class="line">要匹配数组的内容，可以在模式中使用Array表达式,```_*```符号匹配数组中余下的内容</span><br></pre></td></tr></table></figure>
+<pre><code>val arr1 = Array(Array(0),Array(3,4),Array(0,4,6),Array(&quot;fad&quot;,&quot;fff&quot;))
+arr1.map(_ match {
+  case Array(0) =&gt; println(0)
+  case Array(x,y) =&gt; println(x,y)
+  case Array(0,_*) =&gt; println(&quot;...&quot;)
+  case _ =&gt; println(&quot;something&quot;)
+})
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">匹配列表中的元素</span><br></pre></td></tr></table></figure>
+<pre><code>val ls = List(List(0),List(3,4),List(0,4,5),List(&quot;fa&quot;,&quot;aaa&quot;,&quot;tttt&quot;))
+ls.map(_ match {
+  case 0::Nil =&gt; println(0)
+  case x :: y :: Nil =&gt; println(x,y)
+  case 0 :: tail =&gt; println(tail.foreach(println))
+  case x :: tail =&gt; println(&quot;====&quot;)
+  case _ =&gt; println(&quot;something&quot;)
+})
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">匹配元组</span><br></pre></td></tr></table></figure>
+<pre><code>val ls = List((0,4),(&quot;fa&quot;,0),(3,4))
+ls.map(_ match {
+  case (0,_) =&gt; println(0)
+  case (x,y) =&gt; println(x,y)
+  case _ =&gt; println(&quot;something&quot;)
+})
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">14.6 提取器</span><br><span class="line">--</span><br><span class="line">前一节中匹配数组、列表和元素的功能是依靠提取器实现的</span><br><span class="line">==提取器机制==：带有从对象中提取值得```unapply```和```unapplySeq```方法得对象。```unapply```提取固定数量得对象，而```unapplySeq```提取得是一个序列</span><br><span class="line">``` Array.unapplySeq(arr) ```产出一个序列的值。</span><br><span class="line"></span><br><span class="line">14.8 for表达式中的模式</span><br><span class="line">--</span><br></pre></td></tr></table></figure>
+<pre><code>val ls = List((1,2),(3,4),(4,5))
+for ((k,v) &lt;- ls if k % 2 == 1)
+  println(k,v)
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">14.9 样例类</span><br><span class="line">--</span><br><span class="line">可以用模式匹配来匹配样例类，并将属性值绑定到变量</span><br></pre></td></tr></table></figure>
+<pre><code>case class Dollar(value:Double)
+case class Currency(value:Double,unit:String)
+case object Yuan
+val ls = List(Dollar(2.3),Currency(4.5,&quot;10&quot;),Yuan)
+ls.map(_ match {
+  case Dollar(v) =&gt; println(s&quot;Dollar:$v&quot;)
+  case Currency(_,u) =&gt; println(s&quot;got $u&quot;)
+  case Yuan =&gt; println(&quot;lalala&quot;)
+  case _ =&gt; println(&quot;----&quot;)
+})
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*样例类实例使用(),样例对象不适用圆括号</span><br><span class="line"></span><br><span class="line">==声明样例类的时候有如下几件事自动发生：==</span><br><span class="line">- 构造器中的每一个参数都成为val，除非被显式地声明为var</span><br><span class="line">- 在伴生对象中提供apply方法，可以不用new关键字就能构造出相应的对象，比如```Dollar(2.3)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>提供unapply方法让模式匹配可以工作</li>
+<li><p>将生成<figure class="highlight plain"><figcaption><span>```equals``` ```copy```方法，除非显式给出定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">14.10 copy方法和带名参数</span><br><span class="line">--</span><br><span class="line">copy方法创建一个与现有对象值相同的新对象，可以用带名参数修改某些属性</span><br></pre></td></tr></table></figure></p>
+<p>  val amt = Currency(34.2,”RUR”)<br>  val price = amt.copy()<br>  val price1 = amt.copy(value = 13)<br>  val price2 = amt.copy(unit = “CHF”)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">14.11 case语句中的中置表示法</span><br><span class="line">--</span><br><span class="line">如果unapply方法产出一个对偶，可以在case语句中使用中置表示法，19章将会看到将解析结果组合在一起的````~```样例类:</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>result match {case p ~ q =&gt; …} //等同于case ~(p,q)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">*如果操作符以冒号结尾，则他是从右向左结合的</span><br><span class="line"></span><br><span class="line">中置表示法可以用于任何返回对偶的unapply方法：</span><br></pre></td></tr></table></figure></p>
+<pre><code>case object +: {
+  def unapply[T](input: List[T]):Option[(T,List[T])] =
+    if(input.isEmpty) None else Some((input.head,input.tail))
+}
+1+:7+:2+:Nil match {
+  case first +: second +: rest =&gt; println(first + second + rest.length)
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">14.12 匹配嵌套结构</span><br><span class="line">--</span><br><span class="line">三个样例类继承Item抽象类，Bundle和Boolean类嵌套Article和Bundle样例类，</span><br><span class="line">可以用```@```表示法将嵌套的值绑定到变量</span><br></pre></td></tr></table></figure>
+<pre><code>abstract class Item
+case class Article(desc:String,price:Double) extends Item//继承同一个抽象类
+case class Bundle(desc:String,discount:Double,item:Item) extends Item
+val peak = Bundle(&quot;Father&apos;s Day is special&quot;,20.0,Article(&quot;scala is nice&quot;,45.5))
+case class Boolean(desc:String,dis:Double,item:Item*)//Item抽象类列表
+val amt = Boolean(&quot;great&quot;,23.3,Bundle(&quot;nice&quot;,45.4,Article(&quot;wonderful&quot;,45.4)),Article(&quot;scala is nice&quot;,45.5))
+val ls = List(peak,amt)
+ls.map(_ match {
+  case Bundle(_,_,Article(desc,price)) =&gt; println(s&quot;bundle ${desc}:${price}&quot;)
+  case Boolean(_,_,art @ Bundle(_,_,_),rest @ _*) =&gt; println(s&quot;boolean ${art.desc}:${art.discount},${rest.head}&quot;)
+  case Boolean(_,_,art @ Bundle(_,_,_),rest) =&gt; println(s&quot;boolean ${art.desc}&quot;)//匹配继承Item抽象类的元素只有两个
+  case _ =&gt; println(&quot;None&quot;)
+})
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">14.14 密封类</span><br><span class="line">--</span><br><span class="line">当用样例类来做模式匹配的时候，想让编译器帮助确保已经列出了所有可能的选择，要达到这个目的，需要将样例类的通用超类声明为```sealed</span><br></pre></td></tr></table></figure>
+<ul>
+<li>密封类的所有子类都必须在与该密封类相同的文件中定义。</li>
+<li>如果某个类是密封的，那么在编译期所有子类就是可知的，因此==编译器可以检查模式语句的完整性==，让同一组样例类都扩展自某个密封的类或者特质是一个好的做法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sealed abstract class Amount</span><br><span class="line">case class Red(bottom:Double) extends Amount</span><br><span class="line">case object Green extends Amount</span><br><span class="line">case object Gray extends Amount</span><br><span class="line">val color:Amount = Red(3.4)//需要显式声明color的类型，不然就会变成Red</span><br><span class="line">color match &#123;</span><br><span class="line">  case Red(_) =&gt; println(&quot;red&quot;)</span><br><span class="line">  case Green =&gt;println(&quot;green&quot;)</span><br><span class="line">  case Gray =&gt; println(&quot;fad&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="14-16-Option类型"><a href="#14-16-Option类型" class="headerlink" title="14.16 Option类型"></a>14.16 Option类型</h2><p>标准类库的Option类型用样例类来表示那种可能存在，也可能不存在的值。这比空字符串更加清晰，比null做法更加安全。</p>
+<ul>
+<li>map类的get方法返回一个Option。如果对于给定的键没有对应的值，则get返回None，如果有值，该值包在Some中返回</li>
+<li><p>请以不要直接使用get方法，返回None的情况可能会使程序死掉，尽量用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Option[+A]密封抽象类，Some和None继承Option类</span><br><span class="line"></span><br><span class="line">14.17 偏函数</span><br><span class="line">--</span><br><span class="line">被包括在花括号内的一组case语句是一个偏函数——==并非对所有输入值都有定义的函数==。它是PartialFunction[A,B]类的一个实例，该类有两个方法：apply方法从匹配到的模式计算函数值，而```isDefinedAt```方法在输入至少匹配其中一个模式时返回true</span><br></pre></td></tr></table></figure></p>
+<p>  val f:PartialFunction[Char,Int] = {</p>
+<pre><code>case &apos;+&apos; =&gt; 1
+case &apos;-&apos; =&gt; -1
+</code></pre><p>  }<br>  println(f(‘+’))//1<br>  //println(f(‘0’))//error<br>  println(f.isDefinedAt(‘0’))//false<br><code>`</code></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/06/《快学scala》学习笔记-第14章 模式匹配和样例类/" data-id="cjkhpg1at0001dkuv35etasde" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/06/hello-world/" class="article-date">
+  <time datetime="2018-08-06T01:42:28.075Z" itemprop="datePublished">2018-08-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/06/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/06/hello-world/" data-id="cjkhpg1at0000dkuvpynrihsj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/06/《快学scala》学习笔记-第14章 模式匹配和样例类/">《快学scala》学习笔记--第14章 模式匹配和样例类</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/06/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 AlisaBen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
