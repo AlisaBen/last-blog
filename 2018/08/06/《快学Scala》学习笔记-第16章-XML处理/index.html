@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://AlisaBen.github.io">
-  <title>因吹斯听thing:我的博客网站 | AlisaBen的博客</title>
+  <title>《快学Scala》学习笔记--第16章 XML处理 | AlisaBen的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="之前就想过自己搭建一个博客网站，因为自己有记东西的习惯，简书+csdn+有道云，挺麻烦的，今天偶然知道了hexo，感觉这个东西很好，就尝试5分钟搭建，但是实际上不止5分钟呀，中间也遇到了问题，现把我的搭建过程做个记录。  原文链接：5分钟搭建免费个人博客 安装Hexo此步安装命令用的是下面的： 1npm install -g hexo-cli 安装成功之后,会提示hexo的安装目录。我在D盘下新建">
+  <meta name="description" content="16.1 XML字面量Scala对xml有内建支持，直接用xml代码就行">
 <meta property="og:type" content="article">
-<meta property="og:title" content="因吹斯听thing:我的博客网站">
-<meta property="og:url" content="https://AlisaBen.github.io/2018/08/06/因吹斯听thing-我的博客网站/index.html">
+<meta property="og:title" content="《快学Scala》学习笔记--第16章 XML处理">
+<meta property="og:url" content="https://AlisaBen.github.io/2018/08/06/《快学Scala》学习笔记-第16章-XML处理/index.html">
 <meta property="og:site_name" content="AlisaBen的博客">
-<meta property="og:description" content="之前就想过自己搭建一个博客网站，因为自己有记东西的习惯，简书+csdn+有道云，挺麻烦的，今天偶然知道了hexo，感觉这个东西很好，就尝试5分钟搭建，但是实际上不止5分钟呀，中间也遇到了问题，现把我的搭建过程做个记录。  原文链接：5分钟搭建免费个人博客 安装Hexo此步安装命令用的是下面的： 1npm install -g hexo-cli 安装成功之后,会提示hexo的安装目录。我在D盘下新建">
+<meta property="og:description" content="16.1 XML字面量Scala对xml有内建支持，直接用xml代码就行">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-06T04:16:13.115Z">
+<meta property="og:updated_time" content="2018-08-07T03:11:28.630Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="因吹斯听thing:我的博客网站">
-<meta name="twitter:description" content="之前就想过自己搭建一个博客网站，因为自己有记东西的习惯，简书+csdn+有道云，挺麻烦的，今天偶然知道了hexo，感觉这个东西很好，就尝试5分钟搭建，但是实际上不止5分钟呀，中间也遇到了问题，现把我的搭建过程做个记录。  原文链接：5分钟搭建免费个人博客 安装Hexo此步安装命令用的是下面的： 1npm install -g hexo-cli 安装成功之后,会提示hexo的安装目录。我在D盘下新建">
+<meta name="twitter:title" content="《快学Scala》学习笔记--第16章 XML处理">
+<meta name="twitter:description" content="16.1 XML字面量Scala对xml有内建支持，直接用xml代码就行">
   
     <link rel="alternative" href="/atom.xml" title="AlisaBen的博客" type="application/atom+xml">
   
@@ -158,45 +158,27 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-因吹斯听thing-我的博客网站" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-《快学Scala》学习笔记-第16章-XML处理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      因吹斯听thing:我的博客网站
+      《快学Scala》学习笔记--第16章 XML处理
     </h1>
   
 
         
-        <a href="/2018/08/06/因吹斯听thing-我的博客网站/" class="archive-article-date">
-  	<time datetime="2018-08-06T03:45:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-06</time>
+        <a href="/2018/08/06/《快学Scala》学习笔记-第16章-XML处理/" class="archive-article-date">
+  	<time datetime="2018-08-06T04:40:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前就想过自己搭建一个博客网站，因为自己有记东西的习惯，简书+csdn+有道云，挺麻烦的，今天偶然知道了hexo，感觉这个东西很好，就尝试5分钟搭建，但是实际上不止5分钟呀，中间也遇到了问题，现把我的搭建过程做个记录。</p>
-<p> 原文链接：<br><a href="https://www.jianshu.com/p/4eaddcbe4d12" target="_blank" rel="noopener">5分钟搭建免费个人博客</a></p>
-<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>此步安装命令用的是下面的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<p>安装成功之后,会提示hexo的安装目录。我在D盘下新建了Hexo文件夹，执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init D:\Hexo</span><br></pre></td></tr></table></figure>
-<p>进入到该路径下，初始化网站存储的文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init username.github.io</span><br></pre></td></tr></table></figure></p>
-<p>根据链接的配置要求进行更改，进入到该文件夹下面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd username.github.io</span><br></pre></td></tr></table></figure></p>
-<p>执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></p>
-<p>测试启动可以运行</p>
-<p>注意事项：</p>
-<ol>
-<li>hexo的安装命令有很多，我第一遍安装失败了，遇到了hexo不是内部或外部命令</li>
-<li>hexo的文档命名和内容格式 有一定的要求，按照下面的语法新建文档，再编辑新内容<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;doc name&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>总结今天学习到的命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br><span class="line">hexo new &quot;doc name&quot;</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-<p>要好好学习markdown的语法喽~</p>
+        <h2 id="16-1-XML字面量"><a href="#16-1-XML字面量" class="headerlink" title="16.1 XML字面量"></a>16.1 XML字面量</h2><p>Scala对xml有内建支持，直接用xml代码就行</p>
 
       
 
@@ -255,7 +237,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://AlisaBen.github.io/2018/08/06/因吹斯听thing-我的博客网站/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://AlisaBen.github.io/2018/08/06/《快学Scala》学习笔记-第16章-XML处理/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -269,18 +251,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/06/《快学Scala》学习笔记-第15章-注解/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          《快学Scala》学习笔记--第15章 注解
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/08/06/《快学scala》学习笔记-第14章 模式匹配和样例类/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">《快学scala》学习笔记--第14章 模式匹配和样例类</div>
+    <a href="/2018/08/06/《快学Scala》学习笔记-第15章-注解/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">《快学Scala》学习笔记--第15章 注解</div>
       <i class="icon-circle-right"></i>
     </a>
   

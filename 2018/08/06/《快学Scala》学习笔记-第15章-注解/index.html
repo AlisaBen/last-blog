@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://AlisaBen.github.io">
-  <title>因吹斯听thing:我的博客网站 | AlisaBen的博客</title>
+  <title>《快学Scala》学习笔记--第15章 注解 | AlisaBen的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="之前就想过自己搭建一个博客网站，因为自己有记东西的习惯，简书+csdn+有道云，挺麻烦的，今天偶然知道了hexo，感觉这个东西很好，就尝试5分钟搭建，但是实际上不止5分钟呀，中间也遇到了问题，现把我的搭建过程做个记录。  原文链接：5分钟搭建免费个人博客 安装Hexo此步安装命令用的是下面的： 1npm install -g hexo-cli 安装成功之后,会提示hexo的安装目录。我在D盘下新建">
+  <meta name="description" content="15.1 什么是注解注解：插入到代码中以便有工具可以对他们进行处理的标签，工具可以在代码级别运作，也可以被编译器加入了注解信息的类文件 15.2 什么可以被注解可以为类、方法、字段、局部变量和参数添加注解12345@Entity class Credentials@Test def testSomeFeature()&amp;#123;&amp;#125;@BeanProperty var username =">
+<meta name="keywords" content="这一章的内容我也不是很理解，之前也没有应用过，希望有小伙伴一起讨论~">
 <meta property="og:type" content="article">
-<meta property="og:title" content="因吹斯听thing:我的博客网站">
-<meta property="og:url" content="https://AlisaBen.github.io/2018/08/06/因吹斯听thing-我的博客网站/index.html">
+<meta property="og:title" content="《快学Scala》学习笔记--第15章 注解">
+<meta property="og:url" content="https://AlisaBen.github.io/2018/08/06/《快学Scala》学习笔记-第15章-注解/index.html">
 <meta property="og:site_name" content="AlisaBen的博客">
-<meta property="og:description" content="之前就想过自己搭建一个博客网站，因为自己有记东西的习惯，简书+csdn+有道云，挺麻烦的，今天偶然知道了hexo，感觉这个东西很好，就尝试5分钟搭建，但是实际上不止5分钟呀，中间也遇到了问题，现把我的搭建过程做个记录。  原文链接：5分钟搭建免费个人博客 安装Hexo此步安装命令用的是下面的： 1npm install -g hexo-cli 安装成功之后,会提示hexo的安装目录。我在D盘下新建">
+<meta property="og:description" content="15.1 什么是注解注解：插入到代码中以便有工具可以对他们进行处理的标签，工具可以在代码级别运作，也可以被编译器加入了注解信息的类文件 15.2 什么可以被注解可以为类、方法、字段、局部变量和参数添加注解12345@Entity class Credentials@Test def testSomeFeature()&amp;#123;&amp;#125;@BeanProperty var username =">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-06T04:16:13.115Z">
+<meta property="og:updated_time" content="2018-08-06T04:38:42.692Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="因吹斯听thing:我的博客网站">
-<meta name="twitter:description" content="之前就想过自己搭建一个博客网站，因为自己有记东西的习惯，简书+csdn+有道云，挺麻烦的，今天偶然知道了hexo，感觉这个东西很好，就尝试5分钟搭建，但是实际上不止5分钟呀，中间也遇到了问题，现把我的搭建过程做个记录。  原文链接：5分钟搭建免费个人博客 安装Hexo此步安装命令用的是下面的： 1npm install -g hexo-cli 安装成功之后,会提示hexo的安装目录。我在D盘下新建">
+<meta name="twitter:title" content="《快学Scala》学习笔记--第15章 注解">
+<meta name="twitter:description" content="15.1 什么是注解注解：插入到代码中以便有工具可以对他们进行处理的标签，工具可以在代码级别运作，也可以被编译器加入了注解信息的类文件 15.2 什么可以被注解可以为类、方法、字段、局部变量和参数添加注解12345@Entity class Credentials@Test def testSomeFeature()&amp;#123;&amp;#125;@BeanProperty var username =">
   
     <link rel="alternative" href="/atom.xml" title="AlisaBen的博客" type="application/atom+xml">
   
@@ -158,45 +159,47 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-因吹斯听thing-我的博客网站" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-《快学Scala》学习笔记-第15章-注解" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      因吹斯听thing:我的博客网站
+      《快学Scala》学习笔记--第15章 注解
     </h1>
   
 
         
-        <a href="/2018/08/06/因吹斯听thing-我的博客网站/" class="archive-article-date">
-  	<time datetime="2018-08-06T03:45:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-06</time>
+        <a href="/2018/08/06/《快学Scala》学习笔记-第15章-注解/" class="archive-article-date">
+  	<time datetime="2018-08-06T04:27:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前就想过自己搭建一个博客网站，因为自己有记东西的习惯，简书+csdn+有道云，挺麻烦的，今天偶然知道了hexo，感觉这个东西很好，就尝试5分钟搭建，但是实际上不止5分钟呀，中间也遇到了问题，现把我的搭建过程做个记录。</p>
-<p> 原文链接：<br><a href="https://www.jianshu.com/p/4eaddcbe4d12" target="_blank" rel="noopener">5分钟搭建免费个人博客</a></p>
-<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>此步安装命令用的是下面的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<p>安装成功之后,会提示hexo的安装目录。我在D盘下新建了Hexo文件夹，执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init D:\Hexo</span><br></pre></td></tr></table></figure>
-<p>进入到该路径下，初始化网站存储的文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init username.github.io</span><br></pre></td></tr></table></figure></p>
-<p>根据链接的配置要求进行更改，进入到该文件夹下面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd username.github.io</span><br></pre></td></tr></table></figure></p>
-<p>执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></p>
-<p>测试启动可以运行</p>
-<p>注意事项：</p>
-<ol>
-<li>hexo的安装命令有很多，我第一遍安装失败了，遇到了hexo不是内部或外部命令</li>
-<li>hexo的文档命名和内容格式 有一定的要求，按照下面的语法新建文档，再编辑新内容<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;doc name&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>总结今天学习到的命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br><span class="line">hexo new &quot;doc name&quot;</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-<p>要好好学习markdown的语法喽~</p>
+        <h2 id="15-1-什么是注解"><a href="#15-1-什么是注解" class="headerlink" title="15.1 什么是注解"></a>15.1 什么是注解</h2><p>注解：插入到代码中以便有工具可以对他们进行处理的标签，工具可以在代码级别运作，也可以被编译器加入了注解信息的类文件</p>
+<h2 id="15-2-什么可以被注解"><a href="#15-2-什么可以被注解" class="headerlink" title="15.2 什么可以被注解"></a>15.2 什么可以被注解</h2><p>可以为类、方法、字段、局部变量和参数添加注解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Entity class Credentials</span><br><span class="line">@Test def testSomeFeature()&#123;&#125;</span><br><span class="line">@BeanProperty var username = _</span><br><span class="line">def doSomething(@NotNull message:String)&#123;&#125;</span><br><span class="line">@BeanProperty @Id var username = _</span><br></pre></td></tr></table></figure></p>
+<p>在给主构造器添加注解时，需要将注解放置在构造器之前，并加上一对圆括号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Credentials @Inject()&#123;var username:String,var password:String&#125;</span><br></pre></td></tr></table></figure>
+<p>可以为表达式添加注解，需要在表达式后加上冒号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(myMap.get(key):@unchecked) match &#123;...&#125;</span><br></pre></td></tr></table></figure></p>
+<p>还可以为类型参数添加注解：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class MyContainer[@specialized T]</span><br></pre></td></tr></table></figure></p>
+<p>针对实际类型的注解应放在类型名称之后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String @cps[Unit]</span><br></pre></td></tr></table></figure></p>
+<h2 id="15-3-注解参数"><a href="#15-3-注解参数" class="headerlink" title="15.3 注解参数"></a>15.3 注解参数</h2><p>Java注解可以有带名参数，如果参数名是value，名称可以直接略去，如果注解不带参数，圆括号可以略去<br>注解的参数类型只能是：</p>
+<ul>
+<li>数值型的字面量</li>
+<li>字符串</li>
+<li>类字面量</li>
+<li>Java枚举</li>
+<li>其他注解</li>
+<li>上述类型的数组</li>
+</ul>
+<h2 id="15-4-注解实现"><a href="#15-4-注解实现" class="headerlink" title="15.4 注解实现"></a>15.4 注解实现</h2><p>本节主要看下注解类是怎样实现的</p>
+<p>注解必须扩展Annotation特质。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class unchecked extends annotation.Annotation</span><br></pre></td></tr></table></figure>
+<p>注解的作用是描述那些被注解的表达式、变量、字段、方法或类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def check(@NotNull password:String) = &#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>好了，注解看到这里我放弃了，并看不懂……</p>
 
       
 
@@ -205,6 +208,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">这一章的内容我也不是很理解，之前也没有应用过，希望有小伙伴一起讨论~</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -255,7 +269,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://AlisaBen.github.io/2018/08/06/因吹斯听thing-我的博客网站/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://AlisaBen.github.io/2018/08/06/《快学Scala》学习笔记-第15章-注解/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -269,18 +283,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/06/《快学Scala》学习笔记-第15章-注解/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/06/《快学Scala》学习笔记-第16章-XML处理/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          《快学Scala》学习笔记--第15章 注解
+          《快学Scala》学习笔记--第16章 XML处理
         
       </div>
     </a>
   
   
-    <a href="/2018/08/06/《快学scala》学习笔记-第14章 模式匹配和样例类/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">《快学scala》学习笔记--第14章 模式匹配和样例类</div>
+    <a href="/2018/08/06/因吹斯听thing-我的博客网站/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">因吹斯听thing:我的博客网站</div>
       <i class="icon-circle-right"></i>
     </a>
   
