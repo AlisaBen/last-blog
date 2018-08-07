@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://AlisaBen.github.io">
   <title>《快学Scala》学习笔记-第18章 高级类型 | AlisaBen的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="18.1 单例类型在下面的例子中book不能调用addChapter方法，因为setTitle方法返回的是this，Scala自动推断类型为Document。1234567891011121314151617class Document&amp;#123;  def setTitle(title:String) = &amp;#123;    this  &amp;#125;  def setAuthor(author:">
+  <meta name="description" content="18.1 单例类型">
 <meta name="keywords" content="scala">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《快学Scala》学习笔记-第18章 高级类型">
 <meta property="og:url" content="https://AlisaBen.github.io/2018/08/07/《快学Scala》学习笔记-第18章-高级类型/index.html">
 <meta property="og:site_name" content="AlisaBen的博客">
-<meta property="og:description" content="18.1 单例类型在下面的例子中book不能调用addChapter方法，因为setTitle方法返回的是this，Scala自动推断类型为Document。1234567891011121314151617class Document&amp;#123;  def setTitle(title:String) = &amp;#123;    this  &amp;#125;  def setAuthor(author:">
+<meta property="og:description" content="18.1 单例类型">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-07T14:20:23.030Z">
+<meta property="og:updated_time" content="2018-08-07T14:26:04.175Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《快学Scala》学习笔记-第18章 高级类型">
-<meta name="twitter:description" content="18.1 单例类型在下面的例子中book不能调用addChapter方法，因为setTitle方法返回的是this，Scala自动推断类型为Document。1234567891011121314151617class Document&amp;#123;  def setTitle(title:String) = &amp;#123;    this  &amp;#125;  def setAuthor(author:">
+<meta name="twitter:description" content="18.1 单例类型">
   
   
     <link rel="icon" href="/favicon.png">
@@ -189,7 +189,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="18-1-单例类型"><a href="#18-1-单例类型" class="headerlink" title="18.1 单例类型"></a>18.1 单例类型</h2><p>在下面的例子中book不能调用addChapter方法，因为setTitle方法返回的是this，Scala自动推断类型为Document。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Document&#123;</span><br><span class="line">  def setTitle(title:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">  def setAuthor(author:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val article = new Document()</span><br><span class="line">article.setTitle(&quot;whatever&quot;).setAuthor(&quot;cay&quot;)</span><br><span class="line">class Book extends Document&#123;</span><br><span class="line">  def addChapter(chapter:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val book = new Book()</span><br><span class="line">book.setTitle(&quot;scala&quot;)</span><br></pre></td></tr></table></figure></p>
+        <h2 id="18-1-单例类型"><a href="#18-1-单例类型" class="headerlink" title="18.1 单例类型"></a>18.1 单例类型</h2><a id="more"></a>
+<p>在下面的例子中book不能调用addChapter方法，因为setTitle方法返回的是this，Scala自动推断类型为Document。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Document&#123;</span><br><span class="line">  def setTitle(title:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">  def setAuthor(author:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val article = new Document()</span><br><span class="line">article.setTitle(&quot;whatever&quot;).setAuthor(&quot;cay&quot;)</span><br><span class="line">class Book extends Document&#123;</span><br><span class="line">  def addChapter(chapter:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val book = new Book()</span><br><span class="line">book.setTitle(&quot;scala&quot;)</span><br></pre></td></tr></table></figure></p>
 <p>修改方法如下：显式声明setTitle方法的返回类型是this.type</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Document&#123;</span><br><span class="line">  def setTitle(title:String):this.type = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">  def setAuthor(author:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val article = new Document()</span><br><span class="line">article.setTitle(&quot;whatever&quot;).setAuthor(&quot;cay&quot;)</span><br><span class="line">class Book extends Document&#123;</span><br><span class="line">  def addChapter(chapter:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val book = new Book()</span><br><span class="line">book.setTitle(&quot;scala&quot;).addChapter(&quot;&quot;)</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">object Title//单例对象</span><br><span class="line">class Document&#123;</span><br><span class="line">  private var useNextArgAas:Any = null</span><br><span class="line">  def set(obj:Title.type ):this.type = &#123;useNextArgAas = obj;this&#125;</span><br><span class="line">  def to(arg:String) = if(useNextArgAas == Title) println(arg)</span><br><span class="line">&#125;</span><br><span class="line">book.set(Title).to(&quot;scala&quot;)</span><br></pre></td></tr></table></figure>
@@ -440,11 +441,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>

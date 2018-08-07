@@ -189,15 +189,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="18-1-单例类型"><a href="#18-1-单例类型" class="headerlink" title="18.1 单例类型"></a>18.1 单例类型</h2><p>在下面的例子中book不能调用addChapter方法，因为setTitle方法返回的是this，Scala自动推断类型为Document。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Document&#123;</span><br><span class="line">  def setTitle(title:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">  def setAuthor(author:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val article = new Document()</span><br><span class="line">article.setTitle(&quot;whatever&quot;).setAuthor(&quot;cay&quot;)</span><br><span class="line">class Book extends Document&#123;</span><br><span class="line">  def addChapter(chapter:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val book = new Book()</span><br><span class="line">book.setTitle(&quot;scala&quot;)</span><br></pre></td></tr></table></figure></p>
-<p>修改方法如下：显式声明setTitle方法的返回类型是this.type</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Document&#123;</span><br><span class="line">  def setTitle(title:String):this.type = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">  def setAuthor(author:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val article = new Document()</span><br><span class="line">article.setTitle(&quot;whatever&quot;).setAuthor(&quot;cay&quot;)</span><br><span class="line">class Book extends Document&#123;</span><br><span class="line">  def addChapter(chapter:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val book = new Book()</span><br><span class="line">book.setTitle(&quot;scala&quot;).addChapter(&quot;&quot;)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">object Title//单例对象</span><br><span class="line">class Document&#123;</span><br><span class="line">  private var useNextArgAas:Any = null</span><br><span class="line">  def set(obj:Title.type ):this.type = &#123;useNextArgAas = obj;this&#125;</span><br><span class="line">  def to(arg:String) = if(useNextArgAas == Title) println(arg)</span><br><span class="line">&#125;</span><br><span class="line">book.set(Title).to(&quot;scala&quot;)</span><br></pre></td></tr></table></figure>
-<h2 id="18-2-类型投影"><a href="#18-2-类型投影" class="headerlink" title="18.2 类型投影"></a>18.2 类型投影</h2><p>注意下一段代码中的NetWork#Member操作，说明在NetWork中共享Member类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class NetWork&#123;</span><br><span class="line">  class Member(val name:String)&#123;</span><br><span class="line">    val contacts = new ArrayBuffer[NetWork#Member]</span><br><span class="line">  &#125;</span><br><span class="line">  private val members = new ArrayBuffer[Member]()</span><br><span class="line">  def join(name:String) = &#123;</span><br><span class="line">    val m = new Member(name)</span><br><span class="line">    members += m</span><br><span class="line">    m</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val chatter:NetWork = new NetWork</span><br><span class="line">val myFace:NetWork = new NetWork</span><br><span class="line">val fred :chatter.Member= chatter.join(&quot;fred&quot;)</span><br><span class="line">val barney :myFace.Member= myFace.join(&quot;barney&quot;)</span><br><span class="line">fred.contacts += barney</span><br></pre></td></tr></table></figure>
-<h2 id="18-4-类型别名"><a href="#18-4-类型别名" class="headerlink" title="18.4 类型别名"></a>18.4 类型别名</h2><p>类型别名必须出现在类或者对象中，不能出现在Scala文件的顶层<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type Index = mutable.HashMap[String,(Int,Int)]</span><br><span class="line">val a :Index = new Index()</span><br><span class="line">a.put(&quot;a&quot;,(1,2))</span><br></pre></td></tr></table></figure></p>
-<p>更多内容请见我的csdn:<a href="https://blog.csdn.net/weixin_36926779" target="_blank" rel="noopener">小可爱的博客</a></p>
-
+        <h2 id="18-1-单例类型"><a href="#18-1-单例类型" class="headerlink" title="18.1 单例类型"></a>18.1 单例类型</h2>
+        
+          <a class="article-more-a" href="/2018/08/07/《快学Scala》学习笔记-第18章-高级类型/#more">more >></a>
+        
       
 
       
@@ -277,6 +272,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+        <h2 id="17-1-泛型类"><a href="#17-1-泛型类" class="headerlink" title="17.1 泛型类"></a>17.1 泛型类</h2>
+        
+          <a class="article-more-a" href="/2018/08/07/《快学Scala》学习笔记-第17章-类型参数/#more">more >></a>
         
       
 
@@ -285,6 +283,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">scala</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -339,21 +348,10 @@
 <ul>
 <li>349</li>
 <li>350</li>
-<li>242</li>
-</ul>
-<p>题目349：Intersection of Two Arrays<br>描述：Given two arrays, write a function to compute their intersection.<br>例子：Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2].<br>Note:<br>Each element in the result must be unique.<br>The result can be in any order.</p>
-<p>代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; Solution349::intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2)</span><br><span class="line">&#123;</span><br><span class="line">	set&lt;int&gt;nums1_plus, nums2_plus;</span><br><span class="line">	nums1_plus.insert(nums1.begin(), nums1.end());//因为集合是不区分元素位置的</span><br><span class="line">	nums2_plus.insert(nums2.begin(), nums2.end());</span><br><span class="line">	vector&lt;int&gt; res;</span><br><span class="line">	int len1 = nums1_plus.size();</span><br><span class="line">	for (int x : nums1_plus)</span><br><span class="line">	&#123;</span><br><span class="line">		if (nums2_plus.find(x) != nums2_plus.end())res.push_back(x);</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>题目350：Intersection of Two Arrays II<br>描述：Given two arrays, write a function to compute their intersection.<br>例子：Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2, 2].<br>Note:<br>Each element in the result should appear as many times as it shows in both arrays.<br>The result can be in any order.<br>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; Solution350::intersect(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2)</span><br><span class="line">&#123;</span><br><span class="line">	unordered_map&lt;int, int&gt;nums1_plus, nums2_plus;</span><br><span class="line">	for (int x : nums1)nums1_plus[x]++;</span><br><span class="line">	for (int x : nums2)nums2_plus[x]++;</span><br><span class="line">	vector&lt;int&gt; res;</span><br><span class="line">	for (auto x : nums1_plus)</span><br><span class="line">	&#123;</span><br><span class="line">		if (nums2_plus.find(x.first) != nums2_plus.end())res.insert(res.end(), min(x.second, nums2_plus[x.first]), x.first);</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>题目242： Valid Anagram<br>描述：Given two strings s and t , write a function to determine if t is an anagram of s.<br>例子：</p>
-<ol>
-<li>Input: s = “anagram”, t = “nagaram” Output: true</li>
-<li>Input: s = “rat”, t = “car” Output: false</li>
-</ol>
-<p>Note:<br>You may assume the string contains only lowercase alphabets.<br>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">bool Solution242::isAnagram(string s, string t)</span><br><span class="line">&#123;</span><br><span class="line">	//way 1</span><br><span class="line">	//if (s.size() != t.size())return false;</span><br><span class="line">	//unordered_map&lt;char, int&gt; s_plus, t_plus;</span><br><span class="line">	//for (char x : s)s_plus[x]++;</span><br><span class="line">	//for (char x : t)t_plus[x]++;</span><br><span class="line">	//for (auto x : s_plus)</span><br><span class="line">	//&#123;</span><br><span class="line">	//	if (t_plus.find(x.first) != t_plus.end())</span><br><span class="line">	//	&#123;</span><br><span class="line">	//		if (x.second != t_plus[x.first]) return false;</span><br><span class="line">	//	&#125;</span><br><span class="line">	//	else</span><br><span class="line">	//		return false;</span><br><span class="line">	//&#125;</span><br><span class="line">	//return true;</span><br><span class="line">	//way 2</span><br><span class="line">	if (s.size() != t.size()) return false;</span><br><span class="line">	vector&lt;int&gt; flag(26);//将26个小写字母映射到对应数组下标，元素为每个字母出现的次数，初始值为0</span><br><span class="line">	for (char x : s) flag[x - &apos;a&apos;]++;//计算s字符串中每个字母出现的次数</span><br><span class="line">	for (char x : t)</span><br><span class="line">	&#123;</span><br><span class="line">		flag[x - &apos;a&apos;]--;</span><br><span class="line">		if (flag[x - &apos;a&apos;] &lt; 0)return false;//如果两个字符串等长，且不是变换顺序的话，t中一定存在某个字母数大于s</span><br><span class="line">	&#125;</span><br><span class="line">	return true;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在题目242中，第二种方法的runtime优于第一种方法，在非变换顺序的字符串中可以在遍历结束之前结束。</p>
-<p>更多内容请见我的csdn:<a href="https://blog.csdn.net/weixin_36926779" target="_blank" rel="noopener">小可爱的博客</a></p>
-
+<li>242
+        
+          <a class="article-more-a" href="/2018/08/07/leetcode-sort-easy-over/#more">more >></a>
+        
       
 
       
@@ -680,27 +678,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<p>之前就想过自己搭建一个博客网站，因为自己有记东西的习惯，简书+csdn+有道云，挺麻烦的，今天偶然知道了hexo，感觉这个东西很好，就尝试5分钟搭建，但是实际上不止5分钟呀，中间也遇到了问题，现把我的搭建过程做个记录。</p>
-<p> 原文链接：<br><a href="https://www.jianshu.com/p/4eaddcbe4d12" target="_blank" rel="noopener">5分钟搭建免费个人博客</a></p>
-<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>此步安装命令用的是下面的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<p>安装成功之后,会提示hexo的安装目录。我在D盘下新建了Hexo文件夹，执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init D:\Hexo</span><br></pre></td></tr></table></figure>
-<p>进入到该路径下，初始化网站存储的文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init username.github.io</span><br></pre></td></tr></table></figure></p>
-<p>根据链接的配置要求进行更改，进入到该文件夹下面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd username.github.io</span><br></pre></td></tr></table></figure></p>
-<p>执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></p>
-<p>测试启动可以运行</p>
-<p>注意事项：</p>
-<ol>
-<li>hexo的安装命令有很多，我第一遍安装失败了，遇到了hexo不是内部或外部命令</li>
-<li>hexo的文档命名和内容格式 有一定的要求，按照下面的语法新建文档，再编辑新内容<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;doc name&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>总结今天学习到的命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br><span class="line">hexo new &quot;doc name&quot;</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-<p>要好好学习markdown的语法喽~</p>
-
+        <p>之前就想过自己搭建一个博客网站，因为自己有记东西的习惯，简书+csdn+有道云，挺麻烦的，今天偶然知道了hexo，感觉这个东西很好，就尝试5分钟搭建，但是实际上不止5分钟呀，中间也遇到了问题，现把我的搭建过程做个记录。</p>
+        
+          <a class="article-more-a" href="/2018/08/06/因吹斯听thing-我的博客网站/#more">more >></a>
+        
       
 
       
@@ -1111,11 +1092,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>

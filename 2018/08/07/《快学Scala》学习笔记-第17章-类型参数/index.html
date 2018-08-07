@@ -8,17 +8,18 @@
   <link rel="dns-prefetch" href="https://AlisaBen.github.io">
   <title>《快学Scala》学习笔记-第17章-类型参数 | AlisaBen的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="北京邮电大学理学院14级本科，现学习web研发">
+  <meta name="description" content="17.1 泛型类">
+<meta name="keywords" content="scala">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《快学Scala》学习笔记-第17章-类型参数">
 <meta property="og:url" content="https://AlisaBen.github.io/2018/08/07/《快学Scala》学习笔记-第17章-类型参数/index.html">
 <meta property="og:site_name" content="AlisaBen的博客">
-<meta property="og:description" content="北京邮电大学理学院14级本科，现学习web研发">
+<meta property="og:description" content="17.1 泛型类">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-07T12:58:16.729Z">
+<meta property="og:updated_time" content="2018-08-07T14:25:51.216Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《快学Scala》学习笔记-第17章-类型参数">
-<meta name="twitter:description" content="北京邮电大学理学院14级本科，现学习web研发">
+<meta name="twitter:description" content="17.1 泛型类">
   
   
     <link rel="icon" href="/favicon.png">
@@ -188,7 +189,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="17-1-泛型类"><a href="#17-1-泛型类" class="headerlink" title="17.1 泛型类"></a>17.1 泛型类</h2><a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T,S](val first:T,val second:S)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">&#125;</span><br><span class="line">val p = new Pair(42,&quot;string&quot;)</span><br><span class="line">p.printf()</span><br></pre></td></tr></table></figure>
+<h2 id="17-2-泛型函数"><a href="#17-2-泛型函数" class="headerlink" title="17.2 泛型函数"></a>17.2 泛型函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def getMiddle[T](a:Array[T]) = a.length / 2</span><br><span class="line">println(getMiddle(Array(4,&quot;56&quot;)))</span><br></pre></td></tr></table></figure>
+<h2 id="17-3-类型变量界定"><a href="#17-3-类型变量界定" class="headerlink" title="17.3 类型变量界定"></a>17.3 类型变量界定</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T &lt;: Comparable[T]](val first:T,val second:T)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">  def smaller = if(first.compareTo(second) &lt; 0) first else second</span><br><span class="line">&#125;</span><br><span class="line">println((new Pair(&quot;23&quot;,&quot;4&quot;)).smaller)</span><br></pre></td></tr></table></figure>
+<p>如果不在泛型中加入&lt;: Comparable[T]，则就不知道first是否有compareTo方法，所以添加一个上界T 《： Comparable[T]</p>
+<p>但是在类型为Int的时候出现报错，在17.4节中介绍</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T](val first:T,val second:T)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">  def replaceFirst[R &gt;: T](newFirst:R) = new Pair[R](newFirst,second)</span><br><span class="line">&#125;</span><br><span class="line">(new Pair(&quot;23&quot;,&quot;4&quot;)).replaceFirst(0).printf()</span><br></pre></td></tr></table></figure>
+<h2 id="17-4-视图界定"><a href="#17-4-视图界定" class="headerlink" title="17.4 视图界定"></a>17.4 视图界定</h2><p>在上一节中Int类型出现报错是因为Int不是Comparable[Int]的子类。不过RichInt实现了Comparable[Int],同时还有一个从Int到RichInt的隐式转换。<br>解决方法是视图界定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T &lt;% Comparable[T]](val first:T,val second:T)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">  def smaller = if(first.compareTo(second) &lt; 0) first else second</span><br><span class="line">&#125;</span><br><span class="line">println((new Pair[Int](3,4)).smaller)</span><br></pre></td></tr></table></figure></p>
+<p>&lt;%关系将T被隐式转换成Comparable[T]</p>
+<p>用Ordered特质会更好，因为在Comparable的基础上提供了关系操作符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T &lt;% Ordered[T]](val first:T,val second:T)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">  def smaller = if(first &lt; second) first else second</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="17-5-上下文界定"><a href="#17-5-上下文界定" class="headerlink" title="17.5 上下文界定"></a>17.5 上下文界定</h2><p>视图界定T &lt;% V要求必须存在一个从T到V的隐式转换。上下文界定的形式是T:M。要求必须存在一个类型为M[T]的隐式值，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T:Ordering]</span><br></pre></td></tr></table></figure></p>
+<p>要求必须存在一个类型为Ordering[T]的隐式值。当声明一个使用隐式值的方法时，需要添加一个隐式参数,比如ord</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T:Ordering](val first:T,val second:T)&#123;</span><br><span class="line">  def smaller(implicit ord:Ordering[T]) = if(ord.compare(first,second) &lt; 0) first else second</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="17-11-对象不能泛型"><a href="#17-11-对象不能泛型" class="headerlink" title="17.11 对象不能泛型"></a>17.11 对象不能泛型</h2><p>不能给对象添加类型参数，比如可变列表</p>
+<p>更多内容请见我的csdn:<a href="https://blog.csdn.net/weixin_36926779" target="_blank" rel="noopener">小可爱的博客</a></p>
+
       
 
       
@@ -196,6 +212,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">scala</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -290,6 +317,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#17-1-泛型类"><span class="toc-number">1.</span> <span class="toc-text">17.1 泛型类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-2-泛型函数"><span class="toc-number">2.</span> <span class="toc-text">17.2 泛型函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-3-类型变量界定"><span class="toc-number">3.</span> <span class="toc-text">17.3 类型变量界定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-4-视图界定"><span class="toc-number">4.</span> <span class="toc-text">17.4 视图界定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-5-上下文界定"><span class="toc-number">5.</span> <span class="toc-text">17.5 上下文界定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-11-对象不能泛型"><span class="toc-number">6.</span> <span class="toc-text">17.11 对象不能泛型</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -405,11 +445,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
