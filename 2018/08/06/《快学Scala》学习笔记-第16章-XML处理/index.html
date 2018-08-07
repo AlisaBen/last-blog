@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="AlisaBen的博客">
 <meta property="og:description" content="这是一篇《快学scala》的读书笔记，需要具备Scala语言的基础，欢迎读者与我一起探讨，或者教我新知识呀~">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-07T11:56:46.524Z">
+<meta property="og:updated_time" content="2018-08-07T12:03:58.620Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《快学Scala》学习笔记--第16章 XML处理">
 <meta name="twitter:description" content="这是一篇《快学scala》的读书笔记，需要具备Scala语言的基础，欢迎读者与我一起探讨，或者教我新知识呀~">
@@ -194,11 +194,9 @@
 <h2 id="16-2-XML节点"><a href="#16-2-XML节点" class="headerlink" title="16.2 XML节点"></a>16.2 XML节点</h2><p>Node类是所有XML节点类型的祖先，两个最重要的子类是Text和Elem。<br>用child方法遍历父节点下面的每一个子节点</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val ls:Elem = &lt;a herf=&quot;www.baidu.com&quot;&gt;the&lt;em&gt;scala&lt;/em&gt;&lt;em&gt;yoyo&lt;/em&gt;language&lt;/a&gt;</span><br><span class="line">for(x &lt;- ls.child)</span><br><span class="line">  println(x)</span><br></pre></td></tr></table></figure>
 <p>输出结果：</p>
-<p>the<br><em>scala</em><br><em>yoyo</em><br>language</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">the</span><br><span class="line">&lt;em&gt;scala&lt;/em&gt;</span><br><span class="line">&lt;em&gt;yoyo&lt;/em&gt;</span><br><span class="line">language</span><br></pre></td></tr></table></figure>
 <p>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val ls:Elem = &lt;a herf=&quot;www.baidu.com&quot;&gt;the&lt;em&gt;&lt;li&gt;hello&lt;/li&gt;scala&lt;/em&gt;&lt;em&gt;yoyo&lt;/em&gt;language&lt;/a&gt;</span><br><span class="line">for(x &lt;- ls.child if !x.child.isEmpty)</span><br><span class="line">  println(x.child)</span><br></pre></td></tr></table></figure></p>
-<p>输出结果：</p>
-<p>ArrayBuffer(<li>hello</li>, scala)<br>ArrayBuffer(yoyo)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">Seq[Node]--&gt;NodeSeq</span><br><span class="line">NodeSeq--&gt;Document</span><br><span class="line">NodeSeq--&gt;Node</span><br><span class="line">Node--&gt;Elem</span><br></pre></td></tr></table></figure>
+<p>输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ArrayBuffer(&lt;li&gt;hello&lt;/li&gt;, scala)</span><br><span class="line">ArrayBuffer(yoyo)</span><br></pre></td></tr></table></figure></p>
 <p>通过变成的方式构建节点序列，可以使用NodeBuffer,是ArrayBuffer[Node]的子类，可以被隐式转换为NodeSeq，转换之后就不能再继续修改它，因为xml节点序列是不可变的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import scala.xml.&#123;Node, NodeSeq&#125;</span><br><span class="line">val items = new NodeBuffer</span><br><span class="line">items += &lt;li&gt;Fred&lt;/li&gt;</span><br><span class="line">items += &lt;li&gt;Wilma&lt;/li&gt;</span><br><span class="line">val nodes:NodeSeq = items</span><br></pre></td></tr></table></figure>
 <h2 id="16-3-元素属性"><a href="#16-3-元素属性" class="headerlink" title="16.3 元素属性"></a>16.3 元素属性</h2><p>要处理某个元素的属性键和值，可以使用attributes属性,返回Option类型的节点序列<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val ls:Elem = &lt;a href=&quot;www.baidu.com&quot;&gt;the&lt;em&gt;&lt;li&gt;hello&lt;/li&gt;scala&lt;/em&gt;&lt;em&gt;yoyo&lt;/em&gt;language&lt;/a&gt;</span><br><span class="line">val url: scala.Seq[Node] = ls.attributes(&quot;href&quot;)</span><br><span class="line">val url1:String= ls.attributes(&quot;href&quot;).text</span><br><span class="line">println(url1)</span><br></pre></td></tr></table></figure></p>
@@ -211,11 +209,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">val e = &lt;a id=&#123;new Atom[Int](1)&#125;&gt;&lt;/a&gt;</span><br><span class="line">println(e.attributes(&quot;id&quot;).text)</span><br><span class="line">val description = &quot;TOD&quot;</span><br><span class="line">val q = &lt;img alt=&#123;if(description == &quot;TODO&quot;) null else description&#125;&gt;yolo&lt;/img&gt;</span><br><span class="line">println(q.attributes.get(&quot;alt&quot;).getOrElse(Text(&quot;&quot;)))</span><br></pre></td></tr></table></figure>
 <h2 id="16-8-模式匹配"><a href="#16-8-模式匹配" class="headerlink" title="16.8 模式匹配"></a>16.8 模式匹配</h2><p>可以在模式匹配表达式中使用xml字面量</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var nodeLs = List(&lt;img/&gt;)</span><br><span class="line">nodeLs = &lt;li&gt;yolo&lt;/li&gt; :: nodeLs</span><br><span class="line">nodeLs = &lt;ul&gt;lala&lt;li&gt;yilia&lt;/li&gt;&lt;/ul&gt; :: nodeLs</span><br><span class="line">nodeLs.foreach(_ match &#123;</span><br><span class="line">  case &lt;img/&gt; =&gt; println(&quot;img&quot;)</span><br><span class="line">  case &lt;li&gt;&#123;v&#125;&lt;/li&gt; =&gt; println(v)</span><br><span class="line">  case &lt;ul&gt;&#123;_*&#125;&lt;/ul&gt; =&gt; println(&quot;lala&quot;)</span><br><span class="line">  case _ =&gt; println(&quot;&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>可以用下面的方式匹配文本</p>
-<ul>
-<li></li><li>{Text(v)}</li> =&gt; v
-<li></li><li>v</li> =&gt; v.text
-</ul>
+<p>可以用下面的方式匹配文本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;li&gt;&#123;Text(v)&#125;&lt;/li&gt; =&gt; v</span><br><span class="line">&lt;li&gt;v&lt;/li&gt; =&gt; v.text</span><br></pre></td></tr></table></figure></p>
 <p>XML模式不能有属性，如果要匹配属性，需要用守卫</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var nodeLs = List(&lt;img/&gt;)</span><br><span class="line">nodeLs = &lt;li class=&quot;name&quot;&gt;yolo&lt;/li&gt; :: nodeLs</span><br><span class="line">nodeLs = &lt;ul&gt;lala&lt;li&gt;yilia&lt;/li&gt;&lt;/ul&gt; :: nodeLs</span><br><span class="line">nodeLs.foreach(_ match &#123;</span><br><span class="line">  case &lt;img/&gt; =&gt; println(&quot;img&quot;)</span><br><span class="line">  case n @ &lt;li&gt;&#123;_&#125;&lt;/li&gt; if (n.attributes(&quot;class&quot;).text == &quot;name&quot;)=&gt; println(n)</span><br><span class="line">  case &lt;ul&gt;&#123;_*&#125;&lt;/ul&gt; =&gt; println(&quot;lala&quot;)</span><br><span class="line">  case _ =&gt; println(&quot;&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h2 id="16-9-修改元素和属性"><a href="#16-9-修改元素和属性" class="headerlink" title="16.9 修改元素和属性"></a>16.9 修改元素和属性</h2><p>xml节点和节点序列是不可变的，如果要编辑一个节点，需要创建一个拷贝<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val list = &lt;ul&gt;&lt;li&gt;Fred&lt;/li&gt;&lt;li&gt;Wilma&lt;/li&gt;&lt;/ul&gt;</span><br><span class="line">val list2 = list.copy(label = &quot;ol&quot;)</span><br><span class="line">println(list2)</span><br></pre></td></tr></table></figure></p>
@@ -466,19 +460,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">leetcode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">scala</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+                <a href="javascript:void(0)" class="js-tag color4">leetcode</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
             
             <div class="clearfix"></div>

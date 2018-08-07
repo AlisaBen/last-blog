@@ -169,6 +169,152 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-《快学Scala》学习笔记-第18章-高级类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/07/《快学Scala》学习笔记-第18章-高级类型/">《快学Scala》学习笔记-第18章 高级类型</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/07/《快学Scala》学习笔记-第18章-高级类型/" class="archive-article-date">
+  	<time datetime="2018-08-07T13:38:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="18-1-单例类型"><a href="#18-1-单例类型" class="headerlink" title="18.1 单例类型"></a>18.1 单例类型</h2><p>在下面的例子中book不能调用addChapter方法，因为setTitle方法返回的是this，Scala自动推断类型为Document。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Document&#123;</span><br><span class="line">  def setTitle(title:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">  def setAuthor(author:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val article = new Document()</span><br><span class="line">article.setTitle(&quot;whatever&quot;).setAuthor(&quot;cay&quot;)</span><br><span class="line">class Book extends Document&#123;</span><br><span class="line">  def addChapter(chapter:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val book = new Book()</span><br><span class="line">book.setTitle(&quot;scala&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>修改方法如下：显式声明setTitle方法的返回类型是this.type</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Document&#123;</span><br><span class="line">  def setTitle(title:String):this.type = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">  def setAuthor(author:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val article = new Document()</span><br><span class="line">article.setTitle(&quot;whatever&quot;).setAuthor(&quot;cay&quot;)</span><br><span class="line">class Book extends Document&#123;</span><br><span class="line">  def addChapter(chapter:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val book = new Book()</span><br><span class="line">book.setTitle(&quot;scala&quot;).addChapter(&quot;&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">object Title//单例对象</span><br><span class="line">class Document&#123;</span><br><span class="line">  private var useNextArgAas:Any = null</span><br><span class="line">  def set(obj:Title.type ):this.type = &#123;useNextArgAas = obj;this&#125;</span><br><span class="line">  def to(arg:String) = if(useNextArgAas == Title) println(arg)</span><br><span class="line">&#125;</span><br><span class="line">book.set(Title).to(&quot;scala&quot;)</span><br></pre></td></tr></table></figure>
+<h2 id="18-2-类型投影"><a href="#18-2-类型投影" class="headerlink" title="18.2 类型投影"></a>18.2 类型投影</h2><p>注意下一段代码中的NetWork#Member操作，说明在NetWork中共享Member类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class NetWork&#123;</span><br><span class="line">  class Member(val name:String)&#123;</span><br><span class="line">    val contacts = new ArrayBuffer[NetWork#Member]</span><br><span class="line">  &#125;</span><br><span class="line">  private val members = new ArrayBuffer[Member]()</span><br><span class="line">  def join(name:String) = &#123;</span><br><span class="line">    val m = new Member(name)</span><br><span class="line">    members += m</span><br><span class="line">    m</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val chatter:NetWork = new NetWork</span><br><span class="line">val myFace:NetWork = new NetWork</span><br><span class="line">val fred :chatter.Member= chatter.join(&quot;fred&quot;)</span><br><span class="line">val barney :myFace.Member= myFace.join(&quot;barney&quot;)</span><br><span class="line">fred.contacts += barney</span><br></pre></td></tr></table></figure>
+<h2 id="18-4-类型别名"><a href="#18-4-类型别名" class="headerlink" title="18.4 类型别名"></a>18.4 类型别名</h2><p>类型别名必须出现在类或者对象中，不能出现在Scala文件的顶层<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type Index = mutable.HashMap[String,(Int,Int)]</span><br><span class="line">val a :Index = new Index()</span><br><span class="line">a.put(&quot;a&quot;,(1,2))</span><br></pre></td></tr></table></figure></p>
+<p>更多内容请见我的csdn:<a href="https://blog.csdn.net/weixin_36926779" target="_blank" rel="noopener">小可爱的博客</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">scala</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/scala//" class="article-tag-list-link color1">scala</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-《快学Scala》学习笔记-第17章-类型参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/07/《快学Scala》学习笔记-第17章-类型参数/">《快学Scala》学习笔记-第17章-类型参数</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/07/《快学Scala》学习笔记-第17章-类型参数/" class="archive-article-date">
+  	<time datetime="2018-08-07T12:58:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-leetcode-sort-easy-over" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -860,87 +1006,10 @@
 
 
   
-    <article id="post-军训1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/12/01/军训1/">军训1</a>
-    </h1>
-  
-
-        
-        <a href="/2014/12/01/军训1/" class="archive-article-date">
-  	<time datetime="2014-12-01T07:17:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-12-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>黄沙不见烈日炎，碧云天，晓风怨。飒爽英姿，真是个超然。勿让云雨匆匆散，月夜下，欢歌连。<br>闲适风景时时盼，舞翩翩，望不断。舟叶水源，回首泪涟涟。待到君心换我心，垂柳下，戎装前。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/诗词//" class="article-tag-list-link color3">诗词</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1034,19 +1103,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">leetcode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">scala</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+                <a href="javascript:void(0)" class="js-tag color4">leetcode</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
             
             <div class="clearfix"></div>
