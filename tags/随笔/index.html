@@ -6,20 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://AlisaBen.github.io">
-  <title>《快学Scala》学习笔记--第15章 注解 | AlisaBen的博客</title>
+  <title>Tag: 随笔 | AlisaBen的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="15.1 什么是注解">
-<meta name="keywords" content="scala">
-<meta property="og:type" content="article">
-<meta property="og:title" content="《快学Scala》学习笔记--第15章 注解">
-<meta property="og:url" content="https://AlisaBen.github.io/2018/08/06/《快学Scala》学习笔记-第15章-注解/index.html">
+  <meta name="description" content="北京邮电大学理学院14级本科，现学习web研发">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AlisaBen的博客">
+<meta property="og:url" content="https://AlisaBen.github.io/tags/随笔/index.html">
 <meta property="og:site_name" content="AlisaBen的博客">
-<meta property="og:description" content="15.1 什么是注解">
+<meta property="og:description" content="北京邮电大学理学院14级本科，现学习web研发">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-07T06:02:03.524Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《快学Scala》学习笔记--第15章 注解">
-<meta name="twitter:description" content="15.1 什么是注解">
+<meta name="twitter:title" content="AlisaBen的博客">
+<meta name="twitter:description" content="北京邮电大学理学院14级本科，现学习web研发">
   
   
     <link rel="icon" href="/favicon.png">
@@ -169,200 +167,71 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-《快学Scala》学习笔记-第15章-注解" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      《快学Scala》学习笔记--第15章 注解
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/08/06/骗子/" class="archive-article-date">
+  	<time datetime="2018-08-06T05:13:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-06</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/08/06/骗子/">骗子</a>
     </h1>
   
 
-        
-        <a href="/2018/08/06/《快学Scala》学习笔记-第15章-注解/" class="archive-article-date">
-  	<time datetime="2018-08-06T04:27:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="15-1-什么是注解"><a href="#15-1-什么是注解" class="headerlink" title="15.1 什么是注解"></a>15.1 什么是注解</h2><a id="more"></a>
-<p>注解：插入到代码中以便有工具可以对他们进行处理的标签，工具可以在代码级别运作，也可以被编译器加入了注解信息的类文件</p>
-<h2 id="15-2-什么可以被注解"><a href="#15-2-什么可以被注解" class="headerlink" title="15.2 什么可以被注解"></a>15.2 什么可以被注解</h2><p>可以为类、方法、字段、局部变量和参数添加注解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Entity class Credentials</span><br><span class="line">@Test def testSomeFeature()&#123;&#125;</span><br><span class="line">@BeanProperty var username = _</span><br><span class="line">def doSomething(@NotNull message:String)&#123;&#125;</span><br><span class="line">@BeanProperty @Id var username = _</span><br></pre></td></tr></table></figure></p>
-<p>在给主构造器添加注解时，需要将注解放置在构造器之前，并加上一对圆括号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Credentials @Inject()&#123;var username:String,var password:String&#125;</span><br></pre></td></tr></table></figure>
-<p>可以为表达式添加注解，需要在表达式后加上冒号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(myMap.get(key):@unchecked) match &#123;...&#125;</span><br></pre></td></tr></table></figure></p>
-<p>还可以为类型参数添加注解：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class MyContainer[@specialized T]</span><br></pre></td></tr></table></figure></p>
-<p>针对实际类型的注解应放在类型名称之后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String @cps[Unit]</span><br></pre></td></tr></table></figure></p>
-<h2 id="15-3-注解参数"><a href="#15-3-注解参数" class="headerlink" title="15.3 注解参数"></a>15.3 注解参数</h2><p>Java注解可以有带名参数，如果参数名是value，名称可以直接略去，如果注解不带参数，圆括号可以略去<br>注解的参数类型只能是：</p>
-<ul>
-<li>数值型的字面量</li>
-<li>字符串</li>
-<li>类字面量</li>
-<li>Java枚举</li>
-<li>其他注解</li>
-<li>上述类型的数组</li>
-</ul>
-<h2 id="15-4-注解实现"><a href="#15-4-注解实现" class="headerlink" title="15.4 注解实现"></a>15.4 注解实现</h2><p>本节主要看下注解类是怎样实现的</p>
-<p>注解必须扩展Annotation特质。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class unchecked extends annotation.Annotation</span><br></pre></td></tr></table></figure>
-<p>注解的作用是描述那些被注解的表达式、变量、字段、方法或类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def check(@NotNull password:String) = &#123;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>好了，注解看到这里我放弃了，并看不懂……</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">scala</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/scala//" class="article-tag-list-link color1">scala</a>
+        			<a href="/categories/诗词//" class="article-tag-list-link color3">诗词</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://AlisaBen.github.io/2018/08/06/《快学Scala》学习笔记-第15章-注解/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/08/06/《快学Scala》学习笔记-第16章-XML处理/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          《快学Scala》学习笔记--第16章 XML处理
-        
-      </div>
-    </a>
   
   
-    <a href="/2018/08/06/因吹斯听thing-我的博客网站/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">因吹斯听thing:我的博客网站</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#15-1-什么是注解"><span class="toc-number">1.</span> <span class="toc-text">15.1 什么是注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-2-什么可以被注解"><span class="toc-number">2.</span> <span class="toc-text">15.2 什么可以被注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-3-注解参数"><span class="toc-number">3.</span> <span class="toc-text">15.3 注解参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-4-注解实现"><span class="toc-number">4.</span> <span class="toc-text">15.4 注解实现</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -385,9 +254,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

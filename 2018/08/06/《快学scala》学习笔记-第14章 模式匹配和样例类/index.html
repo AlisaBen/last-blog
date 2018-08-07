@@ -8,19 +8,18 @@
   <link rel="dns-prefetch" href="https://AlisaBen.github.io">
   <title>《快学scala》学习笔记--第14章 模式匹配和样例类 | AlisaBen的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="14.1 更好的switch123456val ch: Char = &amp;apos;*&amp;apos;ch match &amp;#123;  case &amp;apos;+&amp;apos; =&amp;gt; println(&amp;quot;加法&amp;quot;)  case &amp;apos;*&amp;apos; =&amp;gt; println(&amp;quot;乘法&amp;quot;)  case _ =&amp;gt; println(&amp;quot;木有&amp;quot;">
+  <meta name="description" content="此篇文章针对有一定Scala基础的读者 14.1 更好的switch">
+<meta name="keywords" content="scala">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《快学scala》学习笔记--第14章 模式匹配和样例类">
 <meta property="og:url" content="https://AlisaBen.github.io/2018/08/06/《快学scala》学习笔记-第14章 模式匹配和样例类/index.html">
 <meta property="og:site_name" content="AlisaBen的博客">
-<meta property="og:description" content="14.1 更好的switch123456val ch: Char = &amp;apos;*&amp;apos;ch match &amp;#123;  case &amp;apos;+&amp;apos; =&amp;gt; println(&amp;quot;加法&amp;quot;)  case &amp;apos;*&amp;apos; =&amp;gt; println(&amp;quot;乘法&amp;quot;)  case _ =&amp;gt; println(&amp;quot;木有&amp;quot;">
+<meta property="og:description" content="此篇文章针对有一定Scala基础的读者 14.1 更好的switch">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-07T04:37:57.858Z">
+<meta property="og:updated_time" content="2018-08-07T06:02:09.941Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《快学scala》学习笔记--第14章 模式匹配和样例类">
-<meta name="twitter:description" content="14.1 更好的switch123456val ch: Char = &amp;apos;*&amp;apos;ch match &amp;#123;  case &amp;apos;+&amp;apos; =&amp;gt; println(&amp;quot;加法&amp;quot;)  case &amp;apos;*&amp;apos; =&amp;gt; println(&amp;quot;乘法&amp;quot;)  case _ =&amp;gt; println(&amp;quot;木有&amp;quot;">
-  
-    <link rel="alternative" href="/atom.xml" title="AlisaBen的博客" type="application/atom+xml">
+<meta name="twitter:description" content="此篇文章针对有一定Scala基础的读者 14.1 更好的switch">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar show">
+			<img src="assets/img/photo.jpg" class="js-avatar show">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">AlisaBen</a></h1>
@@ -62,6 +61,10 @@
 				<li><a href="/">主页</a></li>
 	        
 				<li><a href="/tags/随笔/">随笔</a></li>
+	        
+				<li><a href="/tags/leetcode">leetcode</a></li>
+	        
+				<li><a href="/tags/scala">scala</a></li>
 	        
 			</ul>
 		</nav>
@@ -107,7 +110,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="assets/img/photo.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">AlisaBen</h1>
@@ -116,6 +119,10 @@
 			<p class="header-subtitle"><i class="icon icon-quo-left"></i>自诩为有益之事，永不知生之有涯<i class="icon icon-quo-right"></i></p>
 			
 			
+			
+				
+			
+				
 			
 				
 			
@@ -138,12 +145,16 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 25%"><a href="/tags/随笔/">随笔</a></li>
+		        
+					<li style="width: 25%"><a href="/tags/leetcode">leetcode</a></li>
+		        
+					<li style="width: 25%"><a href="/tags/scala">scala</a></li>
 		        
 				</ul>
 			</nav>
@@ -178,7 +189,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="14-1-更好的switch"><a href="#14-1-更好的switch" class="headerlink" title="14.1 更好的switch"></a>14.1 更好的switch</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val ch: Char = &apos;*&apos;</span><br><span class="line">ch match &#123;</span><br><span class="line">  case &apos;+&apos; =&gt; println(&quot;加法&quot;)</span><br><span class="line">  case &apos;*&apos; =&gt; println(&quot;乘法&quot;)</span><br><span class="line">  case _ =&gt; println(&quot;木有&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>此篇文章针对有一定Scala基础的读者</p>
+<h2 id="14-1-更好的switch"><a href="#14-1-更好的switch" class="headerlink" title="14.1 更好的switch"></a>14.1 更好的switch</h2><a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val ch: Char = &apos;*&apos;</span><br><span class="line">ch match &#123;</span><br><span class="line">  case &apos;+&apos; =&gt; println(&quot;加法&quot;)</span><br><span class="line">  case &apos;*&apos; =&gt; println(&quot;乘法&quot;)</span><br><span class="line">  case _ =&gt; println(&quot;木有&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>match是一个表达式，而不是语句，会有返回值</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val ch: Char = &apos;*&apos;</span><br><span class="line">val x:Int = ch match &#123;</span><br><span class="line">  case &apos;+&apos; =&gt; 0</span><br><span class="line">  case &apos;*&apos; =&gt; 1</span><br><span class="line">  case _ =&gt; 2</span><br><span class="line">&#125;</span><br><span class="line">println(x)</span><br></pre></td></tr></table></figure>
 <h2 id="14-2-守卫"><a href="#14-2-守卫" class="headerlink" title="14.2 守卫"></a>14.2 守卫</h2><p>守卫可以是任何布尔条件，在下面的例子中，只有在守卫模式不能匹配的情况下才执行所有模式匹配</p>
@@ -246,7 +259,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">scala</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/scala//" class="article-tag-list-link color1">scala</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -319,11 +354,6 @@
       </div>
     </a>
   
-  
-    <a href="/2018/08/06/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
-      <i class="icon-circle-right"></i>
-    </a>
   
 </nav>
 
@@ -460,7 +490,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">这一章的内容我也不是很理解，之前也没有应用过，希望有小伙伴一起讨论~</a>
+                <a href="javascript:void(0)" class="js-tag color1">scala</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
@@ -512,27 +550,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         <ul class="search-ul">
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+              <a href="http://github.com/AlisaBen" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>我的GitHub</a>
             </li>
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+              <a href="https://blog.csdn.net/weixin_36926779" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>我的csdn</a>
             </li>
           
         </ul>
@@ -543,7 +565,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">95年girl&lt;br&gt;&lt;br&gt;byr&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">希望永远当一个baby girl&lt;br&gt;骑车带风girl&lt;br&gt;读书girl&lt;br&gt;画画girl&lt;br&gt;跑步girl&lt;br&gt;学霸girl&lt;br&gt;byr girl&lt;br&gt;最最重要的是&lt;br&gt;美丽girl&lt;br&gt;email:yafang1826@163.com&lt;br&gt;</div>
   	  	
     	</section>
     
