@@ -156,6 +156,89 @@
 
 </head>
 
+     <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = $(document.getElementById(url)).text() + ': 0';
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+});
+</script>
+  
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
@@ -372,6 +455,17 @@
 
           
           
+             <span id="/2018/08/07/《快学Scala》学习笔记-第17章-类型参数/" class="leancloud_visitors" data-flag-title="《快学Scala》学习笔记-第17章-类型参数">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -424,18 +518,18 @@
 
       
         <h2 id="17-1-泛型类"><a href="#17-1-泛型类" class="headerlink" title="17.1 泛型类"></a>17.1 泛型类</h2><a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T,S](val first:T,val second:S)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">&#125;</span><br><span class="line">val p = new Pair(42,&quot;string&quot;)</span><br><span class="line">p.printf()</span><br></pre></td></tr></table></figure>
-<h2 id="17-2-泛型函数"><a href="#17-2-泛型函数" class="headerlink" title="17.2 泛型函数"></a>17.2 泛型函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def getMiddle[T](a:Array[T]) = a.length / 2</span><br><span class="line">println(getMiddle(Array(4,&quot;56&quot;)))</span><br></pre></td></tr></table></figure>
-<h2 id="17-3-类型变量界定"><a href="#17-3-类型变量界定" class="headerlink" title="17.3 类型变量界定"></a>17.3 类型变量界定</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T &lt;: Comparable[T]](val first:T,val second:T)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">  def smaller = if(first.compareTo(second) &lt; 0) first else second</span><br><span class="line">&#125;</span><br><span class="line">println((new Pair(&quot;23&quot;,&quot;4&quot;)).smaller)</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[<span class="string">T,S</span>](<span class="link">val first:T,val second:S</span>)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">&#125;</span><br><span class="line">val p = new Pair(42,"string")</span><br><span class="line">p.printf()</span><br></pre></td></tr></table></figure>
+<h2 id="17-2-泛型函数"><a href="#17-2-泛型函数" class="headerlink" title="17.2 泛型函数"></a>17.2 泛型函数</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def getMiddle[<span class="string">T</span>](<span class="link">a:Array[T]</span>) = a.length / 2</span><br><span class="line">println(getMiddle(Array(4,"56")))</span><br></pre></td></tr></table></figure>
+<h2 id="17-3-类型变量界定"><a href="#17-3-类型变量界定" class="headerlink" title="17.3 类型变量界定"></a>17.3 类型变量界定</h2><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T &lt;: Comparable[T]](val <span class="built_in">first</span>:T,val <span class="built_in">second</span>:T)&#123;</span><br><span class="line">  def <span class="built_in">printf</span>() = println(<span class="built_in">first</span>,<span class="built_in">second</span>)</span><br><span class="line">  def smaller = <span class="keyword">if</span>(<span class="built_in">first</span>.compareTo(<span class="built_in">second</span>) &lt; <span class="number">0</span>) <span class="built_in">first</span> <span class="keyword">else</span> <span class="built_in">second</span></span><br><span class="line">&#125;</span><br><span class="line">println((<span class="built_in">new</span> Pair(<span class="string">"23"</span>,<span class="string">"4"</span>)).smaller)</span><br></pre></td></tr></table></figure>
 <p>如果不在泛型中加入&lt;: Comparable[T]，则就不知道first是否有compareTo方法，所以添加一个上界T 《： Comparable[T]</p>
 <p>但是在类型为Int的时候出现报错，在17.4节中介绍</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T](val first:T,val second:T)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">  def replaceFirst[R &gt;: T](newFirst:R) = new Pair[R](newFirst,second)</span><br><span class="line">&#125;</span><br><span class="line">(new Pair(&quot;23&quot;,&quot;4&quot;)).replaceFirst(0).printf()</span><br></pre></td></tr></table></figure>
-<h2 id="17-4-视图界定"><a href="#17-4-视图界定" class="headerlink" title="17.4 视图界定"></a>17.4 视图界定</h2><p>在上一节中Int类型出现报错是因为Int不是Comparable[Int]的子类。不过RichInt实现了Comparable[Int],同时还有一个从Int到RichInt的隐式转换。<br>解决方法是视图界定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T &lt;% Comparable[T]](val first:T,val second:T)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">  def smaller = if(first.compareTo(second) &lt; 0) first else second</span><br><span class="line">&#125;</span><br><span class="line">println((new Pair[Int](3,4)).smaller)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[<span class="string">T</span>](<span class="link">val first:T,val second:T</span>)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">  def replaceFirst[<span class="string">R &gt;: T</span>](<span class="link">newFirst:R</span>) = new Pair[<span class="string">R</span>](<span class="link">newFirst,second</span>)</span><br><span class="line">&#125;</span><br><span class="line">(new Pair("23","4")).replaceFirst(0).printf()</span><br></pre></td></tr></table></figure>
+<h2 id="17-4-视图界定"><a href="#17-4-视图界定" class="headerlink" title="17.4 视图界定"></a>17.4 视图界定</h2><p>在上一节中Int类型出现报错是因为Int不是Comparable[Int]的子类。不过RichInt实现了Comparable[Int],同时还有一个从Int到RichInt的隐式转换。<br>解决方法是视图界定<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T &lt;<span class="symbol">%</span> Comparable[T]](val <span class="built_in">first</span>:T,val <span class="built_in">second</span>:T)&#123;</span><br><span class="line">  def <span class="built_in">printf</span>() = println(<span class="built_in">first</span>,<span class="built_in">second</span>)</span><br><span class="line">  def smaller = <span class="keyword">if</span>(<span class="built_in">first</span>.compareTo(<span class="built_in">second</span>) &lt; <span class="number">0</span>) <span class="built_in">first</span> <span class="keyword">else</span> <span class="built_in">second</span></span><br><span class="line">&#125;</span><br><span class="line">println((<span class="built_in">new</span> Pair[Int](<span class="number">3</span>,<span class="number">4</span>)).smaller)</span><br></pre></td></tr></table></figure></p>
 <p>&lt;%关系将T被隐式转换成Comparable[T]</p>
-<p>用Ordered特质会更好，因为在Comparable的基础上提供了关系操作符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T &lt;% Ordered[T]](val first:T,val second:T)&#123;</span><br><span class="line">  def printf() = println(first,second)</span><br><span class="line">  def smaller = if(first &lt; second) first else second</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="17-5-上下文界定"><a href="#17-5-上下文界定" class="headerlink" title="17.5 上下文界定"></a>17.5 上下文界定</h2><p>视图界定T &lt;% V要求必须存在一个从T到V的隐式转换。上下文界定的形式是T:M。要求必须存在一个类型为M[T]的隐式值，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T:Ordering]</span><br></pre></td></tr></table></figure></p>
+<p>用Ordered特质会更好，因为在Comparable的基础上提供了关系操作符<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">class</span> Pair[T &lt;% Ordered[T]](val <span class="keyword">first</span>:T,val <span class="keyword">second</span>:T)&#123;</span><br><span class="line">  def printf() = println(<span class="keyword">first</span>,<span class="keyword">second</span>)</span><br><span class="line">  def smaller = <span class="keyword">if</span>(<span class="keyword">first</span> &lt; <span class="keyword">second</span>) <span class="keyword">first</span> <span class="keyword">else</span> <span class="keyword">second</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="17-5-上下文界定"><a href="#17-5-上下文界定" class="headerlink" title="17.5 上下文界定"></a>17.5 上下文界定</h2><p>视图界定T &lt;% V要求必须存在一个从T到V的隐式转换。上下文界定的形式是T:M。要求必须存在一个类型为M[T]的隐式值，如<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pair</span>[<span class="title">T</span>:<span class="type">Ordering]</span></span></span><br></pre></td></tr></table></figure></p>
 <p>要求必须存在一个类型为Ordering[T]的隐式值。当声明一个使用隐式值的方法时，需要添加一个隐式参数,比如ord</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Pair[T:Ordering](val first:T,val second:T)&#123;</span><br><span class="line">  def smaller(implicit ord:Ordering[T]) = if(ord.compare(first,second) &lt; 0) first else second</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Pair[T:Ordering](val first:T,val second:T)&#123;</span><br><span class="line">  def smaller(<span class="keyword">implicit</span> ord:Ordering[T]) = <span class="keyword">if</span>(ord.compare(first,second) &lt; <span class="number">0</span>) first <span class="keyword">else</span> second</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="17-11-对象不能泛型"><a href="#17-11-对象不能泛型" class="headerlink" title="17.11 对象不能泛型"></a>17.11 对象不能泛型</h2><p>不能给对象添加类型参数，比如可变列表</p>
 <p>更多内容请见我的csdn:<a href="https://blog.csdn.net/weixin_36926779" target="_blank" rel="noopener">小可爱的博客</a></p>
 
@@ -447,6 +541,35 @@
 
     
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>鼓励一下这只小可爱吧^_^</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="AlisaBen 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="AlisaBen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
     
 
     
@@ -499,31 +622,43 @@
 
     <div class="post-spread">
       
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-<span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_fav">收藏夹</a>
-<a class="jiathis_button_copy">复制网址</a>
-<a class="jiathis_button_email">邮件</a>
-<a class="jiathis_button_weixin">微信</a>
-<a class="jiathis_button_qzone">QQ空间</a>
-<a class="jiathis_button_tqq">腾讯微博</a>
-<a class="jiathis_button_douban">豆瓣</a>
-<a class="jiathis_button_share">一键分享</a>
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
 
-<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-var jiathis_config={
-  data_track_clickback:true,
-  summary:"",
-  shortUrl:false,
-  hideMore:false
-}
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
 </script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
-<!-- JiaThis Button END -->
+
       
     </div>
   </div>
@@ -601,10 +736,10 @@ var jiathis_config={
               
               
               <div class="site-state-item site-state-categories">
-                
+                <a href="/categories/index.html">
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
-                
+                </a>
               </div>
             
 
@@ -612,10 +747,10 @@ var jiathis_config={
               
               
               <div class="site-state-item site-state-tags">
-                
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -651,20 +786,6 @@ var jiathis_config={
           
 
           
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                推荐阅读
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://alisaben.github.io/2018/08/06/%E9%AA%97%E5%AD%90/" title="骗子" target="_blank">骗子</a>
-                  </li>
-                
-              </ul>
-            </div>
           
 
           
@@ -1245,6 +1366,113 @@ var jiathis_config={
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 

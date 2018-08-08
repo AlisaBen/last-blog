@@ -156,6 +156,89 @@
 
 </head>
 
+     <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = $(document.getElementById(url)).text() + ': 0';
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+});
+</script>
+  
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
@@ -394,6 +477,17 @@
 
           
           
+             <span id="/2018/08/06/《快学Scala》学习笔记-第16章-XML处理/" class="leancloud_visitors" data-flag-title="《快学Scala》学习笔记--第16章 XML处理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -446,31 +540,31 @@
 
       
         <p>这是一篇《快学scala》的读书笔记，需要具备Scala语言的基础，欢迎读者与我一起探讨，或者教我新知识呀~<br><a id="more"></a></p>
-<h2 id="16-1-XML字面量"><a href="#16-1-XML字面量" class="headerlink" title="16.1 XML字面量"></a>16.1 XML字面量</h2><p>Scala对xml有内建支持，直接用xml代码就行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import scala.xml.Elem</span><br><span class="line">import scala.xml.NodeBuffer</span><br><span class="line">val doc:Elem = &lt;html&gt;&lt;head&gt;&lt;title&gt;Fred&apos;s&lt;/title&gt;&lt;/head&gt;&lt;/html&gt;</span><br><span class="line">val item:NodeBuffer = &lt;li&gt;Fred&lt;/li&gt;&lt;li&gt;wilma&lt;/li&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="16-1-XML字面量"><a href="#16-1-XML字面量" class="headerlink" title="16.1 XML字面量"></a>16.1 XML字面量</h2><p>Scala对xml有内建支持，直接用xml代码就行<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.xml.Elem</span><br><span class="line"><span class="keyword">import</span> scala.xml.NodeBuffer</span><br><span class="line">val doc:Elem = <span class="xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">title</span>&gt;</span>Fred's<span class="tag">&lt;/<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span><br><span class="line">val item:NodeBuffer = <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>Fred<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>wilma<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
 <h2 id="16-2-XML节点"><a href="#16-2-XML节点" class="headerlink" title="16.2 XML节点"></a>16.2 XML节点</h2><p>Node类是所有XML节点类型的祖先，两个最重要的子类是Text和Elem。<br>用child方法遍历父节点下面的每一个子节点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val ls:Elem = &lt;a herf=&quot;www.baidu.com&quot;&gt;the&lt;em&gt;scala&lt;/em&gt;&lt;em&gt;yoyo&lt;/em&gt;language&lt;/a&gt;</span><br><span class="line">for(x &lt;- ls.child)</span><br><span class="line">  println(x)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val ls:Elem = <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">herf</span>=<span class="string">"www.baidu.com"</span>&gt;</span>the<span class="tag">&lt;<span class="name">em</span>&gt;</span>scala<span class="tag">&lt;/<span class="name">em</span>&gt;</span><span class="tag">&lt;<span class="name">em</span>&gt;</span>yoyo<span class="tag">&lt;/<span class="name">em</span>&gt;</span>language<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="keyword">for</span>(x &lt;- ls.child)</span><br><span class="line">  println(x)</span><br></pre></td></tr></table></figure>
 <p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">the</span><br><span class="line">&lt;em&gt;scala&lt;/em&gt;</span><br><span class="line">&lt;em&gt;yoyo&lt;/em&gt;</span><br><span class="line">language</span><br></pre></td></tr></table></figure>
-<p>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val ls:Elem = &lt;a herf=&quot;www.baidu.com&quot;&gt;the&lt;em&gt;&lt;li&gt;hello&lt;/li&gt;scala&lt;/em&gt;&lt;em&gt;yoyo&lt;/em&gt;language&lt;/a&gt;</span><br><span class="line">for(x &lt;- ls.child if !x.child.isEmpty)</span><br><span class="line">  println(x.child)</span><br></pre></td></tr></table></figure></p>
-<p>输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ArrayBuffer(&lt;li&gt;hello&lt;/li&gt;, scala)</span><br><span class="line">ArrayBuffer(yoyo)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">the</span><br><span class="line"><span class="symbol">&lt;em&gt;</span>scala&lt;/<span class="keyword">em</span>&gt;</span><br><span class="line"><span class="symbol">&lt;em&gt;</span>yoyo&lt;/<span class="keyword">em</span>&gt;</span><br><span class="line"><span class="keyword">language</span></span><br></pre></td></tr></table></figure>
+<p>代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val ls:Elem = <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">herf</span>=<span class="string">"www.baidu.com"</span>&gt;</span>the<span class="tag">&lt;<span class="name">em</span>&gt;</span><span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span>scala<span class="tag">&lt;/<span class="name">em</span>&gt;</span><span class="tag">&lt;<span class="name">em</span>&gt;</span>yoyo<span class="tag">&lt;/<span class="name">em</span>&gt;</span>language<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="keyword">for</span>(x &lt;- ls.child <span class="keyword">if</span> !x.child.isEmpty)</span><br><span class="line">  println(x.child)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">ArrayBuffer</span><span class="params">(&lt;li&gt;hello&lt;/li&gt;, scala)</span></span></span><br><span class="line"><span class="function"><span class="title">ArrayBuffer</span><span class="params">(yoyo)</span></span></span><br></pre></td></tr></table></figure></p>
 <p>通过变成的方式构建节点序列，可以使用NodeBuffer,是ArrayBuffer[Node]的子类，可以被隐式转换为NodeSeq，转换之后就不能再继续修改它，因为xml节点序列是不可变的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import scala.xml.&#123;Node, NodeSeq&#125;</span><br><span class="line">val items = new NodeBuffer</span><br><span class="line">items += &lt;li&gt;Fred&lt;/li&gt;</span><br><span class="line">items += &lt;li&gt;Wilma&lt;/li&gt;</span><br><span class="line">val nodes:NodeSeq = items</span><br></pre></td></tr></table></figure>
-<h2 id="16-3-元素属性"><a href="#16-3-元素属性" class="headerlink" title="16.3 元素属性"></a>16.3 元素属性</h2><p>要处理某个元素的属性键和值，可以使用attributes属性,返回Option类型的节点序列<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val ls:Elem = &lt;a href=&quot;www.baidu.com&quot;&gt;the&lt;em&gt;&lt;li&gt;hello&lt;/li&gt;scala&lt;/em&gt;&lt;em&gt;yoyo&lt;/em&gt;language&lt;/a&gt;</span><br><span class="line">val url: scala.Seq[Node] = ls.attributes(&quot;href&quot;)</span><br><span class="line">val url1:String= ls.attributes(&quot;href&quot;).text</span><br><span class="line">println(url1)</span><br></pre></td></tr></table></figure></p>
-<p>输出结果：<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a><br>通过调用 text方法返回String类型结果,也可以通过下面的方法避免没有这个属性返回null的结果，如果没有返回空<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val url2 = ls.attributes.get(&quot;alt&quot;).getOrElse(Text(&quot;&quot;))</span><br><span class="line"> println(url2)</span><br></pre></td></tr></table></figure></p>
-<p>遍历节点的所有属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val elem1 = &lt;p class=&quot;nihao&quot; type=&quot;wawa&quot;&gt;&lt;/p&gt;</span><br><span class="line">for(attr &lt;- elem1.attributes)</span><br><span class="line">  println(attr.key,attr.value.text)</span><br><span class="line">val map:Map[String,String] = elem1.attributes.asAttrMap</span><br><span class="line">println(map)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.xml.&#123;Node, NodeSeq&#125;</span><br><span class="line">val items = <span class="keyword">new</span> NodeBuffer</span><br><span class="line">items += <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>Fred<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">items += <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>Wilma<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">val nodes:NodeSeq = items</span><br></pre></td></tr></table></figure>
+<h2 id="16-3-元素属性"><a href="#16-3-元素属性" class="headerlink" title="16.3 元素属性"></a>16.3 元素属性</h2><p>要处理某个元素的属性键和值，可以使用attributes属性,返回Option类型的节点序列<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val ls:Elem = <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"www.baidu.com"</span>&gt;</span>the<span class="tag">&lt;<span class="name">em</span>&gt;</span><span class="tag">&lt;<span class="name">li</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span>scala<span class="tag">&lt;/<span class="name">em</span>&gt;</span><span class="tag">&lt;<span class="name">em</span>&gt;</span>yoyo<span class="tag">&lt;/<span class="name">em</span>&gt;</span>language<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line">val url: scala.Seq[Node] = ls.attributes(<span class="string">"href"</span>)</span><br><span class="line">val url1:<span class="built_in">String</span>= ls.attributes(<span class="string">"href"</span>).text</span><br><span class="line">println(url1)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果：<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a><br>通过调用 text方法返回String类型结果,也可以通过下面的方法避免没有这个属性返回null的结果，如果没有返回空<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val url2 = ls<span class="selector-class">.attributes</span><span class="selector-class">.get</span>(<span class="string">"alt"</span>).getOrElse(Text(<span class="string">""</span>))</span><br><span class="line"> println(url2)</span><br></pre></td></tr></table></figure></p>
+<p>遍历节点的所有属性：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val elem1 = &lt;<span class="selector-tag">p</span> class=<span class="string">"nihao"</span> type=<span class="string">"wawa"</span>&gt;&lt;/p&gt;</span><br><span class="line"><span class="function"><span class="title">for</span><span class="params">(attr &lt;- elem1.attributes)</span></span></span><br><span class="line">  println(attr<span class="selector-class">.key</span>,attr<span class="selector-class">.value</span><span class="selector-class">.text</span>)</span><br><span class="line">val map:Map[String,String] = elem1<span class="selector-class">.attributes</span><span class="selector-class">.asAttrMap</span></span><br><span class="line"><span class="function"><span class="title">println</span><span class="params">(map)</span></span></span><br></pre></td></tr></table></figure></p>
 <p>两种方式都可以遍历节点的所有属性，第一种方式的attr类型是MetaData，第二种方式返回的是键值对的map</p>
 <h2 id="16-4-内嵌表达式"><a href="#16-4-内嵌表达式" class="headerlink" title="16.4 内嵌表达式"></a>16.4 内嵌表达式</h2><p>可以在xml字面量中包含Scala的代码块</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val items = List(2,3,5)</span><br><span class="line">val elem = &lt;ul&gt;&#123;for(i &lt;- items)yield &lt;li&gt;&#123;i&#125;&lt;/li&gt;&#125;&lt;/ul&gt;</span><br><span class="line">println(elem)</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val items = List(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>)</span><br><span class="line">val elem = &lt;ul&gt;&#123;<span class="keyword">for</span>(<span class="selector-tag">i</span> &lt;- items)yield &lt;li&gt;&#123;i&#125;&lt;/li&gt;&#125;&lt;/ul&gt;</span><br><span class="line"><span class="function"><span class="title">println</span><span class="params">(elem)</span></span></span><br></pre></td></tr></table></figure>
 <h2 id="16-5-在属性中使用表达式"><a href="#16-5-在属性中使用表达式" class="headerlink" title="16.5 在属性中使用表达式"></a>16.5 在属性中使用表达式</h2><p>可以用Scala表达式来计算属性值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">val e = &lt;a id=&#123;new Atom[Int](1)&#125;&gt;&lt;/a&gt;</span><br><span class="line">println(e.attributes(&quot;id&quot;).text)</span><br><span class="line">val description = &quot;TOD&quot;</span><br><span class="line">val q = &lt;img alt=&#123;if(description == &quot;TODO&quot;) null else description&#125;&gt;yolo&lt;/img&gt;</span><br><span class="line">println(q.attributes.get(&quot;alt&quot;).getOrElse(Text(&quot;&quot;)))</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">val e = &lt;<span class="selector-tag">a</span> id=&#123;new Atom[Int](<span class="number">1</span>)&#125;&gt;&lt;/a&gt;</span><br><span class="line"><span class="function"><span class="title">println</span><span class="params">(e.attributes(<span class="string">"id"</span>)</span></span>.text)</span><br><span class="line">val description = <span class="string">"TOD"</span></span><br><span class="line">val <span class="selector-tag">q</span> = &lt;<span class="selector-tag">img</span> alt=&#123;<span class="keyword">if</span>(description == <span class="string">"TODO"</span>) null <span class="keyword">else</span> description&#125;&gt;yolo&lt;/img&gt;</span><br><span class="line"><span class="function"><span class="title">println</span><span class="params">(q.attributes.get(<span class="string">"alt"</span>)</span></span>.getOrElse(Text(<span class="string">""</span>)))</span><br></pre></td></tr></table></figure>
 <h2 id="16-8-模式匹配"><a href="#16-8-模式匹配" class="headerlink" title="16.8 模式匹配"></a>16.8 模式匹配</h2><p>可以在模式匹配表达式中使用xml字面量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var nodeLs = List(&lt;img/&gt;)</span><br><span class="line">nodeLs = &lt;li&gt;yolo&lt;/li&gt; :: nodeLs</span><br><span class="line">nodeLs = &lt;ul&gt;lala&lt;li&gt;yilia&lt;/li&gt;&lt;/ul&gt; :: nodeLs</span><br><span class="line">nodeLs.foreach(_ match &#123;</span><br><span class="line">  case &lt;img/&gt; =&gt; println(&quot;img&quot;)</span><br><span class="line">  case &lt;li&gt;&#123;v&#125;&lt;/li&gt; =&gt; println(v)</span><br><span class="line">  case &lt;ul&gt;&#123;_*&#125;&lt;/ul&gt; =&gt; println(&quot;lala&quot;)</span><br><span class="line">  case _ =&gt; println(&quot;&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>可以用下面的方式匹配文本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;li&gt;&#123;Text(v)&#125;&lt;/li&gt; =&gt; v</span><br><span class="line">&lt;li&gt;v&lt;/li&gt; =&gt; v.text</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nodeLs = List(<span class="xml"><span class="tag">&lt;<span class="name">img</span>/&gt;</span></span>)</span><br><span class="line">nodeLs = <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>yolo<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span> :: nodeLs</span><br><span class="line">nodeLs = <span class="xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span>lala<span class="tag">&lt;<span class="name">li</span>&gt;</span>yilia<span class="tag">&lt;/<span class="name">li</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span> :: nodeLs</span><br><span class="line">nodeLs.foreach(_ match &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="xml"><span class="tag">&lt;<span class="name">img</span>/&gt;</span></span> =&gt; println(<span class="string">"img"</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;v&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span> =&gt; println(v)</span><br><span class="line">  <span class="keyword">case</span> <span class="xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span>&#123;_*&#125;<span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span> =&gt; println(<span class="string">"lala"</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="function"><span class="params">_</span> =&gt;</span> println(<span class="string">""</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>可以用下面的方式匹配文本<br><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><span class="template-variable">&#123;Text(v)&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">li</span>&gt;</span> =&gt; v</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>v<span class="tag">&lt;/<span class="name">li</span>&gt;</span> =&gt; v.text</span></span><br></pre></td></tr></table></figure></p>
 <p>XML模式不能有属性，如果要匹配属性，需要用守卫</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var nodeLs = List(&lt;img/&gt;)</span><br><span class="line">nodeLs = &lt;li class=&quot;name&quot;&gt;yolo&lt;/li&gt; :: nodeLs</span><br><span class="line">nodeLs = &lt;ul&gt;lala&lt;li&gt;yilia&lt;/li&gt;&lt;/ul&gt; :: nodeLs</span><br><span class="line">nodeLs.foreach(_ match &#123;</span><br><span class="line">  case &lt;img/&gt; =&gt; println(&quot;img&quot;)</span><br><span class="line">  case n @ &lt;li&gt;&#123;_&#125;&lt;/li&gt; if (n.attributes(&quot;class&quot;).text == &quot;name&quot;)=&gt; println(n)</span><br><span class="line">  case &lt;ul&gt;&#123;_*&#125;&lt;/ul&gt; =&gt; println(&quot;lala&quot;)</span><br><span class="line">  case _ =&gt; println(&quot;&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h2 id="16-9-修改元素和属性"><a href="#16-9-修改元素和属性" class="headerlink" title="16.9 修改元素和属性"></a>16.9 修改元素和属性</h2><p>xml节点和节点序列是不可变的，如果要编辑一个节点，需要创建一个拷贝<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val list = &lt;ul&gt;&lt;li&gt;Fred&lt;/li&gt;&lt;li&gt;Wilma&lt;/li&gt;&lt;/ul&gt;</span><br><span class="line">val list2 = list.copy(label = &quot;ol&quot;)</span><br><span class="line">println(list2)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var nodeLs = List(&lt;img/&gt;)</span><br><span class="line">nodeLs = &lt;li class=<span class="string">"name"</span>&gt;yolo&lt;/li&gt; :: nodeLs</span><br><span class="line">nodeLs = &lt;ul&gt;lala&lt;li&gt;yilia&lt;/li&gt;&lt;/ul&gt; :: nodeLs</span><br><span class="line">nodeLs.foreach(<span class="keyword">_</span> <span class="keyword">match</span> &#123;</span><br><span class="line">  <span class="built_in">case</span> &lt;img/&gt; =&gt; println(<span class="string">"img"</span>)</span><br><span class="line">  <span class="built_in">case</span> n @ &lt;li&gt;&#123;<span class="keyword">_</span>&#125;&lt;/li&gt; <span class="keyword">if</span> (n.attributes(<span class="string">"class"</span>).text == <span class="string">"name"</span>)=&gt; println(n)</span><br><span class="line">  <span class="built_in">case</span> &lt;ul&gt;&#123;<span class="keyword">_</span>*&#125;&lt;/ul&gt; =&gt; println(<span class="string">"lala"</span>)</span><br><span class="line">  <span class="built_in">case</span> <span class="keyword">_</span> =&gt; println(<span class="string">""</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="16-9-修改元素和属性"><a href="#16-9-修改元素和属性" class="headerlink" title="16.9 修改元素和属性"></a>16.9 修改元素和属性</h2><p>xml节点和节点序列是不可变的，如果要编辑一个节点，需要创建一个拷贝<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val <span class="keyword">list</span> = &lt;ul&gt;&lt;<span class="keyword">li</span>&gt;Fred&lt;/<span class="keyword">li</span>&gt;&lt;<span class="keyword">li</span>&gt;Wilma&lt;/<span class="keyword">li</span>&gt;&lt;/ul&gt;</span><br><span class="line">val list2 = <span class="keyword">list</span>.<span class="keyword">copy</span>(<span class="keyword">label</span> = <span class="string">"ol"</span>)</span><br><span class="line">println(list2)</span><br></pre></td></tr></table></figure></p>
 <p>结果输出：<ol><li>Fred</li><li>Wilma</li></ol></p>
-<p>新旧两个列表的后代是共享的，要添加一个后代，可以像下面这样调用copy<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val list = &lt;ul&gt;&lt;li&gt;Fred&lt;/li&gt;&lt;li&gt;Wilma&lt;/li&gt;&lt;/ul&gt;</span><br><span class="line">val list2 = list.copy(label = &quot;ol&quot;,child = list.child ++ &lt;li&gt;another&lt;/li&gt;)</span><br><span class="line">println(list2)</span><br></pre></td></tr></table></figure></p>
+<p>新旧两个列表的后代是共享的，要添加一个后代，可以像下面这样调用copy<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val <span class="keyword">list</span> = &lt;ul&gt;&lt;<span class="keyword">li</span>&gt;Fred&lt;/<span class="keyword">li</span>&gt;&lt;<span class="keyword">li</span>&gt;Wilma&lt;/<span class="keyword">li</span>&gt;&lt;/ul&gt;</span><br><span class="line">val list2 = <span class="keyword">list</span>.<span class="keyword">copy</span>(<span class="keyword">label</span> = <span class="string">"ol"</span>,child = <span class="keyword">list</span>.child ++ &lt;<span class="keyword">li</span>&gt;another&lt;/<span class="keyword">li</span>&gt;)</span><br><span class="line">println(list2)</span><br></pre></td></tr></table></figure></p>
 <p>更多内容请见我的csdn:<a href="https://blog.csdn.net/weixin_36926779" target="_blank" rel="noopener">小可爱的博客</a></p>
 
       
@@ -481,6 +575,35 @@
 
     
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>鼓励一下这只小可爱吧^_^</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="AlisaBen 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="AlisaBen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
     
 
     
@@ -533,31 +656,43 @@
 
     <div class="post-spread">
       
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-<span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_fav">收藏夹</a>
-<a class="jiathis_button_copy">复制网址</a>
-<a class="jiathis_button_email">邮件</a>
-<a class="jiathis_button_weixin">微信</a>
-<a class="jiathis_button_qzone">QQ空间</a>
-<a class="jiathis_button_tqq">腾讯微博</a>
-<a class="jiathis_button_douban">豆瓣</a>
-<a class="jiathis_button_share">一键分享</a>
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
 
-<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-var jiathis_config={
-  data_track_clickback:true,
-  summary:"",
-  shortUrl:false,
-  hideMore:false
-}
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
 </script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
-<!-- JiaThis Button END -->
+
       
     </div>
   </div>
@@ -635,10 +770,10 @@ var jiathis_config={
               
               
               <div class="site-state-item site-state-categories">
-                
+                <a href="/categories/index.html">
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
-                
+                </a>
               </div>
             
 
@@ -646,10 +781,10 @@ var jiathis_config={
               
               
               <div class="site-state-item site-state-tags">
-                
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -685,20 +820,6 @@ var jiathis_config={
           
 
           
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                推荐阅读
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://alisaben.github.io/2018/08/06/%E9%AA%97%E5%AD%90/" title="骗子" target="_blank">骗子</a>
-                  </li>
-                
-              </ul>
-            </div>
           
 
           
@@ -1279,6 +1400,113 @@ var jiathis_config={
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 

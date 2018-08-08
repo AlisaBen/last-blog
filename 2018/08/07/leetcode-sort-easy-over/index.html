@@ -156,6 +156,89 @@
 
 </head>
 
+     <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = $(document.getElementById(url)).text() + ': 0';
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+});
+</script>
+  
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
@@ -394,6 +477,17 @@
 
           
           
+             <span id="/2018/08/07/leetcode-sort-easy-over/" class="leancloud_visitors" data-flag-title="leetcode-sort-easy-over">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -454,14 +548,14 @@
 </ul>
 <p>题目349：Intersection of Two Arrays<br>描述：Given two arrays, write a function to compute their intersection.<br>例子：Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2].<br>Note:<br>Each element in the result must be unique.<br>The result can be in any order.</p>
 <p>代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; Solution349::intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2)</span><br><span class="line">&#123;</span><br><span class="line">	set&lt;int&gt;nums1_plus, nums2_plus;</span><br><span class="line">	nums1_plus.insert(nums1.begin(), nums1.end());//因为集合是不区分元素位置的</span><br><span class="line">	nums2_plus.insert(nums2.begin(), nums2.end());</span><br><span class="line">	vector&lt;int&gt; res;</span><br><span class="line">	int len1 = nums1_plus.size();</span><br><span class="line">	for (int x : nums1_plus)</span><br><span class="line">	&#123;</span><br><span class="line">		if (nums2_plus.find(x) != nums2_plus.end())res.push_back(x);</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>题目350：Intersection of Two Arrays II<br>描述：Given two arrays, write a function to compute their intersection.<br>例子：Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2, 2].<br>Note:<br>Each element in the result should appear as many times as it shows in both arrays.<br>The result can be in any order.<br>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; Solution350::intersect(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2)</span><br><span class="line">&#123;</span><br><span class="line">	unordered_map&lt;int, int&gt;nums1_plus, nums2_plus;</span><br><span class="line">	for (int x : nums1)nums1_plus[x]++;</span><br><span class="line">	for (int x : nums2)nums2_plus[x]++;</span><br><span class="line">	vector&lt;int&gt; res;</span><br><span class="line">	for (auto x : nums1_plus)</span><br><span class="line">	&#123;</span><br><span class="line">		if (nums2_plus.find(x.first) != nums2_plus.end())res.insert(res.end(), min(x.second, nums2_plus[x.first]), x.first);</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; Solution349::intersection(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;nums1_plus, nums2_plus;</span><br><span class="line">	nums1_plus.insert(nums1.begin(), nums1.end());<span class="comment">//因为集合是不区分元素位置的</span></span><br><span class="line">	nums2_plus.insert(nums2.begin(), nums2.end());</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">	<span class="keyword">int</span> len1 = nums1_plus.size();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> x : nums1_plus)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (nums2_plus.find(x) != nums2_plus.end())res.push_back(x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>题目350：Intersection of Two Arrays II<br>描述：Given two arrays, write a function to compute their intersection.<br>例子：Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2, 2].<br>Note:<br>Each element in the result should appear as many times as it shows in both arrays.<br>The result can be in any order.<br>代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; Solution350::intersect(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;nums1_plus, nums2_plus;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> x : nums1)nums1_plus[x]++;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> x : nums2)nums2_plus[x]++;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> x : nums1_plus)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (nums2_plus.find(x.first) != nums2_plus.end())res.insert(res.end(), min(x.second, nums2_plus[x.first]), x.first);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>题目242： Valid Anagram<br>描述：Given two strings s and t , write a function to determine if t is an anagram of s.<br>例子：</p>
 <ol>
 <li>Input: s = “anagram”, t = “nagaram” Output: true</li>
 <li>Input: s = “rat”, t = “car” Output: false</li>
 </ol>
-<p>Note:<br>You may assume the string contains only lowercase alphabets.<br>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">bool Solution242::isAnagram(string s, string t)</span><br><span class="line">&#123;</span><br><span class="line">	//way 1</span><br><span class="line">	//if (s.size() != t.size())return false;</span><br><span class="line">	//unordered_map&lt;char, int&gt; s_plus, t_plus;</span><br><span class="line">	//for (char x : s)s_plus[x]++;</span><br><span class="line">	//for (char x : t)t_plus[x]++;</span><br><span class="line">	//for (auto x : s_plus)</span><br><span class="line">	//&#123;</span><br><span class="line">	//	if (t_plus.find(x.first) != t_plus.end())</span><br><span class="line">	//	&#123;</span><br><span class="line">	//		if (x.second != t_plus[x.first]) return false;</span><br><span class="line">	//	&#125;</span><br><span class="line">	//	else</span><br><span class="line">	//		return false;</span><br><span class="line">	//&#125;</span><br><span class="line">	//return true;</span><br><span class="line">	//way 2</span><br><span class="line">	if (s.size() != t.size()) return false;</span><br><span class="line">	vector&lt;int&gt; flag(26);//将26个小写字母映射到对应数组下标，元素为每个字母出现的次数，初始值为0</span><br><span class="line">	for (char x : s) flag[x - &apos;a&apos;]++;//计算s字符串中每个字母出现的次数</span><br><span class="line">	for (char x : t)</span><br><span class="line">	&#123;</span><br><span class="line">		flag[x - &apos;a&apos;]--;</span><br><span class="line">		if (flag[x - &apos;a&apos;] &lt; 0)return false;//如果两个字符串等长，且不是变换顺序的话，t中一定存在某个字母数大于s</span><br><span class="line">	&#125;</span><br><span class="line">	return true;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Note:<br>You may assume the string contains only lowercase alphabets.<br>代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> Solution242::isAnagram(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//way 1</span></span><br><span class="line">	<span class="comment">//if (s.size() != t.size())return false;</span></span><br><span class="line">	<span class="comment">//unordered_map&lt;char, int&gt; s_plus, t_plus;</span></span><br><span class="line">	<span class="comment">//for (char x : s)s_plus[x]++;</span></span><br><span class="line">	<span class="comment">//for (char x : t)t_plus[x]++;</span></span><br><span class="line">	<span class="comment">//for (auto x : s_plus)</span></span><br><span class="line">	<span class="comment">//&#123;</span></span><br><span class="line">	<span class="comment">//	if (t_plus.find(x.first) != t_plus.end())</span></span><br><span class="line">	<span class="comment">//	&#123;</span></span><br><span class="line">	<span class="comment">//		if (x.second != t_plus[x.first]) return false;</span></span><br><span class="line">	<span class="comment">//	&#125;</span></span><br><span class="line">	<span class="comment">//	else</span></span><br><span class="line">	<span class="comment">//		return false;</span></span><br><span class="line">	<span class="comment">//&#125;</span></span><br><span class="line">	<span class="comment">//return true;</span></span><br><span class="line">	<span class="comment">//way 2</span></span><br><span class="line">	<span class="keyword">if</span> (s.size() != t.size()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; flag(<span class="number">26</span>);<span class="comment">//将26个小写字母映射到对应数组下标，元素为每个字母出现的次数，初始值为0</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">char</span> x : s) flag[x - <span class="string">'a'</span>]++;<span class="comment">//计算s字符串中每个字母出现的次数</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">char</span> x : t)</span><br><span class="line">	&#123;</span><br><span class="line">		flag[x - <span class="string">'a'</span>]--;</span><br><span class="line">		<span class="keyword">if</span> (flag[x - <span class="string">'a'</span>] &lt; <span class="number">0</span>)<span class="keyword">return</span> <span class="literal">false</span>;<span class="comment">//如果两个字符串等长，且不是变换顺序的话，t中一定存在某个字母数大于s</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>在题目242中，第二种方法的runtime优于第一种方法，在非变换顺序的字符串中可以在遍历结束之前结束。</p>
 <p>更多内容请见我的csdn:<a href="https://blog.csdn.net/weixin_36926779" target="_blank" rel="noopener">小可爱的博客</a></p>
 
@@ -473,6 +567,35 @@
 
     
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>鼓励一下这只小可爱吧^_^</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="AlisaBen 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="AlisaBen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
     
 
     
@@ -525,31 +648,43 @@
 
     <div class="post-spread">
       
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-<span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_fav">收藏夹</a>
-<a class="jiathis_button_copy">复制网址</a>
-<a class="jiathis_button_email">邮件</a>
-<a class="jiathis_button_weixin">微信</a>
-<a class="jiathis_button_qzone">QQ空间</a>
-<a class="jiathis_button_tqq">腾讯微博</a>
-<a class="jiathis_button_douban">豆瓣</a>
-<a class="jiathis_button_share">一键分享</a>
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
 
-<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-var jiathis_config={
-  data_track_clickback:true,
-  summary:"",
-  shortUrl:false,
-  hideMore:false
-}
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
 </script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
-<!-- JiaThis Button END -->
+
       
     </div>
   </div>
@@ -618,10 +753,10 @@ var jiathis_config={
               
               
               <div class="site-state-item site-state-categories">
-                
+                <a href="/categories/index.html">
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
-                
+                </a>
               </div>
             
 
@@ -629,10 +764,10 @@ var jiathis_config={
               
               
               <div class="site-state-item site-state-tags">
-                
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -668,20 +803,6 @@ var jiathis_config={
           
 
           
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                推荐阅读
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://alisaben.github.io/2018/08/06/%E9%AA%97%E5%AD%90/" title="骗子" target="_blank">骗子</a>
-                  </li>
-                
-              </ul>
-            </div>
           
 
           
@@ -1246,6 +1367,113 @@ var jiathis_config={
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 

@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="AlisaBen&#39;s Blog">
 <meta property="og:description" content="此篇文章针对有一定Scala基础的读者 14.1 更好的switch">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-07T06:02:09.941Z">
+<meta property="og:updated_time" content="2018-08-08T12:24:07.124Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《快学scala》学习笔记--第14章 模式匹配和样例类">
 <meta name="twitter:description" content="此篇文章针对有一定Scala基础的读者 14.1 更好的switch">
@@ -156,6 +156,89 @@
 
 </head>
 
+     <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = $(document.getElementById(url)).text() + ': 0';
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+});
+</script>
+  
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
@@ -394,6 +477,17 @@
 
           
           
+             <span id="/2018/08/06/《快学scala》学习笔记-第14章 模式匹配和样例类/" class="leancloud_visitors" data-flag-title="《快学scala》学习笔记--第14章 模式匹配和样例类">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -447,32 +541,32 @@
       
         <p>此篇文章针对有一定Scala基础的读者</p>
 <h2 id="14-1-更好的switch"><a href="#14-1-更好的switch" class="headerlink" title="14.1 更好的switch"></a>14.1 更好的switch</h2><a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val ch: Char = &apos;*&apos;</span><br><span class="line">ch match &#123;</span><br><span class="line">  case &apos;+&apos; =&gt; println(&quot;加法&quot;)</span><br><span class="line">  case &apos;*&apos; =&gt; println(&quot;乘法&quot;)</span><br><span class="line">  case _ =&gt; println(&quot;木有&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> ch: <span class="type">Char</span> = '*'</span><br><span class="line">ch <span class="keyword">match</span> &#123;</span><br><span class="line">  <span class="keyword">case</span> '+' =&gt; println(<span class="string">"加法"</span>)</span><br><span class="line">  <span class="keyword">case</span> '*' =&gt; println(<span class="string">"乘法"</span>)</span><br><span class="line">  <span class="keyword">case</span> _ =&gt; println(<span class="string">"木有"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>match是一个表达式，而不是语句，会有返回值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val ch: Char = &apos;*&apos;</span><br><span class="line">val x:Int = ch match &#123;</span><br><span class="line">  case &apos;+&apos; =&gt; 0</span><br><span class="line">  case &apos;*&apos; =&gt; 1</span><br><span class="line">  case _ =&gt; 2</span><br><span class="line">&#125;</span><br><span class="line">println(x)</span><br></pre></td></tr></table></figure>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val ch: <span class="keyword">Char</span> = <span class="string">'*'</span></span><br><span class="line">val x:<span class="keyword">Int</span> = ch match &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">'+'</span> =&gt; <span class="number">0</span></span><br><span class="line">  <span class="keyword">case</span> <span class="string">'*'</span> =&gt; <span class="number">1</span></span><br><span class="line">  <span class="keyword">case</span> _ =&gt; <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">println(x)</span><br></pre></td></tr></table></figure>
 <h2 id="14-2-守卫"><a href="#14-2-守卫" class="headerlink" title="14.2 守卫"></a>14.2 守卫</h2><p>守卫可以是任何布尔条件，在下面的例子中，只有在守卫模式不能匹配的情况下才执行所有模式匹配</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">val ch:Char = 3</span><br><span class="line">var sign:Int = 0</span><br><span class="line">ch match &#123;</span><br><span class="line">  case &apos;+&apos; =&gt; println(&quot;++++&quot;)</span><br><span class="line">  case &apos;*&apos; =&gt; println(&quot;====&quot;)</span><br><span class="line">  case _ if ch &gt;= 0 &amp;&amp; ch &lt;= 9 =&gt; sign = ch</span><br><span class="line">  case _ =&gt; println(&quot;---&quot;)</span><br><span class="line">&#125;</span><br><span class="line">println(sign)</span><br></pre></td></tr></table></figure>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">val ch:<span class="keyword">Char</span> = <span class="number">3</span></span><br><span class="line"><span class="keyword">var</span> sign:<span class="keyword">Int</span> = <span class="number">0</span></span><br><span class="line">ch match &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">'+'</span> =&gt; println(<span class="string">"++++"</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="string">'*'</span> =&gt; println(<span class="string">"===="</span>)</span><br><span class="line">  <span class="keyword">case</span> _ <span class="keyword">if</span> ch &gt;= <span class="number">0</span> &amp;&amp; ch &lt;= <span class="number">9</span> =&gt; sign = ch</span><br><span class="line">  <span class="keyword">case</span> _ =&gt; println(<span class="string">"---"</span>)</span><br><span class="line">&#125;</span><br><span class="line">println(sign)</span><br></pre></td></tr></table></figure>
 <h2 id="14-3-模式中的变量"><a href="#14-3-模式中的变量" class="headerlink" title="14.3 模式中的变量"></a>14.3 模式中的变量</h2><p>case _ 是这种特性的特殊情况，变量名是 _</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">val c: Char = &apos;+&apos;</span><br><span class="line">val ch:Char = 9</span><br><span class="line">var sign:Int = 0</span><br><span class="line">ch match &#123;</span><br><span class="line">  case &apos;+&apos; =&gt; println(&quot;++++&quot;)</span><br><span class="line">  case &apos;*&apos; =&gt; println(&quot;====&quot;)</span><br><span class="line">  case c if c &gt;= 0 &amp;&amp; c &lt;= 9 =&gt; sign = c</span><br><span class="line">  case _ =&gt; println(&quot;---&quot;)</span><br><span class="line">&#125;</span><br><span class="line">println(sign)</span><br></pre></td></tr></table></figure>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">val c: <span class="keyword">Char</span> = <span class="string">'+'</span></span><br><span class="line">val ch:<span class="keyword">Char</span> = <span class="number">9</span></span><br><span class="line"><span class="keyword">var</span> sign:<span class="keyword">Int</span> = <span class="number">0</span></span><br><span class="line">ch match &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">'+'</span> =&gt; println(<span class="string">"++++"</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="string">'*'</span> =&gt; println(<span class="string">"===="</span>)</span><br><span class="line">  <span class="keyword">case</span> c <span class="keyword">if</span> c &gt;= <span class="number">0</span> &amp;&amp; c &lt;= <span class="number">9</span> =&gt; sign = c</span><br><span class="line">  <span class="keyword">case</span> _ =&gt; println(<span class="string">"---"</span>)</span><br><span class="line">&#125;</span><br><span class="line">println(sign)</span><br></pre></td></tr></table></figure>
 <ul>
 <li>变量必须以小写字母开头</li>
 <li>如果有一个小写字母开头的常量，则需要将它包在反引号中。</li>
 </ul>
 <h2 id="14-4-类型模式"><a href="#14-4-类型模式" class="headerlink" title="14.4 类型模式"></a>14.4 类型模式</h2><p>匹配列表中的每一个元素的类型，将每一个元素映射成 =&gt; 后面的 string 类型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val ls = List(1,3,4,&quot;one&quot;,&quot;two&quot;,4.5)</span><br><span class="line">val l = ls.map(_ match &#123;</span><br><span class="line">  case x:Int =&gt; &quot;int x:&quot; + x</span><br><span class="line">  case s:String =&gt; &quot;string s:&quot; + s</span><br><span class="line">  case _ =&gt; &quot;other&quot;</span><br><span class="line">&#125;)</span><br><span class="line">l.foreach(println)</span><br></pre></td></tr></table></figure>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val ls = List(<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="string">"one"</span>,<span class="string">"two"</span>,<span class="number">4.5</span>)</span><br><span class="line">val l = ls.map(<span class="keyword">_</span> <span class="keyword">match</span> &#123;</span><br><span class="line">  <span class="built_in">case</span> x:Int =&gt; <span class="string">"int x:"</span> + x</span><br><span class="line">  <span class="built_in">case</span> s:String =&gt; <span class="string">"string s:"</span> + s</span><br><span class="line">  <span class="built_in">case</span> <span class="keyword">_</span> =&gt; <span class="string">"other"</span></span><br><span class="line">&#125;)</span><br><span class="line">l.foreach(println)</span><br></pre></td></tr></table></figure>
 <h2 id="14-5-匹配组、列表和元组"><a href="#14-5-匹配组、列表和元组" class="headerlink" title="14.5 匹配组、列表和元组"></a>14.5 匹配组、列表和元组</h2><p>要匹配数组的内容，可以在模式中使用Array表达式,</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val arr1 = Array(Array(0),Array(3,4),Array(0,4,6),Array(&quot;fad&quot;,&quot;fff&quot;))</span><br><span class="line">arr1.map(_ match &#123;</span><br><span class="line">  case Array(0) =&gt; println(0)</span><br><span class="line">  case Array(x,y) =&gt; println(x,y)</span><br><span class="line">  case Array(0,_*) =&gt; println(&quot;...&quot;)//_*符号匹配数组中余下的内容</span><br><span class="line">  case _ =&gt; println(&quot;something&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val arr1 = <span class="keyword">Array</span>(<span class="keyword">Array</span>(<span class="number">0</span>),<span class="keyword">Array</span>(<span class="number">3</span>,<span class="number">4</span>),<span class="keyword">Array</span>(<span class="number">0</span>,<span class="number">4</span>,<span class="number">6</span>),<span class="keyword">Array</span>(<span class="string">"fad"</span>,<span class="string">"fff"</span>))</span><br><span class="line">arr1.<span class="built_in">map</span>(_ <span class="built_in">match</span> &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="keyword">Array</span>(<span class="number">0</span>) =&gt; <span class="built_in">println</span>(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="keyword">Array</span>(x,y) =&gt; <span class="built_in">println</span>(x,y)</span><br><span class="line">  <span class="keyword">case</span> <span class="keyword">Array</span>(<span class="number">0</span>,_*) =&gt; <span class="built_in">println</span>(<span class="string">"..."</span>)<span class="comment">//_*符号匹配数组中余下的内容</span></span><br><span class="line">  <span class="keyword">case</span> _ =&gt; <span class="built_in">println</span>(<span class="string">"something"</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>匹配列表中的元素</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">val ls = List(List(0),List(3,4),List(0,4,5),List(&quot;fa&quot;,&quot;aaa&quot;,&quot;tttt&quot;))</span><br><span class="line">ls.map(_ match &#123;</span><br><span class="line">  case 0::Nil =&gt; println(0)</span><br><span class="line">  case x :: y :: Nil =&gt; println(x,y)</span><br><span class="line">  case 0 :: tail =&gt; println(tail.foreach(println))</span><br><span class="line">  case x :: tail =&gt; println(&quot;====&quot;)</span><br><span class="line">  case _ =&gt; println(&quot;something&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">val ls = <span class="built_in">List</span>(<span class="built_in">List</span>(<span class="number">0</span>),<span class="built_in">List</span>(<span class="number">3</span>,<span class="number">4</span>),<span class="built_in">List</span>(<span class="number">0</span>,<span class="number">4</span>,<span class="number">5</span>),<span class="built_in">List</span>(<span class="string">"fa"</span>,<span class="string">"aaa"</span>,<span class="string">"tttt"</span>))</span><br><span class="line">ls.<span class="built_in">map</span>(_ <span class="keyword">match</span> &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="number">0</span><span class="type">::Nil</span> =&gt; println(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">case</span> x <span class="type">:: y</span> <span class="type">:: Nil</span> =&gt; println(x,y)</span><br><span class="line">  <span class="keyword">case</span> <span class="number">0</span> <span class="type">:: tail</span> =&gt; println(tail.foreach(println))</span><br><span class="line">  <span class="keyword">case</span> x <span class="type">:: tail</span> =&gt; println(<span class="string">"===="</span>)</span><br><span class="line">  <span class="keyword">case</span> _ =&gt; println(<span class="string">"something"</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>匹配元组</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val ls = List((0,4),(&quot;fa&quot;,0),(3,4))</span><br><span class="line">ls.map(_ match &#123;</span><br><span class="line">  case (0,_) =&gt; println(0)</span><br><span class="line">  case (x,y) =&gt; println(x,y)</span><br><span class="line">  case _ =&gt; println(&quot;something&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val ls = List((<span class="number">0</span>,<span class="number">4</span>),(<span class="string">"fa"</span>,<span class="number">0</span>),(<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line">ls.map(<span class="keyword">_</span> <span class="keyword">match</span> &#123;</span><br><span class="line">  <span class="built_in">case</span> (<span class="number">0</span>,<span class="keyword">_</span>) =&gt; println(<span class="number">0</span>)</span><br><span class="line">  <span class="built_in">case</span> (x,y) =&gt; println(x,y)</span><br><span class="line">  <span class="built_in">case</span> <span class="keyword">_</span> =&gt; println(<span class="string">"something"</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h2 id="14-6-提取器"><a href="#14-6-提取器" class="headerlink" title="14.6 提取器"></a>14.6 提取器</h2><p>前一节中匹配数组、列表和元素的功能是依靠提取器实现的</p>
 <p>==提取器机制==：带有从对象中提取值得unapply和unapplySeq方法得对象。unapply提取固定数量得对象，而unapplySeq提取得是一个序列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array.unapplySeq(arr)</span><br></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array.unapplySe<span class="string">q(arr)</span></span><br></pre></td></tr></table></figure>
 <p>产出一个序列的值。</p>
-<h2 id="14-8-for表达式中的模式"><a href="#14-8-for表达式中的模式" class="headerlink" title="14.8 for表达式中的模式"></a>14.8 for表达式中的模式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val ls = List((1,2),(3,4),(4,5))</span><br><span class="line">for ((k,v) &lt;- ls if k % 2 == 1)</span><br><span class="line">  println(k,v)</span><br></pre></td></tr></table></figure>
+<h2 id="14-8-for表达式中的模式"><a href="#14-8-for表达式中的模式" class="headerlink" title="14.8 for表达式中的模式"></a>14.8 for表达式中的模式</h2><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val ls = List((<span class="number">1</span>,<span class="number">2</span>),(<span class="number">3</span>,<span class="number">4</span>),(<span class="number">4</span>,<span class="number">5</span>))</span><br><span class="line">for ((<span class="name">k</span>,v) &lt;- ls if k % <span class="number">2</span> == <span class="number">1</span>)</span><br><span class="line">  println(<span class="name">k</span>,v)</span><br></pre></td></tr></table></figure>
 <h2 id="14-9-样例类"><a href="#14-9-样例类" class="headerlink" title="14.9 样例类"></a>14.9 样例类</h2><p>可以用模式匹配来匹配样例类，并将属性值绑定到变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">case class Dollar(value:Double)</span><br><span class="line">case class Currency(value:Double,unit:String)</span><br><span class="line">case object Yuan</span><br><span class="line">val ls = List(Dollar(2.3),Currency(4.5,&quot;10&quot;),Yuan)</span><br><span class="line">ls.map(_ match &#123;</span><br><span class="line">  case Dollar(v) =&gt; println(s&quot;Dollar:$v&quot;)</span><br><span class="line">  case Currency(_,u) =&gt; println(s&quot;got $u&quot;)</span><br><span class="line">  case Yuan =&gt; println(&quot;lalala&quot;)</span><br><span class="line">  case _ =&gt; println(&quot;----&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Dollar</span>(<span class="params">value:<span class="type">Double</span></span>)</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">class</span> <span class="title">Currency</span>(<span class="params">value:<span class="type">Double</span>,unit:<span class="type">String</span></span>)</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">object</span> <span class="title">Yuan</span></span></span><br><span class="line"><span class="class"><span class="title">val</span> <span class="title">ls</span> </span>= <span class="type">List</span>(<span class="type">Dollar</span>(<span class="number">2.3</span>),<span class="type">Currency</span>(<span class="number">4.5</span>,<span class="string">"10"</span>),<span class="type">Yuan</span>)</span><br><span class="line">ls.map(_ <span class="keyword">match</span> &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Dollar</span>(v) =&gt; println(<span class="string">s"Dollar:<span class="subst">$v</span>"</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Currency</span>(_,u) =&gt; println(<span class="string">s"got <span class="subst">$u</span>"</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Yuan</span> =&gt; println(<span class="string">"lalala"</span>)</span><br><span class="line">  <span class="keyword">case</span> _ =&gt; println(<span class="string">"----"</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <ul>
 <li>样例类实例使用(),样例对象不适用圆括号</li>
 </ul>
@@ -484,22 +578,22 @@
 <li>将生成toString,equals,copy方法，除非显式给出定义</li>
 </ul>
 <h2 id="14-10-copy方法和带名参数"><a href="#14-10-copy方法和带名参数" class="headerlink" title="14.10 copy方法和带名参数"></a>14.10 copy方法和带名参数</h2><p>copy方法创建一个与现有对象值相同的新对象，可以用带名参数修改某些属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val amt = Currency(34.2,&quot;RUR&quot;)</span><br><span class="line">val price = amt.copy()</span><br><span class="line">val price1 = amt.copy(value = 13)</span><br><span class="line">val price2 = amt.copy(unit = &quot;CHF&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val <span class="attr">amt</span> = Currency(<span class="number">34.2</span>,<span class="string">"RUR"</span>)</span><br><span class="line">val <span class="attr">price</span> = amt.copy()</span><br><span class="line">val <span class="attr">price1</span> = amt.copy(<span class="attr">value</span> = <span class="number">13</span>)</span><br><span class="line">val <span class="attr">price2</span> = amt.copy(<span class="attr">unit</span> = <span class="string">"CHF"</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="14-11-case语句中的中置表示法"><a href="#14-11-case语句中的中置表示法" class="headerlink" title="14.11 case语句中的中置表示法"></a>14.11 case语句中的中置表示法</h2><p>如果unapply方法产出一个对偶，可以在case语句中使用中置表示法，19章将会看到将解析结果组合在一起的~样例类:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result match &#123;case p ~ q =&gt; ...&#125; //等同于case ~(p,q)</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result match &#123;case <span class="selector-tag">p</span> ~ <span class="selector-tag">q</span> =&gt; ...&#125; <span class="comment">//等同于case ~(p,q)</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>如果操作符以冒号结尾，则他是从右向左结合的</li>
 </ul>
 <p>中置表示法可以用于任何返回对偶的unapply方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">case object +: &#123;</span><br><span class="line">  def unapply[T](input: List[T]):Option[(T,List[T])] =</span><br><span class="line">    if(input.isEmpty) None else Some((input.head,input.tail))</span><br><span class="line">&#125;</span><br><span class="line">1+:7+:2+:Nil match &#123;</span><br><span class="line">  case first +: second +: rest =&gt; println(first + second + rest.length)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">case object +: &#123;</span><br><span class="line">  def unapply[<span class="string">T</span>](<span class="link">input: List[T]</span>):Option[(T,List[T])] =</span><br><span class="line"><span class="code">    if(input.isEmpty) None else Some((input.head,input.tail))</span></span><br><span class="line">&#125;</span><br><span class="line">1+:7+:2+:Nil match &#123;</span><br><span class="line">  case first +: second +: rest =&gt; println(first + second + rest.length)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="14-12-匹配嵌套结构"><a href="#14-12-匹配嵌套结构" class="headerlink" title="14.12 匹配嵌套结构"></a>14.12 匹配嵌套结构</h2><p>三个样例类继承Item抽象类，Bundle和Boolean类嵌套Article和Bundle样例类，<br>可以用@表示法将嵌套的值绑定到变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">abstract class Item</span><br><span class="line">case class Article(desc:String,price:Double) extends Item//继承同一个抽象类</span><br><span class="line">case class Bundle(desc:String,discount:Double,item:Item) extends Item</span><br><span class="line">val peak = Bundle(&quot;Father&apos;s Day is special&quot;,20.0,Article(&quot;scala is nice&quot;,45.5))</span><br><span class="line">case class Boolean(desc:String,dis:Double,item:Item*)//Item抽象类列表</span><br><span class="line">val amt = Boolean(&quot;great&quot;,23.3,Bundle(&quot;nice&quot;,45.4,Article(&quot;wonderful&quot;,45.4)),Article(&quot;scala is nice&quot;,45.5))</span><br><span class="line">val ls = List(peak,amt)</span><br><span class="line">ls.map(_ match &#123;</span><br><span class="line">  case Bundle(_,_,Article(desc,price)) =&gt; println(s&quot;bundle $&#123;desc&#125;:$&#123;price&#125;&quot;)</span><br><span class="line">  case Boolean(_,_,art @ Bundle(_,_,_),rest @ _*) =&gt; println(s&quot;boolean $&#123;art.desc&#125;:$&#123;art.discount&#125;,$&#123;rest.head&#125;&quot;)</span><br><span class="line">  case Boolean(_,_,art @ Bundle(_,_,_),rest) =&gt; println(s&quot;boolean $&#123;art.desc&#125;&quot;)//匹配继承Item抽象类的元素只有两个</span><br><span class="line">  case _ =&gt; println(&quot;None&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Item</span></span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">class</span> <span class="title">Article</span>(<span class="params">desc:<span class="type">String</span>,price:<span class="type">Double</span></span>) <span class="keyword">extends</span> <span class="title">Item//继承同一个抽象类</span></span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">class</span> <span class="title">Bundle</span>(<span class="params">desc:<span class="type">String</span>,discount:<span class="type">Double</span>,item:<span class="type">Item</span></span>) <span class="keyword">extends</span> <span class="title">Item</span></span></span><br><span class="line"><span class="class"><span class="title">val</span> <span class="title">peak</span> </span>= <span class="type">Bundle</span>(<span class="string">"Father's Day is special"</span>,<span class="number">20.0</span>,<span class="type">Article</span>(<span class="string">"scala is nice"</span>,<span class="number">45.5</span>))</span><br><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Boolean</span>(<span class="params">desc:<span class="type">String</span>,dis:<span class="type">Double</span>,item:<span class="type">Item</span>*</span>)<span class="title">//Item抽象类列表</span></span></span><br><span class="line"><span class="class"><span class="title">val</span> <span class="title">amt</span> </span>= <span class="type">Boolean</span>(<span class="string">"great"</span>,<span class="number">23.3</span>,<span class="type">Bundle</span>(<span class="string">"nice"</span>,<span class="number">45.4</span>,<span class="type">Article</span>(<span class="string">"wonderful"</span>,<span class="number">45.4</span>)),<span class="type">Article</span>(<span class="string">"scala is nice"</span>,<span class="number">45.5</span>))</span><br><span class="line"><span class="keyword">val</span> ls = <span class="type">List</span>(peak,amt)</span><br><span class="line">ls.map(_ <span class="keyword">match</span> &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Bundle</span>(_,_,<span class="type">Article</span>(desc,price)) =&gt; println(<span class="string">s"bundle <span class="subst">$&#123;desc&#125;</span>:<span class="subst">$&#123;price&#125;</span>"</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Boolean</span>(_,_,art @ <span class="type">Bundle</span>(_,_,_),rest @ _*) =&gt; println(<span class="string">s"boolean <span class="subst">$&#123;art.desc&#125;</span>:<span class="subst">$&#123;art.discount&#125;</span>,<span class="subst">$&#123;rest.head&#125;</span>"</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Boolean</span>(_,_,art @ <span class="type">Bundle</span>(_,_,_),rest) =&gt; println(<span class="string">s"boolean <span class="subst">$&#123;art.desc&#125;</span>"</span>)<span class="comment">//匹配继承Item抽象类的元素只有两个</span></span><br><span class="line">  <span class="keyword">case</span> _ =&gt; println(<span class="string">"None"</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h2 id="14-14-密封类"><a href="#14-14-密封类" class="headerlink" title="14.14 密封类"></a>14.14 密封类</h2><p>当用样例类来做模式匹配的时候，想让编译器帮助确保已经列出了所有可能的选择，要达到这个目的，需要将样例类的通用超类声明为sealed</p>
 <ul>
 <li>密封类的所有子类都必须在与该密封类相同的文件中定义。</li>
 <li>如果某个类是密封的，那么在编译期所有子类就是可知的，因此==编译器可以检查模式语句的完整性==，让同一组样例类都扩展自某个密封的类或者特质是一个好的做法</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sealed abstract class Amount</span><br><span class="line">case class Red(bottom:Double) extends Amount</span><br><span class="line">case object Green extends Amount</span><br><span class="line">case object Gray extends Amount</span><br><span class="line">val color:Amount = Red(3.4)//需要显式声明color的类型，不然就会变成Red</span><br><span class="line">color match &#123;</span><br><span class="line">  case Red(_) =&gt; println(&quot;red&quot;)</span><br><span class="line">  case Green =&gt;println(&quot;green&quot;)</span><br><span class="line">  case Gray =&gt; println(&quot;fad&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sealed</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Amount</span></span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">class</span> <span class="title">Red</span>(<span class="params">bottom:<span class="type">Double</span></span>) <span class="keyword">extends</span> <span class="title">Amount</span></span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">object</span> <span class="title">Green</span> <span class="keyword">extends</span> <span class="title">Amount</span></span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">object</span> <span class="title">Gray</span> <span class="keyword">extends</span> <span class="title">Amount</span></span></span><br><span class="line"><span class="class"><span class="title">val</span> <span class="title">color</span></span>:<span class="type">Amount</span> = <span class="type">Red</span>(<span class="number">3.4</span>)<span class="comment">//需要显式声明color的类型，不然就会变成Red</span></span><br><span class="line">color <span class="keyword">match</span> &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Red</span>(_) =&gt; println(<span class="string">"red"</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Green</span> =&gt;println(<span class="string">"green"</span>)</span><br><span class="line">  <span class="keyword">case</span> <span class="type">Gray</span> =&gt; println(<span class="string">"fad"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="14-16-Option类型"><a href="#14-16-Option类型" class="headerlink" title="14.16 Option类型"></a>14.16 Option类型</h2><p>标准类库的Option类型用样例类来表示那种可能存在，也可能不存在的值。这比空字符串更加清晰，比null做法更加安全。</p>
 <ul>
 <li>map类的get方法返回一个Option。如果对于给定的键没有对应的值，则get返回None，如果有值，该值包在Some中返回</li>
@@ -507,7 +601,7 @@
 </ul>
 <p>Option[+A]密封抽象类，Some和None继承Option类</p>
 <h2 id="14-17-偏函数"><a href="#14-17-偏函数" class="headerlink" title="14.17 偏函数"></a>14.17 偏函数</h2><p>被包括在花括号内的一组case语句是一个偏函数——==并非对所有输入值都有定义的函数==。它是PartialFunction[A,B]类的一个实例，该类有两个方法：apply方法从匹配到的模式计算函数值，而isDefinedAt方法在输入至少匹配其中一个模式时返回true</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val f:PartialFunction[Char,Int] = &#123;</span><br><span class="line">  case &apos;+&apos; =&gt; 1</span><br><span class="line">  case &apos;-&apos; =&gt; -1</span><br><span class="line">&#125;</span><br><span class="line">println(f(&apos;+&apos;))//1</span><br><span class="line">//println(f(&apos;0&apos;))//error</span><br><span class="line">println(f.isDefinedAt(&apos;0&apos;))//false</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val f:PartialFunction[<span class="keyword">Char</span>,<span class="keyword">Int</span>] = &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">'+'</span> =&gt; <span class="number">1</span></span><br><span class="line">  <span class="keyword">case</span> <span class="string">'-'</span> =&gt; -<span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">println</span>(f(<span class="string">'+'</span>))<span class="comment">//1</span></span><br><span class="line"><span class="comment">//println(f('0'))//error</span></span><br><span class="line"><span class="keyword">println</span>(f.isDefinedAt(<span class="string">'0'</span>))<span class="comment">//false</span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -516,6 +610,35 @@
 
     
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>鼓励一下这只小可爱吧^_^</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="AlisaBen 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="AlisaBen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
     
 
     
@@ -568,31 +691,43 @@
 
     <div class="post-spread">
       
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-<span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_fav">收藏夹</a>
-<a class="jiathis_button_copy">复制网址</a>
-<a class="jiathis_button_email">邮件</a>
-<a class="jiathis_button_weixin">微信</a>
-<a class="jiathis_button_qzone">QQ空间</a>
-<a class="jiathis_button_tqq">腾讯微博</a>
-<a class="jiathis_button_douban">豆瓣</a>
-<a class="jiathis_button_share">一键分享</a>
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
 
-<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-var jiathis_config={
-  data_track_clickback:true,
-  summary:"",
-  shortUrl:false,
-  hideMore:false
-}
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
 </script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
-<!-- JiaThis Button END -->
+
       
     </div>
   </div>
@@ -670,10 +805,10 @@ var jiathis_config={
               
               
               <div class="site-state-item site-state-categories">
-                
+                <a href="/categories/index.html">
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
-                
+                </a>
               </div>
             
 
@@ -681,10 +816,10 @@ var jiathis_config={
               
               
               <div class="site-state-item site-state-tags">
-                
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -720,20 +855,6 @@ var jiathis_config={
           
 
           
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                推荐阅读
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://alisaben.github.io/2018/08/06/%E9%AA%97%E5%AD%90/" title="骗子" target="_blank">骗子</a>
-                  </li>
-                
-              </ul>
-            </div>
           
 
           
@@ -1314,6 +1435,113 @@ var jiathis_config={
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 
