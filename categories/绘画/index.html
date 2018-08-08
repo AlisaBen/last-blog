@@ -6,20 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://AlisaBen.github.io">
-  <title>《快学Scala》学习笔记-第18章 高级类型 | AlisaBen的博客</title>
+  <title>Category: 绘画 | AlisaBen的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="18.1 单例类型">
-<meta name="keywords" content="scala">
-<meta property="og:type" content="article">
-<meta property="og:title" content="《快学Scala》学习笔记-第18章 高级类型">
-<meta property="og:url" content="https://AlisaBen.github.io/2018/08/07/《快学Scala》学习笔记-第18章-高级类型/index.html">
+  <meta name="description" content="北京邮电大学理学院14级本科，现学习web研发">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AlisaBen的博客">
+<meta property="og:url" content="https://AlisaBen.github.io/categories/绘画/index.html">
 <meta property="og:site_name" content="AlisaBen的博客">
-<meta property="og:description" content="18.1 单例类型">
+<meta property="og:description" content="北京邮电大学理学院14级本科，现学习web研发">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-07T14:26:04.175Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《快学Scala》学习笔记-第18章 高级类型">
-<meta name="twitter:description" content="18.1 单例类型">
+<meta name="twitter:title" content="AlisaBen的博客">
+<meta name="twitter:description" content="北京邮电大学理学院14级本科，现学习web研发">
   
   
     <link rel="icon" href="/favicon.png">
@@ -169,187 +167,71 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-《快学Scala》学习笔记-第18章-高级类型" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      《快学Scala》学习笔记-第18章 高级类型
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/08/08/彩铅画2-向日葵/" class="archive-article-date">
+  	<time datetime="2018-08-08T05:39:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-08</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/08/08/彩铅画2-向日葵/">彩铅画2-向日葵</a>
     </h1>
   
 
-        
-        <a href="/2018/08/07/《快学Scala》学习笔记-第18章-高级类型/" class="archive-article-date">
-  	<time datetime="2018-08-07T13:38:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="18-1-单例类型"><a href="#18-1-单例类型" class="headerlink" title="18.1 单例类型"></a>18.1 单例类型</h2><a id="more"></a>
-<p>在下面的例子中book不能调用addChapter方法，因为setTitle方法返回的是this，Scala自动推断类型为Document。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Document&#123;</span><br><span class="line">  def setTitle(title:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">  def setAuthor(author:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val article = new Document()</span><br><span class="line">article.setTitle(&quot;whatever&quot;).setAuthor(&quot;cay&quot;)</span><br><span class="line">class Book extends Document&#123;</span><br><span class="line">  def addChapter(chapter:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val book = new Book()</span><br><span class="line">book.setTitle(&quot;scala&quot;)</span><br></pre></td></tr></table></figure></p>
-<p>修改方法如下：显式声明setTitle方法的返回类型是this.type</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Document&#123;</span><br><span class="line">  def setTitle(title:String):this.type = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">  def setAuthor(author:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val article = new Document()</span><br><span class="line">article.setTitle(&quot;whatever&quot;).setAuthor(&quot;cay&quot;)</span><br><span class="line">class Book extends Document&#123;</span><br><span class="line">  def addChapter(chapter:String) = &#123;</span><br><span class="line">    this</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val book = new Book()</span><br><span class="line">book.setTitle(&quot;scala&quot;).addChapter(&quot;&quot;)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">object Title//单例对象</span><br><span class="line">class Document&#123;</span><br><span class="line">  private var useNextArgAas:Any = null</span><br><span class="line">  def set(obj:Title.type ):this.type = &#123;useNextArgAas = obj;this&#125;</span><br><span class="line">  def to(arg:String) = if(useNextArgAas == Title) println(arg)</span><br><span class="line">&#125;</span><br><span class="line">book.set(Title).to(&quot;scala&quot;)</span><br></pre></td></tr></table></figure>
-<h2 id="18-2-类型投影"><a href="#18-2-类型投影" class="headerlink" title="18.2 类型投影"></a>18.2 类型投影</h2><p>注意下一段代码中的NetWork#Member操作，说明在NetWork中共享Member类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class NetWork&#123;</span><br><span class="line">  class Member(val name:String)&#123;</span><br><span class="line">    val contacts = new ArrayBuffer[NetWork#Member]</span><br><span class="line">  &#125;</span><br><span class="line">  private val members = new ArrayBuffer[Member]()</span><br><span class="line">  def join(name:String) = &#123;</span><br><span class="line">    val m = new Member(name)</span><br><span class="line">    members += m</span><br><span class="line">    m</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">val chatter:NetWork = new NetWork</span><br><span class="line">val myFace:NetWork = new NetWork</span><br><span class="line">val fred :chatter.Member= chatter.join(&quot;fred&quot;)</span><br><span class="line">val barney :myFace.Member= myFace.join(&quot;barney&quot;)</span><br><span class="line">fred.contacts += barney</span><br></pre></td></tr></table></figure>
-<h2 id="18-4-类型别名"><a href="#18-4-类型别名" class="headerlink" title="18.4 类型别名"></a>18.4 类型别名</h2><p>类型别名必须出现在类或者对象中，不能出现在Scala文件的顶层<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type Index = mutable.HashMap[String,(Int,Int)]</span><br><span class="line">val a :Index = new Index()</span><br><span class="line">a.put(&quot;a&quot;,(1,2))</span><br></pre></td></tr></table></figure></p>
-<p>更多内容请见我的csdn:<a href="https://blog.csdn.net/weixin_36926779" target="_blank" rel="noopener">小可爱的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">scala</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/scala//" class="article-tag-list-link color1">scala</a>
+        			<a href="/categories/绘画//" class="article-tag-list-link color3">绘画</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://AlisaBen.github.io/2018/08/07/《快学Scala》学习笔记-第18章-高级类型/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/08/08/彩铅画2-向日葵/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          彩铅画2-向日葵
-        
-      </div>
-    </a>
   
   
-    <a href="/2018/08/07/《快学Scala》学习笔记-第17章-类型参数/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">《快学Scala》学习笔记-第17章-类型参数</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#18-1-单例类型"><span class="toc-number">1.</span> <span class="toc-text">18.1 单例类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-2-类型投影"><span class="toc-number">2.</span> <span class="toc-text">18.2 类型投影</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-4-类型别名"><span class="toc-number">3.</span> <span class="toc-text">18.4 类型别名</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -372,10 +254,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
-		isCategory: false,
+		isCategory: true,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
