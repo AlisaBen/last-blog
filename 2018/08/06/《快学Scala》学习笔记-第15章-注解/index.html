@@ -531,12 +531,12 @@ $(function() {
       
         <h2 id="15-1-什么是注解"><a href="#15-1-什么是注解" class="headerlink" title="15.1 什么是注解"></a>15.1 什么是注解</h2><a id="more"></a>
 <p>注解：插入到代码中以便有工具可以对他们进行处理的标签，工具可以在代码级别运作，也可以被编译器加入了注解信息的类文件</p>
-<h2 id="15-2-什么可以被注解"><a href="#15-2-什么可以被注解" class="headerlink" title="15.2 什么可以被注解"></a>15.2 什么可以被注解</h2><p>可以为类、方法、字段、局部变量和参数添加注解<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Entity</span> class Credentials</span><br><span class="line"><span class="variable">@Test</span> def testSomeFeature()&#123;&#125;</span><br><span class="line"><span class="variable">@BeanProperty</span> var username = _</span><br><span class="line">def doSomething(<span class="variable">@NotNull</span> <span class="attribute">message</span>:String)&#123;&#125;</span><br><span class="line"><span class="variable">@BeanProperty</span> <span class="variable">@Id</span> var username = _</span><br></pre></td></tr></table></figure></p>
+<h2 id="15-2-什么可以被注解"><a href="#15-2-什么可以被注解" class="headerlink" title="15.2 什么可以被注解"></a>15.2 什么可以被注解</h2><p>可以为类、方法、字段、局部变量和参数添加注解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Entity class Credentials</span><br><span class="line">@Test def testSomeFeature()&#123;&#125;</span><br><span class="line">@BeanProperty var username = _</span><br><span class="line">def doSomething(@NotNull message:String)&#123;&#125;</span><br><span class="line">@BeanProperty @Id var username = _</span><br></pre></td></tr></table></figure></p>
 <p>在给主构造器添加注解时，需要将注解放置在构造器之前，并加上一对圆括号</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Credentials</span> @<span class="title">Inject</span>()</span>&#123;<span class="keyword">var</span> username:<span class="built_in">String</span>,<span class="keyword">var</span> password:<span class="built_in">String</span>&#125;</span><br></pre></td></tr></table></figure>
-<p>可以为表达式添加注解，需要在表达式后加上冒号<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(myMap.get(key):@unchecked) match <span class="meta">&#123;...&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>还可以为类型参数添加注解：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyContainer</span>[<span class="meta">@specialized</span> <span class="title">T</span>]</span></span><br></pre></td></tr></table></figure></p>
-<p>针对实际类型的注解应放在类型名称之后<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> <span class="symbol">@cps[Unit]</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Credentials @Inject()&#123;var username:String,var password:String&#125;</span><br></pre></td></tr></table></figure>
+<p>可以为表达式添加注解，需要在表达式后加上冒号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(myMap.get(key):@unchecked) match &#123;...&#125;</span><br></pre></td></tr></table></figure></p>
+<p>还可以为类型参数添加注解：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class MyContainer[@specialized T]</span><br></pre></td></tr></table></figure></p>
+<p>针对实际类型的注解应放在类型名称之后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String @cps[Unit]</span><br></pre></td></tr></table></figure></p>
 <h2 id="15-3-注解参数"><a href="#15-3-注解参数" class="headerlink" title="15.3 注解参数"></a>15.3 注解参数</h2><p>Java注解可以有带名参数，如果参数名是value，名称可以直接略去，如果注解不带参数，圆括号可以略去<br>注解的参数类型只能是：</p>
 <ul>
 <li>数值型的字面量</li>
@@ -548,8 +548,8 @@ $(function() {
 </ul>
 <h2 id="15-4-注解实现"><a href="#15-4-注解实现" class="headerlink" title="15.4 注解实现"></a>15.4 注解实现</h2><p>本节主要看下注解类是怎样实现的</p>
 <p>注解必须扩展Annotation特质。</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">unchecked</span> <span class="keyword">extends</span> <span class="title">annotation</span>.<span class="title">Annotation</span></span></span><br></pre></td></tr></table></figure>
-<p>注解的作用是描述那些被注解的表达式、变量、字段、方法或类型<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(@NotNull <span class="symbol">password:</span>String)</span></span> = &#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class unchecked extends annotation.Annotation</span><br></pre></td></tr></table></figure>
+<p>注解的作用是描述那些被注解的表达式、变量、字段、方法或类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def check(@NotNull password:String) = &#123;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>好了，注解看到这里我放弃了，并看不懂……</p>
 
       
@@ -899,7 +899,7 @@ $(function() {
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共19.4k字</span>
+  <span class="post-count">博客全站共20.5k字</span>
 </div>
 
         
