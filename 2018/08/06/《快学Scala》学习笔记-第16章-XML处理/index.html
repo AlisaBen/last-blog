@@ -540,7 +540,7 @@ $(function() {
 <p>通过变成的方式构建节点序列，可以使用NodeBuffer,是ArrayBuffer[Node]的子类，可以被隐式转换为NodeSeq，转换之后就不能再继续修改它，因为xml节点序列是不可变的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import scala.xml.&#123;Node, NodeSeq&#125;</span><br><span class="line">val items = new NodeBuffer</span><br><span class="line">items += &lt;li&gt;Fred&lt;/li&gt;</span><br><span class="line">items += &lt;li&gt;Wilma&lt;/li&gt;</span><br><span class="line">val nodes:NodeSeq = items</span><br></pre></td></tr></table></figure>
 <h2 id="16-3-元素属性"><a href="#16-3-元素属性" class="headerlink" title="16.3 元素属性"></a>16.3 元素属性</h2><p>要处理某个元素的属性键和值，可以使用attributes属性,返回Option类型的节点序列<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val ls:Elem = &lt;a href=&quot;www.baidu.com&quot;&gt;the&lt;em&gt;&lt;li&gt;hello&lt;/li&gt;scala&lt;/em&gt;&lt;em&gt;yoyo&lt;/em&gt;language&lt;/a&gt;</span><br><span class="line">val url: scala.Seq[Node] = ls.attributes(&quot;href&quot;)</span><br><span class="line">val url1:String= ls.attributes(&quot;href&quot;).text</span><br><span class="line">println(url1)</span><br></pre></td></tr></table></figure></p>
-<p>输出结果：<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a><br>通过调用 text方法返回String类型结果,也可以通过下面的方法避免没有这个属性返回null的结果，如果没有返回空<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val url2 = ls.attributes.get(&quot;alt&quot;).getOrElse(Text(&quot;&quot;))</span><br><span class="line"> println(url2)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果：www.baidu.com<br>通过调用 text方法返回String类型结果,也可以通过下面的方法避免没有这个属性返回null的结果，如果没有返回空<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val url2 = ls.attributes.get(&quot;alt&quot;).getOrElse(Text(&quot;&quot;))</span><br><span class="line"> println(url2)</span><br></pre></td></tr></table></figure></p>
 <p>遍历节点的所有属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val elem1 = &lt;p class=&quot;nihao&quot; type=&quot;wawa&quot;&gt;&lt;/p&gt;</span><br><span class="line">for(attr &lt;- elem1.attributes)</span><br><span class="line">  println(attr.key,attr.value.text)</span><br><span class="line">val map:Map[String,String] = elem1.attributes.asAttrMap</span><br><span class="line">println(map)</span><br></pre></td></tr></table></figure></p>
 <p>两种方式都可以遍历节点的所有属性，第一种方式的attr类型是MetaData，第二种方式返回的是键值对的map</p>
 <h2 id="16-4-内嵌表达式"><a href="#16-4-内嵌表达式" class="headerlink" title="16.4 内嵌表达式"></a>16.4 内嵌表达式</h2><p>可以在xml字面量中包含Scala的代码块</p>
@@ -750,7 +750,7 @@ $(function() {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -761,7 +761,7 @@ $(function() {
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -772,7 +772,7 @@ $(function() {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -904,7 +904,7 @@ $(function() {
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共35.6k字</span>
+  <span class="post-count">博客全站共35.8k字</span>
 </div>
 
         
@@ -1506,6 +1506,8 @@ $(function() {
   
 
   
+  
+
 
   
 

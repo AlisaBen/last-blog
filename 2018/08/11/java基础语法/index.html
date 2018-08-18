@@ -605,9 +605,8 @@ $(function() {
 <li>不能使用一个子类的引用去指向父类的对象<code>Dog a = new Animal()</code>是错的</li>
 </ul>
 <p>如果定义了一个指向子类对象的父类引用类型，除了能够引用父类中定义的所有属性和方法外，还可以使用子类强大的功能（子类中重写的方法会覆盖父类的方法），但是对于只存在于子类的方法和属性就不能获取</p>
-<h2 id="多态的实现方式"><a href="#多态的实现方式" class="headerlink" title="多态的实现方式"></a>多态的实现方式</h2><p>###多态的实现条件：继承、重写和向上转型</p>
-<p>多态的实现方式：继承父类进行方法重写，抽象类和抽象方法，接口实现</p>
-<p>###抽象方法声明语法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abstract void f();</span><br></pre></td></tr></table></figure></p>
+<h2 id="多态的实现方式"><a href="#多态的实现方式" class="headerlink" title="多态的实现方式"></a>多态的实现方式</h2><h3 id="多态的实现条件：继承、重写和向上转型"><a href="#多态的实现条件：继承、重写和向上转型" class="headerlink" title="多态的实现条件：继承、重写和向上转型"></a>多态的实现条件：继承、重写和向上转型</h3><p>多态的实现方式：继承父类进行方法重写，抽象类和抽象方法，接口实现</p>
+<h3 id="抽象方法声明语法"><a href="#抽象方法声明语法" class="headerlink" title="抽象方法声明语法"></a>抽象方法声明语法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abstract void f();</span><br></pre></td></tr></table></figure>
 <p>包含抽象方法的类叫做抽象类，抽象类在定义类时，会加上<code>abstract</code>关键字</p>
 <p>使用抽象类的情况</p>
 <ul>
@@ -619,7 +618,7 @@ $(function() {
 <li>抽象类的对象不能直接创建，通常是定义引用变量指向子类对象</li>
 </ul>
 <p>一个实现抽象类的例子:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">TelePhone</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">message</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>###接口实现<br><code>abstract</code>关键字允许在类中创建一个或多个没有任何定义的方法，而<code>interface</code>使抽象的概念更向前迈进了一步，会产生一个完全抽象类，根本没有提供任何方法体</p>
+<h3 id="接口实现"><a href="#接口实现" class="headerlink" title="接口实现"></a>接口实现</h3><p><code>abstract</code>关键字允许在类中创建一个或多个没有任何定义的方法，而<code>interface</code>使抽象的概念更向前迈进了一步，会产生一个完全抽象类，根本没有提供任何方法体</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">interface Animal&#123;</span><br><span class="line">	int y = 5;</span><br><span class="line">	public void eat();</span><br><span class="line">	public void travel();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>接口不能用于实例化对象</li>
@@ -826,7 +825,7 @@ $(function() {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -837,7 +836,7 @@ $(function() {
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -848,7 +847,7 @@ $(function() {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -925,7 +924,7 @@ $(function() {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#利用文本编辑java程序"><span class="nav-number">1.</span> <span class="nav-text">利用文本编辑java程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java语言基础"><span class="nav-number">2.</span> <span class="nav-text">java语言基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java运算符"><span class="nav-number">3.</span> <span class="nav-text">java运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#位运算符"><span class="nav-number">3.1.</span> <span class="nav-text">位运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑运算符"><span class="nav-number">3.2.</span> <span class="nav-text">逻辑运算符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java数组"><span class="nav-number">4.</span> <span class="nav-text">java数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组的定义和初始化"><span class="nav-number">4.1.</span> <span class="nav-text">数组的定义和初始化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java方法"><span class="nav-number">5.</span> <span class="nav-text">java方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java类与对象"><span class="nav-number">6.</span> <span class="nav-text">Java类与对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造方法"><span class="nav-number">6.1.</span> <span class="nav-text">构造方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java继承"><span class="nav-number">7.</span> <span class="nav-text">java继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#继承的例子："><span class="nav-number">7.1.</span> <span class="nav-text">继承的例子：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承的特点"><span class="nav-number">7.2.</span> <span class="nav-text">继承的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子类方法重写"><span class="nav-number">7.3.</span> <span class="nav-text">子类方法重写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承的初始化顺序"><span class="nav-number">7.4.</span> <span class="nav-text">继承的初始化顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小知识"><span class="nav-number">7.5.</span> <span class="nav-text">小知识</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java多态"><span class="nav-number">8.</span> <span class="nav-text">java多态</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#向上转型"><span class="nav-number">8.1.</span> <span class="nav-text">向上转型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态的实现方式"><span class="nav-number">8.2.</span> <span class="nav-text">多态的实现方式</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#利用文本编辑java程序"><span class="nav-number">1.</span> <span class="nav-text">利用文本编辑java程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java语言基础"><span class="nav-number">2.</span> <span class="nav-text">java语言基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java运算符"><span class="nav-number">3.</span> <span class="nav-text">java运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#位运算符"><span class="nav-number">3.1.</span> <span class="nav-text">位运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑运算符"><span class="nav-number">3.2.</span> <span class="nav-text">逻辑运算符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java数组"><span class="nav-number">4.</span> <span class="nav-text">java数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组的定义和初始化"><span class="nav-number">4.1.</span> <span class="nav-text">数组的定义和初始化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java方法"><span class="nav-number">5.</span> <span class="nav-text">java方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java类与对象"><span class="nav-number">6.</span> <span class="nav-text">Java类与对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造方法"><span class="nav-number">6.1.</span> <span class="nav-text">构造方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java继承"><span class="nav-number">7.</span> <span class="nav-text">java继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#继承的例子："><span class="nav-number">7.1.</span> <span class="nav-text">继承的例子：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承的特点"><span class="nav-number">7.2.</span> <span class="nav-text">继承的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子类方法重写"><span class="nav-number">7.3.</span> <span class="nav-text">子类方法重写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承的初始化顺序"><span class="nav-number">7.4.</span> <span class="nav-text">继承的初始化顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小知识"><span class="nav-number">7.5.</span> <span class="nav-text">小知识</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java多态"><span class="nav-number">8.</span> <span class="nav-text">java多态</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#向上转型"><span class="nav-number">8.1.</span> <span class="nav-text">向上转型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态的实现方式"><span class="nav-number">8.2.</span> <span class="nav-text">多态的实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多态的实现条件：继承、重写和向上转型"><span class="nav-number">8.2.1.</span> <span class="nav-text">多态的实现条件：继承、重写和向上转型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象方法声明语法"><span class="nav-number">8.2.2.</span> <span class="nav-text">抽象方法声明语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口实现"><span class="nav-number">8.2.3.</span> <span class="nav-text">接口实现</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -980,7 +979,7 @@ $(function() {
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共35.6k字</span>
+  <span class="post-count">博客全站共35.8k字</span>
 </div>
 
         
@@ -1582,6 +1581,8 @@ $(function() {
   
 
   
+  
+
 
   
 
