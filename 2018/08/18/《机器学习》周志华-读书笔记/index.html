@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="AlisaBen&#39;s Blog">
 <meta property="og:description" content="希望可以坚持住，两个月为期">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-19T11:06:00.169Z">
+<meta property="og:updated_time" content="2018-08-19T11:07:24.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《机器学习》周志华-读书笔记">
 <meta name="twitter:description" content="希望可以坚持住，两个月为期">
@@ -550,7 +550,7 @@ $(function() {
 <p>推到过程：</p>
 <script type="math/tex; mode=display">E_{(w,b)}=\sum_{i=1}^{m}(y_i-wx_i-b)^2</script><script type="math/tex; mode=display">\frac {\partial E_{(w,b)}}{\partial w}=\sum_{i=1}{m}2(y_i-wx_i-b)(-x_i)</script><script type="math/tex; mode=display">=2w\sum_{i=1}^{m}x_i^2-2\sum_{i=1}^{m}x_i(y_i-b)</script><script type="math/tex; mode=display">\frac {\partial E_{(w,b)}}{\partial b}=-2\sum_{i=1}^{m}(y_i-wx_i-b)</script><script type="math/tex; mode=display">=-2\sum_{i=1}^{m}(y_i-wx_i)+2\sum_{i=1}^{m}b</script><script type="math/tex; mode=display">=2mb-2\sum_{i=1}^{m}(y_i-wx_i)</script><p>对凸函数求最优解，对上面两个式子取零求w,b</p>
 <script type="math/tex; mode=display">w=\frac {\sum_{i=1}^{m}y_i(x_i-\bar x)}{\sum_{i=1}^{m}x_i^2-m\bar x^2}</script><script type="math/tex; mode=display">b=\frac {1}{m}\sum_{i=1}^{m}(y_i-wx_i)</script><hr>
-<h1 id="逻辑回归分类器sklearn-LogisticRegression"><a href="#逻辑回归分类器sklearn-LogisticRegression" class="headerlink" title="逻辑回归分类器sklearn-LogisticRegression"></a>逻辑回归分类器sklearn-LogisticRegression</h1><p>在多分类情况下，如果<code>multi_class</code>参数设置为<code>ovr</code>，那么训练算法使用one-vs-rest<code>OvR</code>方案；如果<code>multi_class</code>参数设置为<code>multinomial</code>，那么训练算法使用交叉损失函数。<br>注：如果<code>multi_class</code>设置为<code>multinomial</code>，那么<code>solver</code>参数只能设置为<code>lbfgs</code> <code>sag</code> <code>newton-cg</code></p>
+<h2 id="逻辑回归分类器sklearn-LogisticRegression"><a href="#逻辑回归分类器sklearn-LogisticRegression" class="headerlink" title="逻辑回归分类器sklearn-LogisticRegression"></a>逻辑回归分类器sklearn-LogisticRegression</h2><p>在多分类情况下，如果<code>multi_class</code>参数设置为<code>ovr</code>，那么训练算法使用one-vs-rest<code>OvR</code>方案；如果<code>multi_class</code>参数设置为<code>multinomial</code>，那么训练算法使用交叉损失函数。<br>注：如果<code>multi_class</code>设置为<code>multinomial</code>，那么<code>solver</code>参数只能设置为<code>lbfgs</code> <code>sag</code> <code>newton-cg</code></p>
 <p>该类通过使用<code>liblinear</code>求解器和<code>newton-cg</code> <code>sag</code> <code>lbfgs</code>求解器实现正则化逻辑回归，可以处理稠密矩阵和稀疏矩阵。使用包含64位浮点数的C有序数组或CSR矩阵以获得最佳性能，任何其他输入格式将被转换。</p>
 <p><code>newton-cg</code> <code>sag</code> <code>lbfgs</code>求解器仅支持原始问题的L2正则化，<code>liblinear</code>求解器支持L1和L2正则化，对偶问题仅用于L2惩罚</p>
 <div class="table-container">
@@ -567,7 +567,6 @@ $(function() {
 <td><code>penalty</code></td>
 <td><code>l1</code> or <code>l2</code></td>
 <td><code>newton-cg</code> <code>sag</code> <code>lbfgs</code>求解器仅支持原始公式的L2正则化</td>
-<td></td>
 </tr>
 <tr>
 <td><code>dual</code></td>
@@ -901,7 +900,7 @@ $(function() {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第3章-线性模型"><span class="nav-number">1.</span> <span class="nav-text">第3章 线性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-3-3对数几率回归"><span class="nav-number">1.1.</span> <span class="nav-text">3.1-3.3对数几率回归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归分类器sklearn-LogisticRegression"><span class="nav-number">2.</span> <span class="nav-text">逻辑回归分类器sklearn-LogisticRegression</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第3章-线性模型"><span class="nav-number">1.</span> <span class="nav-text">第3章 线性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-3-3对数几率回归"><span class="nav-number">1.1.</span> <span class="nav-text">3.1-3.3对数几率回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归分类器sklearn-LogisticRegression"><span class="nav-number">1.2.</span> <span class="nav-text">逻辑回归分类器sklearn-LogisticRegression</span></a></li></ol></li></ol></div>
             
 
           </div>
