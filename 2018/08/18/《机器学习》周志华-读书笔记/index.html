@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="AlisaBen&#39;s Blog">
 <meta property="og:description" content="希望可以坚持住，两个月为期">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-19T11:03:23.448Z">
+<meta property="og:updated_time" content="2018-08-19T11:06:00.169Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《机器学习》周志华-读书笔记">
 <meta name="twitter:description" content="希望可以坚持住，两个月为期">
@@ -557,7 +557,6 @@ $(function() {
 <table>
 <thead>
 <tr>
-<th></th>
 <th>参数</th>
 <th><code>option</code></th>
 <th>备注</th>
@@ -565,62 +564,47 @@ $(function() {
 </thead>
 <tbody>
 <tr>
-<td></td>
 <td><code>penalty</code></td>
 <td><code>l1</code> or <code>l2</code></td>
 <td><code>newton-cg</code> <code>sag</code> <code>lbfgs</code>求解器仅支持原始公式的L2正则化</td>
 <td></td>
 </tr>
 <tr>
-<td></td>
 <td><code>dual</code></td>
 <td><code>bool</code></td>
 <td>原始问题还是对偶问题。对于L2惩罚和<code>liblinear</code>求解器使用对偶问题。如果样本数大于特征数优先设定为<code>False</code></td>
-<td></td>
 </tr>
 <tr>
-<td></td>
 <td><code>tol</code></td>
 <td><code>float</code>,default<code>1e-4</code></td>
 <td>容忍度</td>
-<td></td>
 </tr>
 <tr>
-<td></td>
 <td><code>C</code></td>
 <td><code>float</code>,default<code>1.0</code></td>
 <td>正规化强度逆; 必须是积极的浮动。 与支持向量机一样，较小的值指定更强的正则化。</td>
-<td></td>
 </tr>
 <tr>
-<td></td>
 <td><code>class_weight</code></td>
 <td>dict or <code>balanced</code>,default None</td>
 <td>没给认为所有类别权重一样，<code>balanced</code>自动调整权重</td>
-<td></td>
 </tr>
 <tr>
-<td></td>
 <td><code>solver</code></td>
 <td><code>newton-cg</code> <code>lbfgs</code> <code>liblinear</code> <code>sag</code> <code>saga</code></td>
 <td>小数据集用<code>liblinear</code>,<code>sag</code> <code>saga</code>快；多分类问题只使用<code>newton-cg</code> <code>sag</code> <code>saga</code> <code>lbfgs</code>;<code>newton-cg</code> <code>lbfgs</code> <code>sag</code>只能处理L2惩罚</td>
 </tr>
 <tr>
-<td></td>
 <td><code>max_iter</code></td>
 <td>default 100</td>
 <td></td>
-<td></td>
 </tr>
 <tr>
-<td></td>
 <td><code>multi_class</code></td>
 <td><code>ovr</code> <code>multinomial</code></td>
 <td></td>
-<td></td>
 </tr>
 <tr>
-<td></td>
 <td><code>verbose</code></td>
 <td><code>int</code>,default 0</td>
 <td>对于<code>liblinear</code>和<code>lbfgs</code>求解器，将<code>verbose</code>设置为任何正数以表示详细程度。</td>
