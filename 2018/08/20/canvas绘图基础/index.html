@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "094fd489"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="前端,canvas," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="发现了一个好玩的canvas学习网站，终于可以好好学习惹">
+<meta name="keywords" content="前端,canvas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="canvas绘图基础">
+<meta property="og:url" content="https://AlisaBen.github.io/2018/08/20/canvas绘图基础/index.html">
+<meta property="og:site_name" content="AlisaBen&#39;s Blog">
+<meta property="og:description" content="发现了一个好玩的canvas学习网站，终于可以好好学习惹">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-20T14:06:35.954Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="canvas绘图基础">
+<meta name="twitter:description" content="发现了一个好玩的canvas学习网站，终于可以好好学习惹">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'cool girl'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://AlisaBen.github.io/2018/08/20/canvas绘图基础/"/>
+
+
+
+
+
+  <title>canvas绘图基础 | AlisaBen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4425f02e3aceec56c86c2be922faf390";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+     <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = $(document.getElementById(url)).text() + ': 0';
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+});
+</script>
+  
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AlisaBen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">自诩为有益之事，永不知生之有涯</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://AlisaBen.github.io/2018/08/20/canvas绘图基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AlisaBen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://pd2lvob9v.bkt.clouddn.com/10797029.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlisaBen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">canvas绘图基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-20T19:40:28+08:00">
+                2018-08-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/20/canvas绘图基础/" class="leancloud_visitors" data-flag-title="canvas绘图基础">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,784 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  26 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>发现了一个好玩的canvas学习网站，终于可以好好学习惹</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="绘制直线"><a href="#绘制直线" class="headerlink" title="绘制直线"></a>绘制直线</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Line 线条/直线<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"line"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oCanvas = document.getElementById("line");</span></span><br><span class="line"><span class="undefined">        var oContext =  oCanvas.getContext("2d");       //二维绘图对象</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.beginPath();                           //起始一条路径，或重置当前路径</span></span><br><span class="line"><span class="undefined">        oContext.moveTo(100,150);                       //把路径移动到画布中的指定点，不创建直线</span></span><br><span class="line"><span class="undefined">        oContext.lineTo(450,50);                        //添加一个新点，然后在画布中创建从该点到最后指定点的直线</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "red";</span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 7</span></span><br><span class="line"><span class="undefined">        oContext.stroke();                              //在画布上绘制文本（无填充）</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="设置直线线帽lineCap"><a href="#设置直线线帽lineCap" class="headerlink" title="设置直线线帽lineCap"></a>设置直线线帽<code>lineCap</code></h2><p><code>lineCap</code> API的参数<code>butt</code> <code>square</code> <code>round</code><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Line Cap 线条/直线线帽<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"lineCap"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oLineCap = document.getElementById("lineCap");</span></span><br><span class="line"><span class="undefined">        var oContext = oLineCap.getContext("2d");</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //butt</span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.moveTo(200,oLineCap.height / 2 -50);</span></span><br><span class="line"><span class="undefined">        oContext.lineTo(oLineCap.width - 200,oLineCap.height / 2 -50);</span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 10;</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.lineCap = "butt";      //默认，向线条的每个末端添加平直的边缘。</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //round</span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.moveTo(200,oLineCap.height / 2);</span></span><br><span class="line"><span class="undefined">        oContext.lineTo(oLineCap.width - 200,oLineCap.height / 2);</span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 10;</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.lineCap = "round";     //向线条的每个末端添加圆形线帽。</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //square</span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.moveTo(200,oLineCap.height / 2 +50);</span></span><br><span class="line"><span class="undefined">        oContext.lineTo(oLineCap.width - 200,oLineCap.height / 2 +50);</span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 10;</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.lineCap = "square";    //向线条的每个末端添加正方形线帽。</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="二次贝塞尔曲线quadraticCurveTo"><a href="#二次贝塞尔曲线quadraticCurveTo" class="headerlink" title="二次贝塞尔曲线quadraticCurveTo"></a>二次贝塞尔曲线<code>quadraticCurveTo</code></h2><p><code>quadraticCurveTo</code> API参数中间点x,y和右边点x,y<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Quadratic Curve 二次贝塞尔曲线<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"quadraticCurveTo"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oQuadraticCurveTo = document.getElementById("quadraticCurveTo");</span></span><br><span class="line"><span class="undefined">        var oContext = oQuadraticCurveTo.getContext("2d");</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.moveTo(188,150);                       //起始点（x,y）</span></span><br><span class="line"><span class="undefined">        oContext.quadraticCurveTo(288, 0, 388, 150);    //创建二次贝塞尔曲线,中间点坐标和右边点坐标</span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 10;</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 示例图 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"position: absolute;bottom: 0;left: 0;width: 500px;"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://canvas.migong.org/wp-content/uploads/2015/12/quadratic-curves.jpg"</span> <span class="attr">alt</span>=<span class="string">"Quadratic Curve 二次贝塞尔曲线"</span> <span class="attr">width</span>=<span class="string">"100%"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="三次贝塞尔曲线bezierCurveTo"><a href="#三次贝塞尔曲线bezierCurveTo" class="headerlink" title="三次贝塞尔曲线bezierCurveTo"></a>三次贝塞尔曲线<code>bezierCurveTo</code></h2><p><code>bezierCurveTo</code> API参数三个点的坐标<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Bezier Curve 三次贝塞尔曲线<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"bezierCurveTo"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oBezierCurveTo = document.getElementById("bezierCurveTo");</span></span><br><span class="line"><span class="undefined">        var oContext = oBezierCurveTo.getContext("2d");</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.moveTo(188,130);                               //起始点（x,y）</span></span><br><span class="line"><span class="undefined">        oContext.bezierCurveTo(40, 10, 588, 10, 388, 170);     //创建三次贝塞尔曲线</span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 10;</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 示例图 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"position: absolute;bottom: 0;left: 0;width: 500px;"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://canvas.migong.org/wp-content/uploads/2015/12/bezier-curves.jpg"</span> <span class="attr">alt</span>=<span class="string">"Bezier Curve 三次贝塞尔曲线"</span> <span class="attr">width</span>=<span class="string">"100%"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="线条拐角lineJoin"><a href="#线条拐角lineJoin" class="headerlink" title="线条拐角lineJoin"></a>线条拐角<code>lineJoin</code></h2><p><code>lineJoin</code>参数<code>miter</code> <code>round</code> <code>bevel</code><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Line Join 线条拐角<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"lineJoin"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oLineJoin = document.getElementById("lineJoin");</span></span><br><span class="line"><span class="undefined">        var oContext = oLineJoin.getContext("2d");</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 20;</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.moveTo(99, 150);</span></span><br><span class="line"><span class="undefined">        oContext.lineTo(149, 50);</span></span><br><span class="line"><span class="undefined">        oContext.lineTo(199, 150);</span></span><br><span class="line"><span class="undefined">       	oContext.lineJoin = "miter";    //默认。创建尖角</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.moveTo(239, 150);</span></span><br><span class="line"><span class="undefined">        oContext.lineTo(289, 50);</span></span><br><span class="line"><span class="undefined">        oContext.lineTo(339, 150);</span></span><br><span class="line"><span class="undefined">        oContext.lineJoin = "round";    //创建圆角</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.moveTo(379, 150);</span></span><br><span class="line"><span class="undefined">        oContext.lineTo(429, 50);</span></span><br><span class="line"><span class="undefined">        oContext.lineTo(479, 150);</span></span><br><span class="line"><span class="undefined">        oContext.lineJoin = "bevel";    //创建斜角</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="圆角arcTo"><a href="#圆角arcTo" class="headerlink" title="圆角arcTo"></a>圆角<code>arcTo</code></h2><p><code>arcTo</code>的5个参数分别表示起始点x起始点y终点x终点y，半径<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Rounded Corners 圆角<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"arcTo"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oArcTo = document.getElementById("arcTo");</span></span><br><span class="line"><span class="undefined">        var oConText = oArcTo.getContext("2d");</span></span><br><span class="line"><span class="undefined">        var oRectWdith = 200;</span></span><br><span class="line"><span class="undefined">        var oRectHeight = 100;</span></span><br><span class="line"><span class="undefined">        var oRectX = 189;</span></span><br><span class="line"><span class="undefined">        var oRectY = 50;</span></span><br><span class="line"><span class="undefined">        var oCornerRadius = 50;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oConText.beginPath();</span></span><br><span class="line"><span class="undefined">        oConText.moveTo(oRectX, oRectY);</span></span><br><span class="line"><span class="undefined">        oConText.lineTo(oRectX + oRectWdith - oCornerRadius, oRectY);</span></span><br><span class="line"><span class="undefined">        //创建两条线之间的弧/曲线</span></span><br><span class="line"><span class="undefined">        oConText.arcTo(oRectX + oRectWdith, oRectY, oRectX + oRectWdith, oRectY + oCornerRadius, oCornerRadius);</span></span><br><span class="line"><span class="undefined">        oConText.lineTo(oRectX + oRectWdith, oRectY + oRectHeight);</span></span><br><span class="line"><span class="undefined">        oConText.lineWidth = 5;</span></span><br><span class="line"><span class="undefined">        oConText.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oConText.stroke();</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="绘制矩形"><a href="#绘制矩形" class="headerlink" title="绘制矩形"></a>绘制矩形</h1><p><code>rect(x, y, width, height)</code>矩形左上角x,y<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Rectangle 矩形<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"rect"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oRect = document.getElementById("rect");</span></span><br><span class="line"><span class="undefined">        var oContext = oRect.getContext("2d");</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.rect(188, 50, 200, 100);   //创建矩形</span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = "cornsilk";    //填充颜色</span></span><br><span class="line"><span class="undefined">        oContext.fill();                    //填充当前绘图</span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 5;</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="绘制圆形"><a href="#绘制圆形" class="headerlink" title="绘制圆形"></a>绘制圆形</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Arc 弧/曲线、圆形、半圆<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"arc"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oArc = document.getElementById("arc");</span></span><br><span class="line"><span class="undefined">        var oContext = oArc.getContext("2d");</span></span><br><span class="line"><span class="undefined">        var x = oArc.width / 2;         //圆的中心的 x 坐标</span></span><br><span class="line"><span class="undefined">        var y = oArc.height / 2;        //圆的中心的 y 坐标</span></span><br><span class="line"><span class="undefined">        var radius = 75;                //圆的半径（Radius）</span></span><br><span class="line"><span class="undefined">        var startAngle = 1.1 * Math.PI; //起始角（Starting Angle），以弧度计（弧的圆形的三点钟位置是 0 度）</span></span><br><span class="line"><span class="undefined">        var endAngle = 1.9 * Math.PI;   //结束角（Ending Angle），以弧度计</span></span><br><span class="line"><span class="undefined">        var counterClockwise = false;   //可选，规定应该逆时针还是顺时针绘图。False = 顺时针，true = 逆时针</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.arc(x - 150,y - 150,radius,startAngle,startAngle + Math.PI,counterClockwise);</span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 10;</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.arc(x, y, radius, 0, 2 * Math.PI, false);          //创建圆形</span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = "cornsilk"</span></span><br><span class="line"><span class="undefined">        oContext.fill();</span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 10;</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.arc(x + 150, y + 50, radius, 0,  Math.PI, false);  //创建半圆</span></span><br><span class="line"><span class="undefined">        //oContext.closePath();                                       //关闭路径</span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = "cornsilk";</span></span><br><span class="line"><span class="undefined">        oContext.fill();</span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 10;</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 示例图 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"position: absolute;bottom: 0;left: 0;width: 500px;"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://canvas.migong.org/wp-content/uploads/2015/12/arcs-diagram.png"</span> <span class="attr">alt</span>=<span class="string">"Arc 弧/曲线、圆形、半圆"</span> <span class="attr">width</span>=<span class="string">"100%"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="颜色渐变createLinearGradient"><a href="#颜色渐变createLinearGradient" class="headerlink" title="颜色渐变createLinearGradient"></a>颜色渐变<code>createLinearGradient</code></h1><h2 id="线性渐变"><a href="#线性渐变" class="headerlink" title="线性渐变"></a>线性渐变</h2><p><code>createLinearGradient(x,y,width,height)</code><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Linear Gradient 线性渐变<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"createLinearGradient"</span> <span class="attr">width</span>=<span class="string">"300"</span> <span class="attr">height</span>=<span class="string">"300"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oCreateLinearGradient = document.getElementById("createLinearGradient");</span></span><br><span class="line"><span class="undefined">        var oContext = oCreateLinearGradient.getContext("2d");</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.rect(0, 0, oCreateLinearGradient.width, oCreateLinearGradient.height); //创建一个矩形</span></span><br><span class="line"><span class="undefined">        //创建线性渐变</span></span><br><span class="line"><span class="undefined">        var grd = oContext.createLinearGradient(0, 0, oCreateLinearGradient.width, oCreateLinearGradient.height);</span></span><br><span class="line"><span class="undefined">        grd.addColorStop(1, 'cornsilk');    //从cornsilk</span></span><br><span class="line"><span class="undefined">        grd.addColorStop(0, 'tomato');      //到tomato</span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = grd;           //填充矩形颜色为线性渐变颜色（grd）</span></span><br><span class="line"><span class="undefined">        oContext.fill();</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="放射渐变createRadialGradient"><a href="#放射渐变createRadialGradient" class="headerlink" title="放射渐变createRadialGradient"></a>放射渐变<code>createRadialGradient</code></h2><p><code>createRadialGradient(x0,y0,r0,x1,y1,r1)</code><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Radial Gradient 放射渐变<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"createRadialGradient"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oCreateRadialGradient = document.getElementById("createRadialGradient");</span></span><br><span class="line"><span class="undefined">        var oContext = oCreateRadialGradient.getContext("2d");</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.rect(0, 0, oCreateRadialGradient.width, oCreateRadialGradient.height); //创建一个矩形</span></span><br><span class="line"><span class="undefined">        //创建放射渐变</span></span><br><span class="line"><span class="undefined">        var grd = oContext.createRadialGradient(238, 50, 10, 238, 50, 300);</span></span><br><span class="line"><span class="undefined">        grd.addColorStop(0, 'cornsilk');    //从cornsilk</span></span><br><span class="line"><span class="undefined">        grd.addColorStop(1, 'tomato');      //到tomato</span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = grd;           //填充矩形颜色为放射渐变颜色（grd）</span></span><br><span class="line"><span class="undefined">        oContext.fill();</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="模式元素"><a href="#模式元素" class="headerlink" title="模式元素"></a>模式元素</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Pattern 模式元素<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"createPattern"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oCreatePattern = document.getElementById("createPattern");</span></span><br><span class="line"><span class="undefined">        var oContext = oCreatePattern.getContext("2d");</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var imageOjb = new Image();         //创建图案对象</span></span><br><span class="line"><span class="undefined">        imageOjb.onload = function()&#123;       //当图片加载完成后执行 Function</span></span><br><span class="line"><span class="undefined">            var oPattern = oContext.createPattern(imageOjb, "repeat");          //创建模式元素（可以是图片、视频，或者其他 Canvas 元素）</span></span><br><span class="line"><span class="undefined">           	oContext.arc(200,200,100,0,2 * Math.PI);</span></span><br><span class="line"><span class="undefined">            //oContext.rect(0, 0, oCreatePattern.width, oCreatePattern.height);   //创建矩形</span></span><br><span class="line"><span class="undefined">            oContext.fillStyle = oPattern;  //填充矩形为 oPattern（模式元素）</span></span><br><span class="line"><span class="undefined">            oContext.fill();</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined">        imageOjb.src = "http://canvas.migong.org/wp-content/uploads/2015/12/bg.gif";</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="绘制图像drawImage"><a href="#绘制图像drawImage" class="headerlink" title="绘制图像drawImage"></a>绘制图像<code>drawImage</code></h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Draw Image 绘制图像、剪切图像<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"drawImage"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oDrawImage = document.getElementById("drawImage");</span></span><br><span class="line"><span class="undefined">        var oContext = oDrawImage.getContext("2d");</span></span><br><span class="line"><span class="undefined">        var imageOjb = new Image();</span></span><br><span class="line"><span class="undefined">        var sx = 10;                    //开始剪切的 x 坐标位置</span></span><br><span class="line"><span class="undefined">        var sy = 10;                    //开始剪切的 y 坐标位置</span></span><br><span class="line"><span class="undefined">        var sWidth = 100;               //被剪切图像的宽度</span></span><br><span class="line"><span class="undefined">        var sHeight = 100;              //被剪切图像的高度</span></span><br><span class="line"><span class="undefined">        var x = 10;                     //在 Canvas 上放置图像的 x 坐标位置</span></span><br><span class="line"><span class="undefined">        var y = 10;                     //在 Canvas 上放置图像的 Y 坐标位置</span></span><br><span class="line"><span class="undefined">        var imgWidth = 100;             //可选。改变图像的宽度。（伸展或缩小图像）</span></span><br><span class="line"><span class="undefined">        var imgHeight = 100;            //可选。改变图像的高度。（伸展或缩小图像）</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        imageOjb.onload = function()&#123;</span></span><br><span class="line"><span class="undefined">            //绘制图像(未设置宽高)</span></span><br><span class="line"><span class="undefined">            oContext.drawImage(imageOjb, x, y);</span></span><br><span class="line"><span class="undefined">            //绘制设置宽高后的图像</span></span><br><span class="line"><span class="undefined">            oContext.drawImage(imageOjb, x + 350, y + 50, imgWidth+100, imgHeight);</span></span><br><span class="line"><span class="undefined">            //剪切图像</span></span><br><span class="line"><span class="undefined">            oContext.drawImage(imageOjb, sx+50, sy+20, sWidth, sHeight, x + 50, y + 250, imgWidth, imgHeight);</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined">        imageOjb.src = "http://canvas.migong.org/wp-content/uploads/2015/12/avatar.jpg";</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="绘制文字"><a href="#绘制文字" class="headerlink" title="绘制文字"></a>绘制文字</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Text Font,Size,Color 文本大小，字体，颜色<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"text"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oText = document.getElementById("text");</span></span><br><span class="line"><span class="undefined">        var oContext = oText.getContext("2d");</span></span><br><span class="line"><span class="undefined">        var x = oText.width / 2;</span></span><br><span class="line"><span class="undefined">        var y = oText.height / 2;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.font = "40pt Microsoft JhengHei";            //设置文本大小 + 字体</span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = "tomato";                        //设置文本颜色</span></span><br><span class="line"><span class="undefined">        oContext.fillText("你好 Canvas", x - 150, y);         //绘制文本 + 文本 x 和 y 的坐标位置</span></span><br><span class="line"><span class="undefined">        //文本对齐方式 center|end|left|right|start</span></span><br><span class="line"><span class="undefined">        oContext.textAlign = "center";</span></span><br><span class="line"><span class="undefined">        //设置文本基线 alphabetic|top|hanging|middle|ideographic|bottom</span></span><br><span class="line"><span class="undefined">        oContext.textBaseline = "top";</span></span><br><span class="line"><span class="undefined">        oContext.fillText("center", x, y - 100);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.textAlign = "end";</span></span><br><span class="line"><span class="undefined">        oContext.fillText("end", x, y - 50);</span></span><br><span class="line"><span class="undefined">        //测量文本	</span></span><br><span class="line"><span class="undefined">        var oWidth = oContext.measureText("helala").width;</span></span><br><span class="line"><span class="undefined">        oContext.fillText("(" + oWidth + "px)", x, y + 50);</span></span><br><span class="line"><span class="undefined">        //无填充文本</span></span><br><span class="line"><span class="undefined">        //oContext.strokeStyle = "tomato";                      //文本线条颜色</span></span><br><span class="line"><span class="undefined">        //oContext.strokeText("你好 Canvas", x - 150, y);       //绘制无填充文本</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="改变位置"><a href="#改变位置" class="headerlink" title="改变位置"></a>改变位置</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Translate 改变/转变<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"translate"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oTranslate = document.getElementById("translate");</span></span><br><span class="line"><span class="undefined">        var oContext = oTranslate.getContext("2d");</span></span><br><span class="line"><span class="undefined">        var x = oTranslate.width / 2;</span></span><br><span class="line"><span class="undefined">        var y = oTranslate.height / 2;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oContext.fillRect(x - 150, y - 150, 150, 150);  //填充矩形</span></span><br><span class="line"><span class="undefined">        oContext.translate(70, 70);                     //重新映射矩形(x,y) 的位置</span></span><br><span class="line"><span class="undefined">        oContext.fillRect(x, y, 150, 150);              //(x,y) 的位置被重新映射（x+70,y+70）</span></span><br><span class="line"><span class="undefined">   		oContext.translate(-250,50);</span></span><br><span class="line"><span class="undefined">        oContext.fillRect(x,y,150,200);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Scale 缩放<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"scale"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oScale = document.getElementById("scale");</span></span><br><span class="line"><span class="undefined">        var oContext = oScale.getContext("2d");</span></span><br><span class="line"><span class="undefined">        var x = oScale.width / 2;</span></span><br><span class="line"><span class="undefined">        var y = oScale.height / 2;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="undefined">        oContext.save();                            //保存当前环境的状态</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oContext.strokeRect(100, 100, 25, 25);      //绘制矩形</span></span><br><span class="line"><span class="undefined">        oContext.scale(2,2);                        //将矩形(x,y)进行缩放(1=100%, 0.5=50%, 2=200%, 依次类推)</span></span><br><span class="line"><span class="undefined">        oContext.strokeRect(100, 100, 25, 25);      //大小*200% 和 位置*200%</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="undefined">        oContext.restore();                         //返回之前保存过的路径状态和属性</span></span><br><span class="line"><span class="undefined">        oContext.translate(x, y)                    //重新映射文本(x,y) 的位置</span></span><br><span class="line"><span class="undefined">        oContext.font = "20pt Microsoft JhengHei";</span></span><br><span class="line"><span class="undefined">        oContext.textAlign = "center";</span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oContext.scale(-1, 1);                      //翻转(x,y)</span></span><br><span class="line"><span class="undefined">        oContext.fillText("你好 Canvas", 0, 100);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="旋转-阴影-透明"><a href="#旋转-阴影-透明" class="headerlink" title="旋转+阴影+透明"></a>旋转+阴影+透明</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Rotate 旋转<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"rotate"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oRotate = document.getElementById("rotate");</span></span><br><span class="line"><span class="undefined">        var oContext = oRotate.getContext("2d");</span></span><br><span class="line"><span class="undefined">        var x = oRotate.width / 2;</span></span><br><span class="line"><span class="undefined">        var y = oRotate.height / 2;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oContext.rotate(Math.PI / 4);               //旋转矩形</span></span><br><span class="line"><span class="undefined">                oContext.shadowColor = "#999";      //设置或返回用于阴影的颜色</span></span><br><span class="line"><span class="undefined">        oContext.shadowBlur = 40;           //设置或返回用于阴影的模糊级别</span></span><br><span class="line"><span class="undefined">        oContext.shadowOffsetX = 25;        //设置或返回阴影距形状的水平（x）距离</span></span><br><span class="line"><span class="undefined">        oContext.shadowOffsetY = 15;        //设置或返回阴影距形状的垂直（y）距离</span></span><br><span class="line"><span class="undefined">        oContext.fillRect(x, y - 100, 150, 100);    //填充矩形</span></span><br><span class="line"><span class="undefined">                oContext.globalAlpha = 0.7;     //设置绘图的透明值</span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.arc(x, y-100, 50, 0, 2 * Math.PI, false);</span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = "black";</span></span><br><span class="line"><span class="undefined">        oContext.fill();</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="裁剪"><a href="#裁剪" class="headerlink" title="裁剪"></a>裁剪</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Clipping Region 剪切区域<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"clip"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oClip = document.getElementById("clip");</span></span><br><span class="line"><span class="undefined">        var oContext = oClip.getContext("2d");</span></span><br><span class="line"><span class="undefined">        var x = oClip.width / 2;</span></span><br><span class="line"><span class="undefined">        var y = oClip.height / 2;</span></span><br><span class="line"><span class="undefined">        var radius = 100;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.save();        //保存当前环境的状态</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //第一个圆</span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.arc(x, y, radius, 0, 2 * Math.PI,false);</span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = "tomato";</span></span><br><span class="line"><span class="undefined">        oContext.fill();</span></span><br><span class="line"><span class="undefined">        oContext.clip();        // 按照第一个圆裁剪剪切任意形状和尺寸的区域</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //第二个圆（与第一个圆部分重叠并覆盖）</span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.arc(x + 100, y, radius, 0, 2 * Math.PI,false);</span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = "#333";</span></span><br><span class="line"><span class="undefined">        oContext.fill();</span></span><br><span class="line"><span class="undefined">        //oContext.clip();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //第三个圆（与第一个和第二个圆部分重叠并覆盖）</span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.arc(x, y + 100, radius, 0, 2 * Math.PI,false);</span></span><br><span class="line"><span class="undefined">        oContext.fillStyle = "cornsilk";</span></span><br><span class="line"><span class="undefined">        oContext.fill();</span></span><br><span class="line"><span class="undefined">        //oContext.clip();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        oContext.restore();     //返回之前保存过的路径状态和属性</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //第四个圆（无填充，与第一个圆位置相同，并覆盖前三个圆之上）</span></span><br><span class="line"><span class="undefined">        oContext.beginPath();</span></span><br><span class="line"><span class="undefined">        oContext.arc(x, y, radius, 0, 2 * Math.PI,false);</span></span><br><span class="line"><span class="undefined">        oContext.lineWidth = 10;</span></span><br><span class="line"><span class="undefined">        oContext.strokeStyle = "#CCC";</span></span><br><span class="line"><span class="undefined">        oContext.stroke();</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="获取图像数据"><a href="#获取图像数据" class="headerlink" title="获取图像数据"></a>获取图像数据</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Image Data 图像数据/对象<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"getImageData"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        function drawImage (imageObj) &#123;</span></span><br><span class="line"><span class="undefined">            var oGetImageData = document.getElementById("getImageData");</span></span><br><span class="line"><span class="undefined">            var oContext = oGetImageData.getContext("2d");</span></span><br><span class="line"><span class="undefined">            var imageX = oGetImageData.width / 2 - 100;</span></span><br><span class="line"><span class="undefined">            var imageY = oGetImageData.height / 2 - 100;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            oContext.drawImage(imageObj, imageX, imageY);     //绘制图像</span></span><br><span class="line"><span class="undefined">            //返回 ImageData 对象，该对象为 imageObj 的像素数据</span></span><br><span class="line"><span class="undefined">            var imageData = oContext.getImageData(imageX, imageY, imageObj.width, imageObj.height);</span></span><br><span class="line"><span class="undefined">            //注：使用 getImageData() 方法时源代码与图像对象需在同一个服务器上，否则会报错</span></span><br><span class="line"><span class="undefined">            var data = imageData.data;  //ImageData 对象的图像数据</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            //循环图像数据（rgb）颜色值</span></span><br><span class="line"><span class="xml">            for (var i = 0; i <span class="tag">&lt; <span class="attr">data.length</span>; <span class="attr">i</span> += <span class="string">4)</span> &#123;</span></span></span><br><span class="line"><span class="undefined">                var red = data[i];          //red</span></span><br><span class="line"><span class="undefined">                var green = data[i + 1];    //green</span></span><br><span class="line"><span class="undefined">                var blue = data[i + 2];     //blue</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">                //在控制台输出图像数据（rgb）颜色值</span></span><br><span class="line"><span class="undefined">                //console.log(red,green,blue)</span></span><br><span class="line"><span class="undefined">            &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            //输出图像对象共有多少个像素点</span></span><br><span class="line"><span class="undefined">            oContext.font = "14pt Microsoft JhengHei";</span></span><br><span class="line"><span class="undefined">            oContext.fillStyle = "tomato";</span></span><br><span class="line"><span class="undefined">            oContext.fillText("共有" + data.length + "个图像数据", imageX, imageY + 230);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var imageObj = new Image();</span></span><br><span class="line"><span class="undefined">        //imageObj 对象加载完成执行 drawImage()</span></span><br><span class="line"><span class="undefined">        imageObj.onload = function ()&#123;</span></span><br><span class="line"><span class="undefined">            drawImage(this);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        imageObj.src = "http://canvas.migong.org/wp-content/uploads/2015/12/avatar.jpg";</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="绘制动画"><a href="#绘制动画" class="headerlink" title="绘制动画"></a>绘制动画</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>绘制动画，点击开始/暂停<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"anim"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //绘制矩形函数传参</span></span><br><span class="line"><span class="undefined">        function drawRect(myRect,oContext)&#123;</span></span><br><span class="line"><span class="undefined">            oContext.beginPath();</span></span><br><span class="line"><span class="undefined">            oContext.rect(myRect.x,myRect.y,myRect.width,myRect.height);</span></span><br><span class="line"><span class="undefined">            oContext.fillStyle = "tomato";</span></span><br><span class="line"><span class="undefined">            oContext.fill();</span></span><br><span class="line"><span class="undefined">            oContext.lineWidth = myRect.borderWidth;</span></span><br><span class="line"><span class="undefined">            oContext.strokeStyle = "#333";</span></span><br><span class="line"><span class="undefined">            oContext.stroke();</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //动画</span></span><br><span class="line"><span class="undefined">        function anim(myRect,oAnim,oContext,startTime)&#123;</span></span><br><span class="line"><span class="undefined">            if (runAnimation.value) &#123;</span></span><br><span class="line"><span class="undefined">                //当前时间戳减去上一秒所获得的时间戳，随之动画不断执行，time 数值会越来越大</span></span><br><span class="line"><span class="undefined">                var time = (new Date()).getTime() - startTime;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">                //匀速动画（运行前注释“循环动画”代码段）</span></span><br><span class="line"><span class="undefined">                /*</span></span><br><span class="line"><span class="undefined">                var linearSpeed = 100;      //运行速度</span></span><br><span class="line"><span class="undefined">                var newX = linearSpeed * time / 1000;</span></span><br><span class="line"><span class="undefined">                //判断距离，当 newX &lt; Canvas 宽度 - 矩形宽度 - 边框宽度时改变矩形X轴坐标</span></span><br><span class="line"><span class="undefined">                if (newX &lt; oAnim.width - myRect.width - myRect.borderWidth / 2) &#123;</span></span><br><span class="line"><span class="undefined">                    myRect.x = newX;</span></span><br><span class="line"><span class="undefined">                &#125;;</span></span><br><span class="line"><span class="undefined">                */</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">                //循环动画（运行前注释“匀速动画”代码段）</span></span><br><span class="line"><span class="undefined">                </span></span><br><span class="line"><span class="undefined">                var amplitude = 150;</span></span><br><span class="line"><span class="undefined">                var period = 2000;</span></span><br><span class="line"><span class="undefined">                var centerX = oAnim.width / 2 - myRect.width / 2;</span></span><br><span class="line"><span class="undefined">                var nextX = amplitude * Math.sin(time * 2 * Math.PI / period) + centerX;</span></span><br><span class="line"><span class="undefined">                myRect.x = nextX;</span></span><br><span class="line"><span class="undefined">                </span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">                //清空矩形</span></span><br><span class="line"><span class="undefined">                oContext.clearRect(0, 0, oAnim.width, oAnim.height);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">                //绘制矩形</span></span><br><span class="line"><span class="undefined">                drawRect(myRect,oContext);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">                //绘制动画</span></span><br><span class="line"><span class="undefined">                requestAnimationFrame(function()&#123;</span></span><br><span class="line"><span class="undefined">                    anim(myRect,oAnim,oContext,startTime);</span></span><br><span class="line"><span class="undefined">                &#125;);</span></span><br><span class="line"><span class="undefined">            &#125;;</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oAnim = document.getElementById("anim");</span></span><br><span class="line"><span class="undefined">        var oContext = oAnim.getContext("2d");</span></span><br><span class="line"><span class="undefined">        var myRect = &#123;</span></span><br><span class="line"><span class="undefined">            x: 3,</span></span><br><span class="line"><span class="undefined">            y: 100,</span></span><br><span class="line"><span class="undefined">            width: 100,</span></span><br><span class="line"><span class="undefined">            height: 50,</span></span><br><span class="line"><span class="undefined">            borderWidth: 3</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var runAnimation = &#123;</span></span><br><span class="line"><span class="undefined">            value: false</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined">        //监听 Canvas 是否被点击</span></span><br><span class="line"><span class="undefined">        document.getElementById("anim").addEventListener("click",function()&#123;</span></span><br><span class="line"><span class="undefined">            runAnimation.value = !runAnimation.value;</span></span><br><span class="line"><span class="undefined">            if (runAnimation.value) &#123;</span></span><br><span class="line"><span class="undefined">                //获取当前时间戳，也可以简写成 var startTime = + new Date()</span></span><br><span class="line"><span class="undefined">                var startTime = (new Date()).getTime();</span></span><br><span class="line"><span class="undefined">                anim(myRect,oAnim,oContext,startTime);</span></span><br><span class="line"><span class="undefined">            &#125;;</span></span><br><span class="line"><span class="undefined">        &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //绘制矩形</span></span><br><span class="line"><span class="undefined">        drawRect(myRect,oContext);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="获取鼠标位置"><a href="#获取鼠标位置" class="headerlink" title="获取鼠标位置"></a>获取鼠标位置</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>获取鼠标指针移动坐标<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        *&#123;</span></span><br><span class="line"><span class="undefined">            margin: 0;</span></span><br><span class="line"><span class="undefined">            padding: 0;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        .container&#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"getMousePos"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        var oGetMousePos = document.getElementById("getMousePos");</span></span><br><span class="line"><span class="undefined">        var oContext = oGetMousePos.getContext("2d");</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //打印鼠标指针坐标</span></span><br><span class="line"><span class="undefined">        function writeMessage (oGetMousePos,message) &#123;</span></span><br><span class="line"><span class="undefined">            oContext.clearRect(0, 0, oGetMousePos.width, oGetMousePos.height);</span></span><br><span class="line"><span class="undefined">            oContext.font = "20pt Microsoft JhengHei";</span></span><br><span class="line"><span class="undefined">            oContext.fillStyle = "tomato";</span></span><br><span class="line"><span class="undefined">            oContext.fillText(message, 10, 25);</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined">        //获取鼠标指针坐标</span></span><br><span class="line"><span class="undefined">        function getMousePos (oContext, evt) &#123;</span></span><br><span class="line"><span class="undefined">            var rect = oGetMousePos.getBoundingClientRect();</span></span><br><span class="line"><span class="undefined">            return &#123;</span></span><br><span class="line"><span class="undefined">                x: evt.clientX - rect.left,</span></span><br><span class="line"><span class="undefined">                y: evt.clientY - rect.top</span></span><br><span class="line"><span class="undefined">            &#125;;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        //监听鼠标移动</span></span><br><span class="line"><span class="undefined">        oGetMousePos.addEventListener("mousemove", function(evt)&#123;</span></span><br><span class="line"><span class="undefined">            var mousePos = getMousePos(oGetMousePos, evt);</span></span><br><span class="line"><span class="undefined">            var message = "鼠标指针坐标：" + mousePos.x + "," + mousePos.y;</span></span><br><span class="line"><span class="undefined">            writeMessage(oGetMousePos, message);</span></span><br><span class="line"><span class="undefined">        &#125;,false);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>鼓励一下这只小可爱吧^_^</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="AlisaBen 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="AlisaBen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/canvas/" rel="tag"># canvas</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/19/leetcode-string-easy-22-541/" rel="next" title="leetcode-string-easy-22-541">
+                <i class="fa fa-chevron-left"></i> leetcode-string-easy-22-541
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODcyMC8xNTI0OA=="></div>
+    </div>
+
+  
+
+ 
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://pd2lvob9v.bkt.clouddn.com/10797029.jpg"
+                alt="AlisaBen" />
+            
+              <p class="site-author-name" itemprop="name">AlisaBen</p>
+              <p class="site-description motion-element" itemprop="description">Folks in the stories had lots of chances of turning back, only they didn't.They kept going...because they were holding on to something</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AlisaBen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yafang1826@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/weixin_36926779" target="_blank" title="csdn">
+                      
+                        <i class="fa fa-fw fa-globe"></i>csdn</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jizhi.im/blog/post/deep_reinforcement_learning" title="深度增强学习前沿算法思想" target="_blank">深度增强学习前沿算法思想</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jizhi.im/blog/post/rl_intro" title="极简增强学习新手教程" target="_blank">极简增强学习新手教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jair.org/index.php/jair" title="增强学习算法调查的研究" target="_blank">增强学习算法调查的研究</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#绘制直线"><span class="nav-number">1.</span> <span class="nav-text">绘制直线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置直线线帽lineCap"><span class="nav-number">1.1.</span> <span class="nav-text">设置直线线帽lineCap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二次贝塞尔曲线quadraticCurveTo"><span class="nav-number">1.2.</span> <span class="nav-text">二次贝塞尔曲线quadraticCurveTo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三次贝塞尔曲线bezierCurveTo"><span class="nav-number">1.3.</span> <span class="nav-text">三次贝塞尔曲线bezierCurveTo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线条拐角lineJoin"><span class="nav-number">1.4.</span> <span class="nav-text">线条拐角lineJoin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#圆角arcTo"><span class="nav-number">1.5.</span> <span class="nav-text">圆角arcTo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绘制矩形"><span class="nav-number">2.</span> <span class="nav-text">绘制矩形</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绘制圆形"><span class="nav-number">3.</span> <span class="nav-text">绘制圆形</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#颜色渐变createLinearGradient"><span class="nav-number">4.</span> <span class="nav-text">颜色渐变createLinearGradient</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性渐变"><span class="nav-number">4.1.</span> <span class="nav-text">线性渐变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#放射渐变createRadialGradient"><span class="nav-number">4.2.</span> <span class="nav-text">放射渐变createRadialGradient</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模式元素"><span class="nav-number">5.</span> <span class="nav-text">模式元素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绘制图像drawImage"><span class="nav-number">6.</span> <span class="nav-text">绘制图像drawImage</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绘制文字"><span class="nav-number">7.</span> <span class="nav-text">绘制文字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#改变位置"><span class="nav-number">8.</span> <span class="nav-text">改变位置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缩放"><span class="nav-number">9.</span> <span class="nav-text">缩放</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#旋转-阴影-透明"><span class="nav-number">10.</span> <span class="nav-text">旋转+阴影+透明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#裁剪"><span class="nav-number">11.</span> <span class="nav-text">裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取图像数据"><span class="nav-number">12.</span> <span class="nav-text">获取图像数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绘制动画"><span class="nav-number">13.</span> <span class="nav-text">绘制动画</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取鼠标位置"><span class="nav-number">14.</span> <span class="nav-text">获取鼠标位置</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+    本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlisaBen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共41.4k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
