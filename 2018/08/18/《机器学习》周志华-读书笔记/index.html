@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="AlisaBen&#39;s Blog">
 <meta property="og:description" content="希望可以坚持住，两个月为期">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-21T13:46:26.388Z">
+<meta property="og:updated_time" content="2018-08-21T13:51:40.173Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《机器学习》周志华-读书笔记">
 <meta name="twitter:description" content="希望可以坚持住，两个月为期">
@@ -492,7 +492,7 @@ $(function() {
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,512 字
+                  1,537 字
                 </span>
               
 
@@ -643,6 +643,7 @@ $(function() {
 <script type="math/tex; mode=display">\nabla _{\theta _j}J(\theta)=-\frac {1}{m}\sum _{i=1}^{m}x_i(l\{y_i=j\}-p(y_i=j|x_i;\theta))</script><p>$\nabla _{\theta _j}$是一个向量，它的第l个元素$\frac {\partial J(\theta)}{\partial \theta_{jl}}$是$J(\theta)$对$\theta _j$的第l个分量的偏导数<br>每一步迭代更新$\theta$:</p>
 <script type="math/tex; mode=display">\theta _j=\theta _j-\alpha \nabla _{\theta _j}J(\theta)j=(1,...,k)</script><p>通过添加一个权重衰减项$\frac {\lambda}{2}\sum _{i=1}^{k}\sum _{j=0}^{n}\theta _{ij}^2$来修改代价函数，惩罚过大的参数值，将代价函数变成严格的凸函数，保证有唯一解，保证迭代收敛到全局最优解</p>
 <script type="math/tex; mode=display">J(\theta)=-\frac {1}{m}[\sum _{i=1}^{m}\sum _{j=1}^{k}l\{y_i=j\}\ln \frac {e^{\theta _j^Tx_i}}{\sum _{l=1}^{k}e^{\theta _l^Tx_i}}]+\frac {\lambda}{2}\sum _{i=1}^{k}\sum _{j=0}^{n}\theta _{ij}^2</script><p>其导数为</p>
+<script type="math/tex; mode=display">\nabla _{\theta _j}J(\theta)=-\frac {1}{m}\sum _{i=1}^{m}x_i(l\{y_i=j\}-p(y_i=j|x_i;\theta))+\lambda \theta _j</script><p>注：如果类别间互斥，则使用softmax回归；否则训练k个二元分类器</p>
 
       
     </div>
