@@ -87,18 +87,18 @@
 
 
 
-<meta name="description" content="希望可以坚持住，两个月为期">
+<meta name="description" content="《机器学习-周志华》+《机器学习实战》">
 <meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《机器学习》周志华-读书笔记">
 <meta property="og:url" content="https://AlisaBen.github.io/2018/08/18/《机器学习》周志华-读书笔记/index.html">
 <meta property="og:site_name" content="AlisaBen&#39;s Blog">
-<meta property="og:description" content="希望可以坚持住，两个月为期">
+<meta property="og:description" content="《机器学习-周志华》+《机器学习实战》">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-22T06:33:51.075Z">
+<meta property="og:updated_time" content="2018-08-22T15:04:28.615Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《机器学习》周志华-读书笔记">
-<meta name="twitter:description" content="希望可以坚持住，两个月为期">
+<meta name="twitter:description" content="《机器学习-周志华》+《机器学习实战》">
 
 
 
@@ -492,7 +492,7 @@ $(function() {
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4,210 字
+                  4,211 字
                 </span>
               
 
@@ -530,15 +530,15 @@ $(function() {
 
       
         <blockquote>
-<p>希望可以坚持住，两个月为期</p>
+<p>《机器学习-周志华》+《机器学习实战》</p>
 </blockquote>
 <a id="more"></a>
 <h1 id="线性模型"><a href="#线性模型" class="headerlink" title="线性模型"></a>线性模型</h1><h2 id="对数几率回归"><a href="#对数几率回归" class="headerlink" title="对数几率回归"></a>对数几率回归</h2><p>对数几率回归的初衷：找到一个单调可微的函数将分类任务的真实标记和线性回归模型预测值联系起来，比如sigmoid函数</p>
 <p>广义线性模型：</p>
-<script type="math/tex; mode=display">y = g^{-1}(\vec w^T+b)</script><p>对数几率函数：</p>
+<script type="math/tex; mode=display">y = g^{-1}(\vec w^Tx+b)</script><p>对数几率函数：</p>
 <script type="math/tex; mode=display">y = \frac {1}{1+e^{-z}}</script><p>将对数几率函数引入广义线性模型就得到了对数几率回归</p>
 <p>变化对数几率回归为：</p>
-<script type="math/tex; mode=display">\ln\frac {y}{1-y} = \vec w^T+b</script><p>其中</p>
+<script type="math/tex; mode=display">\ln\frac {y}{1-y} = \vec w^Tx+b</script><p>其中</p>
 <script type="math/tex; mode=display">\frac {y}{1-y}</script><p>表示样本<code>x</code>为正例的概率，所以称</p>
 <script type="math/tex; mode=display">\ln\frac {y}{1-y}</script><p>为对数几率</p>
 <p>对数几率的优点：</p>
@@ -550,9 +550,9 @@ $(function() {
 <p>推导过程：</p>
 <script type="math/tex; mode=display">E_{(w,b)}=\sum_{i=1}^{m}(y_i-wx_i-b)^2</script><script type="math/tex; mode=display">\frac {\partial E_{(w,b)}}{\partial w}=\sum_{i=1}^{m}2(y_i-wx_i-b)(-x_i)</script><script type="math/tex; mode=display">=2w\sum_{i=1}^{m}x_i^2-2\sum_{i=1}^{m}x_i(y_i-b)</script><script type="math/tex; mode=display">\frac {\partial E_{(w,b)}}{\partial b}=-2\sum_{i=1}^{m}(y_i-wx_i-b)</script><script type="math/tex; mode=display">=-2\sum_{i=1}^{m}(y_i-wx_i)+2\sum_{i=1}^{m}b</script><script type="math/tex; mode=display">=2mb-2\sum_{i=1}^{m}(y_i-wx_i)</script><p>对凸函数求最优解，对上面两个式子取零求w,b</p>
 <script type="math/tex; mode=display">w=\frac {\sum_{i=1}^{m}y_i(x_i-\bar x)}{\sum_{i=1}^{m}x_i^2-m\bar x^2}</script><script type="math/tex; mode=display">b=\frac {1}{m}\sum_{i=1}^{m}(y_i-wx_i)</script><h2 id="确定对数几率回归中的w和b"><a href="#确定对数几率回归中的w和b" class="headerlink" title="确定对数几率回归中的w和b"></a>确定对数几率回归中的w和b</h2><p>将对数几率回归重写为</p>
-<script type="math/tex; mode=display">\ln\frac {p (y=1|x)}{p(y=0|x)}=w^T+b</script><p>那么</p>
+<script type="math/tex; mode=display">\ln\frac {p (y=1|x)}{p(y=0|x)}=w^Tx+b</script><p>那么</p>
 <script type="math/tex; mode=display">p(y=1|x)=\frac {1}{1+e^{-(w^Tx+b)}}</script><script type="math/tex; mode=display">p(y=0|x)=1-p(y=1|x)=\frac {1}{1+e^{w^Tx+b}}</script><p>第i个样本可写为</p>
-<script type="math/tex; mode=display">p(y_i=1|x_i)=\frac {1}{1+e^{-(w^Tx_i+b)}}</script><script type="math/tex; mode=display">p(y_i=0|x_i)=\frac {1}{1+e^{w^Tx+b}}</script><p>利用极大似然估计w,b，将m个样本的概率相乘得到</p>
+<script type="math/tex; mode=display">p(y_i=1|x_i)=\frac {1}{1+e^{-(w^Tx_i+b)}}</script><script type="math/tex; mode=display">p(y_i=0|x_i)=\frac {1}{1+e^{w^Tx_i+b}}</script><p>利用极大似然估计w,b，将m个样本的概率相乘得到</p>
 <script type="math/tex; mode=display">L(w,b)=\prod_{i=1}^{m}p(y_i|x_i;w,b)</script><p>对上式取对数得到</p>
 <script type="math/tex; mode=display">l(w,b)=\ln L(w,b)=\ln {\prod_{i=1}^{m}p(y_i|x_i;w,b)}=\sum_{i=1}^{m}\ln p(y_i|x_i;w,b)</script><script type="math/tex; mode=display">\beta=(w;b)</script><script type="math/tex; mode=display">\hat x=(x;1)</script><script type="math/tex; mode=display">p_1(\hat x_i;\beta)=p(y_i=1|\hat x_i;\beta)</script><script type="math/tex; mode=display">p_0(\hat x_i;\beta)=p(y_i=0|\hat x_i;\beta)</script><script type="math/tex; mode=display">p(y_i|\hat x_i;\beta)=p(y_i|x_i;w,b)=y_ip_1(\hat x_i;\beta)+(1-y_i)p_0(\hat x_i;\beta)</script><script type="math/tex; mode=display">y_i={[0,1]}</script><p>所以将对数似然公式重写</p>
 <script type="math/tex; mode=display">l(\beta) = \sum_{i=1}^{m}\ln p(y_i|\hat x_i;\beta)
@@ -839,7 +839,7 @@ $(function() {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -861,7 +861,7 @@ $(function() {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -993,7 +993,7 @@ $(function() {
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共45.0k字</span>
+  <span class="post-count">博客全站共54.5k字</span>
 </div>
 
         

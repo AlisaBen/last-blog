@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "094fd489"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="深度学习,强化学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="希望这篇翻译能够帮我自己理解,持续更新">
+<meta name="keywords" content="深度学习,强化学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度强化学习实战-中文翻译">
+<meta property="og:url" content="https://AlisaBen.github.io/2018/08/22/深度强化学习实战-中文翻译/index.html">
+<meta property="og:site_name" content="AlisaBen&#39;s Blog">
+<meta property="og:description" content="希望这篇翻译能够帮我自己理解,持续更新">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/22/深度强化学习实战-中文翻译/Figure1.1.png">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/22/深度强化学习实战-中文翻译/Figure1.2.png">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/22/深度强化学习实战-中文翻译/Figure1.3.png">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/22/深度强化学习实战-中文翻译/Figure1.4.png">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/22/深度强化学习实战-中文翻译/Figure1.5.png">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/22/深度强化学习实战-中文翻译/Figure1.6.png">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/22/深度强化学习实战-中文翻译/Figure1.7.png">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/22/深度强化学习实战-中文翻译/Figure1.8.png">
+<meta property="og:updated_time" content="2018-08-22T15:08:31.919Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度强化学习实战-中文翻译">
+<meta name="twitter:description" content="希望这篇翻译能够帮我自己理解,持续更新">
+<meta name="twitter:image" content="https://alisaben.github.io/2018/08/22/深度强化学习实战-中文翻译/Figure1.1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'cool girl'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://AlisaBen.github.io/2018/08/22/深度强化学习实战-中文翻译/"/>
+
+
+
+
+
+  <title>深度强化学习实战-中文翻译 | AlisaBen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4425f02e3aceec56c86c2be922faf390";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+     <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = $(document.getElementById(url)).text() + ': 0';
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+});
+</script>
+  
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AlisaBen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">自诩为有益之事，永不知生之有涯</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://AlisaBen.github.io/2018/08/22/深度强化学习实战-中文翻译/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AlisaBen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://pd2lvob9v.bkt.clouddn.com/10797029.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlisaBen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深度强化学习实战-中文翻译</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-22T23:00:47+08:00">
+                2018-08-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/22/深度强化学习实战-中文翻译/" class="leancloud_visitors" data-flag-title="深度强化学习实战-中文翻译">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  9,568 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  32 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>希望这篇翻译能够帮我自己理解,持续更新</p>
+</blockquote>
+<a id="more"></a>
+<p>第一部分 基础</p>
+<h1 id="第一章-什么是强化学习"><a href="#第一章-什么是强化学习" class="headerlink" title="第一章 什么是强化学习"></a>第一章 什么是强化学习</h1><h2 id="强化学习发展历程"><a href="#强化学习发展历程" class="headerlink" title="强化学习发展历程"></a>强化学习发展历程</h2><p>1936年，英国数学家阿兰·图灵发表了一篇题为“论可计算”的论文数字，适用于Entscheidungs问题，“他在其中开发了一个算法的数学描述，后来被称为图灵机。他的<br>图灵机的概念成为现代电子技术发展的基础电脑。有趣的是，他最初开发的图灵机作为解决问题的工具数学问题，不是因为他想发明一个新的计算机科学领域。尽管如此，他和其他许多人都认识到这种新计算理念的力量立刻提出了这些新计算系统是否会成为问题的问题像人类一样聪明。阿兰图灵自己开始了人工智能领域随后在1950年出版了“计算机械与智能”论文开头的问题是，“机器可以思考吗？”棋盘游戏一直都是被认为是一项智力运动，因此很自然地将其作为一种测试平台机器可以变得聪明。编写国际象棋游戏算法的几次尝试是在随后的几年中制定的，从仅描述的算法开始纸张，必须由一个人按照一系列规则运行，直到具有里程碑意义的失败。1996年，国际象棋世界冠军加里卡斯帕罗夫采用IBM的DeepBlue算法。</p>
+<p><img src="/2018/08/22/深度强化学习实战-中文翻译/Figure1.1.png" alt="图片"></p>
+<p>图1.1 这描绘了单磁带图灵机的工作原理。 标记为“q1”的形状是读写可以向左或向右移动磁带的磁头，磁带的打印值均匀分布在单元格中。读/写head遵循一组预定义的规则，可以读取磁带上的某些值，擦除和写入新值录影带。 这个简单的模型捕捉了计算的本质，并开始了计算机科学领域。虽然这些国际象棋游戏机在当时令人印象深刻，但它们是（并且继续<br>是）主要基于穷举搜索和预编程逻辑而不是执行任何类似人类的分析或策略。实际上，大多数被称为人工的早期的情报只是硬编码的逻辑和启发式。第一个试图对生物神经网络及南无的描述人工神经网络出现在20世纪40年代，并将成为机器学习领域的许多算法之一。关于神经网络如何学习的一个特别有影响的理论是由心理学家唐纳德希伯在1949年出版的“行为组织”一书中提出。希伯提出当两个神经元反复发射时，学习发生在神经元的水平电化学信号称为动作电位同步和近距离，然后这两个神经元之间的因果关系将得到加强。他的理论后来被称为Hebbian学习，并且仍然被认为是重要的支持它的经验证据。</p>
+<p><img src="/2018/08/22/深度强化学习实战-中文翻译/Figure1.2.png" alt="图片"></p>
+<p>图1.2 第一个神经网络之一的图表，称为ADALINE，用于滤除回声电话线。网络简单地计算其输入变量的加权和，如果总和是否比某些阈值参数更大，它将返回1，否则返回0（称为步进函数）。 通过定义一些错误功能，你可以按照简单的规则修改阈值参数，以减少错误并提高算法的性能。</p>
+<p>借助一些理论神经科学，第一个人工神经网络在20世纪50年代的一些最早的计算机上实现了。值得注意的是，在1959年，斯坦福大学的研究人员创造了神经网络的第一个商业应用称为ADALINE的算法，用于滤除电话线信号中的回声并且今天仍在使用。任何神经网络算法，实际上大多数机器学习算法，涉及控制其行为的参数。为了神经网络执行任何所需的任务，必须“训练”网络的参数才能将其设置为正确的值。通过简单的启发式方法训练ADALINE和其他早期神经网络搜索程序，虽然有些人采用了后来严格制定的程序并定义为反向传播。反向传播技术的历史有点虽然不确定，但直到20世纪80年代中期它才能进行更多的训练才被广泛采用。它能够训练比ADALINE更复杂的神经网络，并且仍然是神经网络的标准训练程序。</p>
+<h2 id="有监督和无监督学习"><a href="#有监督和无监督学习" class="headerlink" title="有监督和无监督学习"></a>有监督和无监督学习</h2><p>与大多数神经网络和其他类型的机器学习算法一样，ADALINE是一种有监督的学习算法。有监督学习算法以师生模式进行训练。例如，如果你想构建一个算法将一个图像数据集划分成特定的类别，那么老师将会针对图像数据集执行算法来分类，然后算法会得到一个预测值，基于预测精度，老师会提供纠正反馈，以便提高预测精度。通过许多图像示例执行此操作，算法最终会表现得很好。更准确地说，学习算法是给定输入数据并产生输出。然后通过某个目标评估输出将算法的输出与已知的正确或标记输出进行比较，函数输出有多错误的度量（即错误）。然后更新算法的参数以最小化目标产生的误差功能，通常使用反向传播技术。因此，对每个监督学习任务，您需要两组数据：要学习的数据和标记数据（即正确的数据）无论问题是什么的答案）。必须生成标签数据并进行策划人类专门用于训练算法，而要学习的数据可以从“环境”获得，例如电话线信号。最大规模的商业应用需要至少数万甚至数百万和数十亿标记的训练数据行以在其任务中获得令人满意的准确性。</p>
+<p>相反，无监督学习算法试图从数据中学习东西，而没有得到老师的明确反馈。无监督的最常见形式是聚类，其试图从数据集中找到相关数据的聚类。更现代和更复杂的无监督学习技巧包括一种称为自动编码器的神经网络，它可以自动学习数据中的复杂模式。尽管如此，无监督的方法在实用性方面受到限制，难以操作它们。 无监督算法可能会用你的数据学到一些有趣的东西，但是如果你没有告诉它你想要它做什么，它将不能把图像数据集分成你想要的类别。</p>
+<p>有监督的学习一直是机器学习的主要形式。然而，在我们寻求艾伦·图灵梦寐以求的智能机器方面，这是最成功的商业用途。当然是想要发展智能的一个主要原因，机器是他们可以做我们还不知道该怎么做的事情。这是监督学习的局限性;必须已经有一位老师知道如何做到这一点任务可以教机器。如果机器学会了如何完成任务，那么它当然是非常有用，因为它可能比人类更快，更便宜，误差更小，但是它仍然无法学习如何做任何我们还不知道该怎么做的事情。这些有监督学习算法必然是针对特定领域的。</p>
+<p><img src="/2018/08/22/深度强化学习实战-中文翻译/Figure1.3.png" alt="图片"></p>
+<p>图1.3 监督学习是一种表现出师生关系的算法。算法通过老师给出明确的反馈来学习。 无监督学习算法能够在某种程度上自我教导，并自己学习一些数据。</p>
+<p>显然，人类具有监督和无监督学习的方面。在学校学习知识是师生情况的一个例子。然而，无监督的学习对人类的进步有着重要影响：创造新的知识，新技能，艺术和创造力。必须有第一个学习的东西在能够教它之前让他们自己学习。有监督的学习可以帮助我们提高效率，节省了我们的时间和资源，从而为我们提供了更多的资源来投资于创造，但确实如此，不会给我们人工智能（AGI），机器将成为我们的知识同行而不仅仅是自动化工具。但即使你完全有实际意识，并且对AGI没有兴趣，监督学习仍然不能令人满意，因为它受到限制：我们可以提供多少培训数据;就像可以上学的学生人数一样，受到教师人数的限制。有时我们只是没有资源来生产标记的数据集，或这样做超过了使用算法的好处。</p>
+<p>例如，作者的妻子之一是神经科学家，他使用花式显微镜对活体啮齿动物的神经元进行成像。 显微镜产生数十亿字节的视频数据，必须通过手动识别和描绘神经元进行精心分析，以产生有关神经元特征的定量数据。最近发表了一篇机器学习论文，其中论文的作者开发了一种可以自动生成的神经网络，能够识别这些视频中的神经元。 然而，它是一个监督神经网络，要求每个用户提供数千个手动识别神经元的标记数据集。 作者自己指出，这个过程可能需要10个多小时（乐观）。如果你不得不多次进行这种类型的实验，那么如此重要的时间投资可能会在长期内得到回报，没有一个忙碌的科学家想冒险花费整整一个工作日来为不能保证工作的算法构建训练数据集。</p>
+<p>或许更有说明性的监督学习的不足之处在于教授如何驾驶汽车或操作机器人的算法。 假设您想要一辆汽车通过分析视频输入来学习如何驾驶（即没有其他传感器，如雷达和激光雷达）; 这实际上是特斯拉目前用于开发自动驾驶软件的策略。汽车必须连续控制方向盘并不断调整加速器或断开。您将如何收集此任务的培训数据？这是一个控制任务（或决策任务），而不是预测或分类任务，它是监督学习的基础。</p>
+<p>在传统的监督学习任务中，环境得到精确管理，只有算法可以访问我们策划的数据，并且每个数据都是完全独立的（即我们可以任意删除或添加数据，而不会显着影响算法的整体性能）。在控制任务中，环境基本上不受管理并且“单独”生成数据并且可能是概率性的。在我们的自动驾驶汽车示例中，算法从其摄像机接收的数据不是由人产生的，而是由周围环境的自然演变产生的，这是时间的函数，这在很大程度上是不可预测的。此外，如果没有一堆昂贵的传感器，汽车只能对周围环境进行不完整的观察。教授算法在每个时刻应该做什么是完全不可行的，例如在给定摄像机当前记录的情况下方向盘应该旋转的确切数量。</p>
+<h2 id="控制任务中的问题结构"><a href="#控制任务中的问题结构" class="headerlink" title="控制任务中的问题结构"></a>控制任务中的问题结构</h2><p>这让我们回到了本章开头的开创性人工智能研究员Marvin Minsky的话。许多早期的人工智能算法只不过是人类可以轻易遵循的硬编码规则。神经网络和其他学习算法的出现使我们能够通过给出正确的答案来教授算法如何做某事，告诉它有多么错误，并让它自己更新，以免下次错误。这使我们不必编制和编写一套固定的规则来解决问题，并为我们提供了更大的灵活性。但它仍然是一个非常程序化的过程：输入一些数据，获得输出，根据我们对正确答案的了解产生错误值，然后使用反向传播等技术更新算法。如果我们可以为算法提供一个高级目标或目标并让它弄清楚细节怎么办？我们希望能够像Marvin Minsky那样做目标导向的编程，他们认为这将是未来。</p>
+<p>强化学习领域开始意识到想象的未来。在强化学习，我们不需要给算法提供一堆标记数据来学习一些任务，我们只需要能够定义环境中成功的样子。例如，我们可以给出“不打击任何东西，遵循所有交通规则，沿着最有效的路线从A点导航到B点”的高级目标到我们的自动驾驶汽车算法并让它弄清楚如何计算实现该目标的细节。这似乎是一项了不起的壮举，但这正是我们将在本书中学习如何做的事情。</p>
+<p>所有的人类行为都是从根本上是目标导向的，所以我们应该如何设计我们的学习算法。通过自然选择进行的生物进化赋予了大多数物种一系列原始目标或驱动力，例如最大限度地减少饥饿，避免痛苦，寻求快乐，减少不确定性，以及在人类和其他社会动物的情况下，实现社会接受。即使在远离我们祖先环境的现代世界中，每个人的行为也可以被简化为这些原始驱动和目标的某种组合。例如，尽管很难承认，编写本书的作者可能认为他们这样做是因为他们对强化学习感到兴奋，并希望与其他人分享，但从根本上说，我们的动机是我们的进化原始动力。贡献我们部落的成员。令人惊讶的是，世界上有多少人单独最大化或最小化了一小部分高级别的驱动器和目标。</p>
+<p>让我们按照这个想法运行吧。如果一个人饿了（高级驾驶）那么她必须吃饭以减少她的饥饿感。 但是吃不能一步到位;她首先必须做出非常低级别的决定，比如走向哪个方向。从这个意义上说，为了解决一个高层次的目标，我们可以把它分解成小的子问题，这些问题一起将有助于解决高级问题。</p>
+<p><img src="/2018/08/22/深度强化学习实战-中文翻译/Figure1.4.png" alt="图片"><br>图1.4 满足一个人饥饿的高级目标可以分解为一个“本地”子目标树，每个目标都必须解决才能实现全局目标。</p>
+<p>理查德·贝尔曼（Richard Bellman）在1957年给出了一个严格的数学描述，这个想法打破了一个高层次的目标，其中不清楚如何自己解决，进入最低层次的子目标层次结构，几乎都是微不足道的决定。贝尔曼称这种技术是动态编程，其原因主要与历史环境有关，而不是为了清晰。更直观的名称可能是“目标分解”。贝尔曼的动态编程除了目标分解之外还有一个技巧：除了将目标分解为一组更容易解决的子目标外，我们还应该将解决方案存储到这些子目标的所有解决方案中，这样如果我们需要在以后的时间点解决相同的子目标，我们可以查看上次获得的解决方案，而不是重新计算出来。这种存储先前解决的子问题的技术称为memoization（注意，它不是记忆，它是记忆;没有“r”）。</p>
+<p>动态编程（DP）可用于解决任何可分解为较小部分的控制任务。这应用从经济学到数学到计算机科学，当然还有强化学习，我们很快就会看到。但是为了给出一个简单的DP动作示例（以及您在教科书中最常见的示例），让我们看看如何使用它来提高计算机算法的效率，该算法在Fibonacci序列中产生当时的数字。如果你不熟悉Fibonacci序列，它就是遵循这种模式的正整数序列：0,1,1,2,3,5,8,13,21 ……其中第n个数是前两个数字的总和。换句话说，n=(n-1)+(n-2)其中n指的是序列中的第n个数字（零索引），前两个数字总是0和1.请理所当然地认为这个数字序列是特殊的并且实际上具有有用的应用因此，为什么我们可能想要编写一个计算机程序来生成它。使用这个数学定义作为我们的起点，我们可以在Python中编写这个函数：</p>
+<p><code>
+</code></p>
+<p>我们定义了一个Python字典来存储我们制作的任何计算，并将它初始化为Fibonacci序列中的前两个数字。如果使用已经遇到的输入调用函数，它可以使用Python字典查找先前计算的数字并返回它，否则它将计算它（但只是一次）并将其存储在mem字典中.<br>我们现在知道，为了应用Bellman的动态编程，我们必须能够将我们的问题分解为我们知道如何解决的子问题。但即便是这种看似无害的假设也很难在现实世界中实现。 你如何打破“不崩溃”的自动驾驶汽车的高水平目标成为小型非碰撞子问题？ 通过首先解决更容易的行走问题，孩子是否学会走路？在强化学习中，我们经常会遇到可能包含某些随机性因素的细微差别，我们无法像贝尔曼那样完全应用动态规划。 事实上，DP可以被认为是问题解决技术连续体的一个极端，其中另一端是随机试验和错误。</p>
+<p>查看这种学习连续体的另一种方式是，在某些情况下，我们对环境有最大的了解，而在其他情况下，我们对环境的了解很少，因此我们需要在每种情况下采用不同的策略。 如果你需要在你自己的房子里使用浴室，那么你确切地知道（好吧，至少是无意识的）肌肉运动的顺序会让你从任何起始位置（即动态编程）进入浴室。这当然是因为你非常了解你的房子,换句话说，你的房子中有一个或多或少完美的模型。 如果你去别人家里参加过你从未去过的聚会，那么假设没有人告诉你，你只需环顾四周，直到你自己找到浴室（即试错）; 因为你没有那个人的房子的好模型。</p>
+<p>试错策略通常属于蒙特卡罗方法的保护范围。蒙特卡罗方法基本上是从环境中随机抽样。 在许多现实世界的问题中，我们至少对环境如何运作有一些了解，因此我们最终不得不采用一些混合策略来进行一些随机的试验和错误以及利用我们已经了解的环境和直接的知识来解决容易的子目标。</p>
+<p>混淆策略的一个愚蠢的例子是，如果你被蒙住眼睛，放在你家里一个不知名的地方，并被告知要通过扔鹅卵石和聆听噪音找到浴室。您可以首先将高级目标（找到浴室）分解为更容易接近的子目标，找出您当前所在的房间。要解决这个子目标，您可能会随机指向几个鹅卵石并评估房间的大小，可能会给你足够的信息来推断你在哪个房间，比如卧室。然后你需要转到另一个子目标，导航到门，这样你就可以进入走廊。然后你会再次开始扔鹅卵石，但是既然你记得（记住）你最后一次随机鹅卵石投掷的结果，你可以把你的投掷目标定位到不那么确定的区域。迭代这个过程，你最终可能找到你的浴室。因此，在这种情况下，您应用动态规划的问题结构（即目标分解）和蒙特卡罗方法的随机采样。</p>
+<h2 id="标准模型"><a href="#标准模型" class="headerlink" title="标准模型"></a>标准模型</h2><p>我们学习了理查德贝尔曼如何将动态规划作为解决某些控制或决策问题的一般方法，但我们也知道它占据了强化学习连续体的极端。可以说，贝尔曼更重要的贡献是帮助开发我们可能称之为强化学习型问题的“标准模型”。标准模型本质上是一组核心术语和概念，每一个强化学习问题都可以用来表达。这不仅提供了一种标准化的语言，可以与其他工程师和研究人员进行交流，它也迫使我们以一种易于动态编程的方式来制定我们的问题，例如问题分解。我们可以迭代地优化本地子问题，但仍然朝着实现全局高层目标迈进。 幸运的是，它实际上也非常简单。</p>
+<p>为了具体说明标准模型，让我们考虑构建一个标准模型的任务。强化学习算法，可以学习最大限度地减少大数据的能源使用。计算机需要保持冷却才能正常运行，因此可能会产生大型数据中心冷却系统的成本很高。保持数据中心冷静的天真方法<br>只是为了在一定程度上保持空调开启，导致没有服务器运行得太热了。你可能做得比这更好，因为它不太可能中心的服务器同时运行热，数据中心的使用情况也是如此总是处于同一水平，所以如果你可以将冷却目标定位到重要的地方和时间。大多数情况下，您可以用更少的钱获得相同的结果。</p>
+<p>标准模型的第一步是定义您的总体目标。在这种情况下我们整体目标是尽量减少在冷却上花费的美元，但是我们中心没有服务器可以超过一些阈值温度。虽然这似乎是两个目标，但我们可以将这些一起捆绑成一个新的复合目标函数。这将是一个函数返回一个错误值，表明我们在达到这两个目标时的目标是多少，给出服务器的当前成本和温度数据。我们的实际数字目标函数并不重要，我们只想让它尽可能低。因此，我们需要我们的强化学习算法来针对某些输入数据最小化这个目标（误差）函数，这些数据肯定会包括运行成本和温度数据，但也可能包含其他有用的上下文信息，可以帮助算法预测数据中心用法。</p>
+<p>这个输入数据是由环境生成的数据，这个术语我们已经松散了使用。一般而言，强化学习（或控制）任务的环境是任何动态过程产生与实现我们的目标相关的数据。。虽然我们将它用作技术术语，但它的日常使用并没有太多抽象。<br>作为一个非常先进的强化学习算法的例子，你总是在某种环境中，你的眼睛和耳朵不断消耗你的环境产生的信息，这样你就可以实现你的日常目标。<br>由于环境是动态过程（即时间的函数），它可能在不同大小和类型的每个时刻产生连续的数据流。为了使算法友好，我们需要采用这种环境数据并将其捆绑到我们称之为（环境状态）状态的离散数据包中，并且可以在每个离散时间步骤中传递给我们的算法。</p>
+<p>总结到目前为止，我们定义了一个目标函数（最小化成本和温度），它是环境（我们的数据中心和任何相关过程）的状态（当前成本，当前温度数据）的函数。<br>我们模型的最后一部分是强化学习算法本身。这可以是任何可以从数据中学习以最小化或最大化某些目标函数的算法。它未必是深度学习算法;我们想要明确强化学习是一个独立的领域，与任何特定学习算法的关注点分开。我们将在几个部分中列出我们为什么本书几乎完全使用深度学习作为我们的学习算法的原因。</p>
+<p>正如我们之前提到的，强化学习（或一般控制任务）与普通监督学习之间的关键差异之一是，在控制任务中，算法需要做出决策并采取行动。这些行为将对未来发生的事情产生因果影响。采取行动确实是标准模型中的另一个关键词，或多或少是您所期望的。但是，每项决策或采取的行动都是分析当前环境状况并尝试做出最佳决策的结果。标准模型中的最后一个概念是，在每次采取行动后，算法都会得到奖励。奖励是学习算法在实现全局目标方面表现良好的（本地）信号。奖励可以是一个积极的信号（即表现良好，保持良好）或负面信号（即这不起作用，尝试别的东西），即使我们称这两种情况都是奖励。</p>
+<p>奖励信号是学习算法必须更新自身的唯一提示，希望在下一个环境状态下表现更好。在我们的数据中心示例的情况下，只要其操作减少了错误值，我们就可以向算法授予+10（任意值）的奖励。或者更合理地，我们给予奖励与减少误差的程度成比例。 如果它增加了错误，那么我们给它一个负面的奖励。最后，我们通过将其称为代理来为我们的学习算法赋予更高级的名称。代理是任何强化学习问题中的动作或决策学习算法。最后，我们可以把它们放在一起，如图1.5所示。</p>
+<p><img src="/2018/08/22/深度强化学习实战-中文翻译/Figure1.5.png" alt="图片"></p>
+<p>Figure1.5 强化学习算法的标准模型.RL算法涉及学习在环境中进行交互的最佳方式的代理。代理在环境中执行操作-例如移动棋子-然后更新环境状态。对于我们采取的每一个动作，我们都会收到奖励（例如，赢得游戏的次数为+1，输掉游戏时为-1，否则为0）。RL算法重复此过程，目的是最大化奖励，并最终了解环境的运作方式。</p>
+<p>在我们的数据中心示例中，我们希望我们的代理将学习如何降低冷却成本。除非我们能够为其提供完整的环境知识，否则它将不得不采用某种程度的反复试验。如果我们幸运的话，代理可能会学得很好，以至于它可以在不同于最初训练的环境中使用。由于代理是学习者，因此它被实现为某种学习算法。由于这是一本关于深度强化学习的书，我们的代理将使用深度学习算法（也称为深度神经网络）来实现。但请记住，强化学习更多地是关于问题和解决方案的类型，而不是任何特定的学习算法，并且当然可以使用深度神经网络的替代方案。实际上，在第3章中我们开始使用一个非常简单的非神经网络算法，然后在本章末尾用神经网络代替它。</p>
+<p><img src="/2018/08/22/深度强化学习实战-中文翻译/Figure1.6.png" alt="图片"><br>图1.6 输入数据（某个时间点的环境状态）被传送到代理中，代理在本书中被实现为深度神经网络，然后评估该数据以采取行动。这个过程比这里显示的更多一些，但这抓住了本质。</p>
+<p>代理人的唯一目标是在长期内最大化其预期回报。代理只是重复这个循环：处理状态信息，决定采取什么行动，看看你是否获得奖励，观察新状态，采取其他行动……等等。如果我们正确地设置了这一切，代理最终将学会了解其环境并在每一步都做出可靠的好决策。这种通用机制可以应用于自动驾驶汽车，聊天机器人，机器人，自动股票交易，医疗保健等等。我们将探索其中一些应用程序将在下一节和本书中介绍。</p>
+<p>在本书中，我们花了大部分时间学习如何将问题构建到我们的标准模型中，以及如何实现足够强大的学习算法（代理）来解决难题。对于我们的情况，您不需要构建环境，您只需插入现有环境（例如游戏引擎或其他API）。例如，OpenAI发布了一个Python Gym库，它为我们提供了大量的环境和一个简单的界面，我们的学习算法可以与它们进行交互（图1.5）。左边的代码显示了设置和使用这些环境中的一个是多么简单，只有5行代码的9x9 Go游戏。</p>
+<p><img src="/2018/08/22/深度强化学习实战-中文翻译/Figure1.7.png" alt="图片"></p>
+<p>图1.7 OpenAI python库带有许多环境和一个简单的界面，学习算法可以与它们进行交互。 只需几行代码，我们就加载了9x9 Go板。</p>
+<h2 id="我能用强化学习做什么"><a href="#我能用强化学习做什么" class="headerlink" title="我能用强化学习做什么"></a>我能用强化学习做什么</h2><p>我们通过探索人工智能的历史以及它如何引导我们来开始本章，相信尽管最近在监督学习方面的成功是重要和有用的，有监督的学习不会让我们接受人工智能（AGI）。我们最终寻求能够以最小的方式应用于多个问题的通用学习机器，无监督，其技能可以跨领域转移。大数据丰富的公司可以从受监督的方法中获益，但规模较小的公司和组织可能没有资源来利用机器学习的力量。通用学习算法将为每个人提供公平的竞争环境。</p>
+<p>尽管如此，虽然通用学习机器比领域专用和监督机器更强大，但仍有理由考虑在实践中使用当前的强化学习技术。强化学习研究和应用仍在成熟，但近年来出现了许多令人兴奋的发展。强化学习研究与实践应用程序仍在成熟，但最近有许多令人兴奋的发展。谷歌的DeepMind研究小组展示了一些令人印象深刻的成果并引起了国际关注。第一次是在2013年，一种算法可以在超人的水平上播放一系列Atari游戏。 以前创建代理来解决这些游戏的尝试涉及微调底层算法以理解游戏的特定规则，通常称为特征工程。虽然这些特征工程方法可以很好地用于特定游戏，但是他们无法将任何知识或技能转移到新游戏或域。DeepMind的深度Q网络（DQN）算法足够强大，可以继续使用没有任何游戏特定调整的七场比赛。它只有屏幕上的原始像素，只是被告知要最大化分数，但算法学会了如何超越专家级别。</p>
+<p><img src="/2018/08/22/深度强化学习实战-中文翻译/Figure1.8.png" alt="图片"><br>图1.8 DeepMind的DQN算法成功学会了如何玩7个Atari游戏，只有原始像素作为输入，玩家得分是最大化的目标。 以前的算法，例如IBM的Deep Blue，需要经过微调才能玩特定的游戏。</p>
+<p>最近，DeepMind的AlphaGo和AlphaZero算法击败了全世界中国古代游戏Go的最佳玩家。专家认为人工智能（AI）会至少在十年内无法参加比赛。玩家不知道最好的<br>在任何给定的回合中移动，只收到他们在行动结束时的行动反馈游戏。许多高水平的玩家认为自己是艺术家，而不是计算战略家，并将获胜的动作描述为美丽或优雅。这些是特征算法通常处理不好。拥有超过10170个法律委员会职位，蛮力算法（就像IBM深蓝用来击败国际象棋一样）是不可行的。AlphaGo通过玩数百万次模拟游戏和学习来管理这项壮举，哪些动作最大化了玩游戏的回报。与Atari案件类似，AlphaGo只能访问人类玩家所拥有的相同信息。</p>
+<p>虽然可以比人类更好地玩游戏的算法是非凡的，但是承诺RL的潜力远不止于制作更好的游戏机器人。 DeepMind能够创建一个模型将谷歌的数据中心冷却成本降低了40％，这是我们之前探讨过的本章仅作为一个例子。自动驾驶汽车使用RL来学习哪一系列动作（加速，转弯，断路，发信号）导致乘客到达目的地以及如何避免事故。研究人员正在训练机器人来完成任务学习运行，无需明确编程复杂的运动技能。</p>
+<p>其中许多例子都是高赌注，比如开车。你当然不能让学习机器通过反复试验来学习驾驶汽车的方法。幸运的是，有越来越多的成功例子让学习机器在一些无害的模拟器中松动，然后一旦掌握了模拟器，就在现实世界的真实硬件上进行尝试。我们将在本书中探讨的一个例子是算法交易。所有股票交易的很大一部分实际上是由人类操作员几乎没有输入的计算机执行的。这些算法交易者中的大多数都是由管理数十亿美元的大型对冲基金掌握的。然而，在过去几年中，我们已经看到个体交易者对构建交易算法越来越感兴趣。实际上，Quantopian是一家提供平台的公司，个人用户可以用Python编写交易算法并在安全的模拟环境中对其进行测试。如果他们的算法表现良好，他们可以用它们来交易真钱。许多交易者通过简单的启发式和规则化取得了相对成功。然而，股票市场是动态且不可预测的，因此持续学习强化学习算法具有能够实时适应不断变化的市场条件的优势。</p>
+<p>我们在本书的早期讨论的一个实际问题是广告投放。许多网络广告从广告中获得了可观的收入，而广告的收入通常与广告可以获得的点击次数相关联。因此，有一个很大的动力来放置最大化点击次数的广告。但是，实现此目的的唯一方法是利用有关用户的信息来放置最合适的广告。遗憾的是，我们通常不知道用户的哪些特征与正确的广告选择相关。但是，我们可以采用强化学习技术取得一些进展。如果我们为RL算法提供一些关于用户的潜在有用信息（我们称之为环境或环境状态），并告诉它最大化广告点击次数，那么它将学习如何将其输入数据与其目标相关联，并最终将了解哪些广告会为特定用户带来最多的点击次数。</p>
+<h1 id="第二章-强化学习建模问题：马尔科夫决策过程"><a href="#第二章-强化学习建模问题：马尔科夫决策过程" class="headerlink" title="第二章 强化学习建模问题：马尔科夫决策过程"></a>第二章 强化学习建模问题：马尔科夫决策过程</h1><h1 id="第三章-预测最佳状态和行为：DQN网络"><a href="#第三章-预测最佳状态和行为：DQN网络" class="headerlink" title="第三章 预测最佳状态和行为：DQN网络"></a>第三章 预测最佳状态和行为：DQN网络</h1><h1 id="第四章-学习选取最佳行为：策略梯度（Policy-Gradients）"><a href="#第四章-学习选取最佳行为：策略梯度（Policy-Gradients）" class="headerlink" title="第四章 学习选取最佳行为：策略梯度（Policy Gradients）"></a>第四章 学习选取最佳行为：策略梯度（Policy Gradients）</h1><h1 id="第五章-了解环境和指定计划：基于模型学习"><a href="#第五章-了解环境和指定计划：基于模型学习" class="headerlink" title="第五章 了解环境和指定计划：基于模型学习"></a>第五章 了解环境和指定计划：基于模型学习</h1><p>第二部分 进阶</p>
+<h1 id="第六章-构建自己的AlphaGo"><a href="#第六章-构建自己的AlphaGo" class="headerlink" title="第六章 构建自己的AlphaGo"></a>第六章 构建自己的AlphaGo</h1><h1 id="第七章-选择优化方法：进化方法"><a href="#第七章-选择优化方法：进化方法" class="headerlink" title="第七章 选择优化方法：进化方法"></a>第七章 选择优化方法：进化方法</h1><h1 id="第八章-强化学习在行车路线上的应用：组合优化"><a href="#第八章-强化学习在行车路线上的应用：组合优化" class="headerlink" title="第八章 强化学习在行车路线上的应用：组合优化"></a>第八章 强化学习在行车路线上的应用：组合优化</h1><h1 id="第九章-持续学习策略：击败遗忘灾难"><a href="#第九章-持续学习策略：击败遗忘灾难" class="headerlink" title="第九章 持续学习策略：击败遗忘灾难"></a>第九章 持续学习策略：击败遗忘灾难</h1><h1 id="第十章-超越推理：强化学习创造力"><a href="#第十章-超越推理：强化学习创造力" class="headerlink" title="第十章 超越推理：强化学习创造力"></a>第十章 超越推理：强化学习创造力</h1><h1 id="第十一章-结论"><a href="#第十一章-结论" class="headerlink" title="第十一章 结论"></a>第十一章 结论</h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>鼓励一下这只小可爱吧^_^</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="AlisaBen 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="AlisaBen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/强化学习/" rel="tag"># 强化学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/20/canvas绘图基础/" rel="next" title="canvas绘图基础">
+                <i class="fa fa-chevron-left"></i> canvas绘图基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODcyMC8xNTI0OA=="></div>
+    </div>
+
+  
+
+ 
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://pd2lvob9v.bkt.clouddn.com/10797029.jpg"
+                alt="AlisaBen" />
+            
+              <p class="site-author-name" itemprop="name">AlisaBen</p>
+              <p class="site-description motion-element" itemprop="description">Folks in the stories had lots of chances of turning back, only they didn't.They kept going...because they were holding on to something</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AlisaBen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yafang1826@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/weixin_36926779" target="_blank" title="csdn">
+                      
+                        <i class="fa fa-fw fa-globe"></i>csdn</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jizhi.im/blog/post/deep_reinforcement_learning" title="深度增强学习前沿算法思想" target="_blank">深度增强学习前沿算法思想</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jizhi.im/blog/post/rl_intro" title="极简增强学习新手教程" target="_blank">极简增强学习新手教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jair.org/index.php/jair" title="增强学习算法调查的研究" target="_blank">增强学习算法调查的研究</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-什么是强化学习"><span class="nav-number">1.</span> <span class="nav-text">第一章 什么是强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#强化学习发展历程"><span class="nav-number">1.1.</span> <span class="nav-text">强化学习发展历程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有监督和无监督学习"><span class="nav-number">1.2.</span> <span class="nav-text">有监督和无监督学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制任务中的问题结构"><span class="nav-number">1.3.</span> <span class="nav-text">控制任务中的问题结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准模型"><span class="nav-number">1.4.</span> <span class="nav-text">标准模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我能用强化学习做什么"><span class="nav-number">1.5.</span> <span class="nav-text">我能用强化学习做什么</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-强化学习建模问题：马尔科夫决策过程"><span class="nav-number">2.</span> <span class="nav-text">第二章 强化学习建模问题：马尔科夫决策过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-预测最佳状态和行为：DQN网络"><span class="nav-number">3.</span> <span class="nav-text">第三章 预测最佳状态和行为：DQN网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-学习选取最佳行为：策略梯度（Policy-Gradients）"><span class="nav-number">4.</span> <span class="nav-text">第四章 学习选取最佳行为：策略梯度（Policy Gradients）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-了解环境和指定计划：基于模型学习"><span class="nav-number">5.</span> <span class="nav-text">第五章 了解环境和指定计划：基于模型学习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第六章-构建自己的AlphaGo"><span class="nav-number">6.</span> <span class="nav-text">第六章 构建自己的AlphaGo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第七章-选择优化方法：进化方法"><span class="nav-number">7.</span> <span class="nav-text">第七章 选择优化方法：进化方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章-强化学习在行车路线上的应用：组合优化"><span class="nav-number">8.</span> <span class="nav-text">第八章 强化学习在行车路线上的应用：组合优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第九章-持续学习策略：击败遗忘灾难"><span class="nav-number">9.</span> <span class="nav-text">第九章 持续学习策略：击败遗忘灾难</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第十章-超越推理：强化学习创造力"><span class="nav-number">10.</span> <span class="nav-text">第十章 超越推理：强化学习创造力</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第十一章-结论"><span class="nav-number">11.</span> <span class="nav-text">第十一章 结论</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+    本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlisaBen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共54.5k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
