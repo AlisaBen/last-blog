@@ -99,7 +99,7 @@
 <meta property="og:image" content="https://alisaben.github.io/2018/08/29/利用外星人入侵小游戏学习面向对象编程/3.png">
 <meta property="og:image" content="https://alisaben.github.io/2018/08/29/利用外星人入侵小游戏学习面向对象编程/4.png">
 <meta property="og:image" content="https://alisaben.github.io/2018/08/29/利用外星人入侵小游戏学习面向对象编程/alien_invasion.png">
-<meta property="og:updated_time" content="2018-08-29T08:32:33.283Z">
+<meta property="og:updated_time" content="2018-08-29T09:17:10.710Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用外星人入侵小游戏学习面向对象编程">
 <meta name="twitter:description" content="前言：python游戏实践，面向对象编程，框架pygame">
@@ -537,7 +537,7 @@ $(function() {
         <p>前言：python游戏实践，面向对象编程，框架pygame</p>
 <a id="more"></a>
 <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>pygame框架可以用于管理图形、动画声音等，能够利用它来轻松地开发复杂的游戏，可以让我们更加专注于面向对象编程。此项目是基于pygame框架搭建的一个小游戏，在此文中将实现此项目的50%，后续会有跟进，源代码已经放在我的GitHub中，并在进行中将会不断对代码结构进行优化，对样式进行优化。在本例中将会接触简单的面向对象编程和继承。面向对象编程是提取项目中某种事物的关键属性进行抽象，抽象模型中包括数据和行为，类是对象的抽象，对象是类的实例。</p>
-<p><a href="https://github.com/AlisaBen/fun_python/tree/master/alien_invasion" target="_blank" rel="noopener">GitHub源代码</a></p>
+<p><a href="https://github.com/AlisaBen/easycoding" target="_blank" rel="noopener">GitHub源代码</a></p>
 <p>效果图<br><img src="/2018/08/29/利用外星人入侵小游戏学习面向对象编程/GIF.gif" alt="image"><br>游戏简介：在游戏《外星人入侵》中，玩家控制着一艘最初出现在屏幕底部中央的飞船。玩家 可以使用箭头键左右移动飞船，还可使用空格键进行射击。游戏开始时，一群外星人出 现在天空中，他们在屏幕中向下移动。玩家的任务是射杀这些外星人。玩家将所有外星 人都消灭干净后，将出现一群新的外星人，他们移动的速度更快。只要有外星人撞到了 玩家的飞船或到达了屏幕底部，玩家就损失一艘飞船。玩家损失三艘飞船后，游戏结束。</p>
 <p>游戏用例图（第一次画用例图，不是很准确……）<br><img src="/2018/08/29/利用外星人入侵小游戏学习面向对象编程/3.png" alt="image"><br>分析该项目，飞船、子弹、外星人可以分别划分为具有共同属性的一类，类中定义各自的属性，包括图像、形状、位置、更新位置、绘制图像等；在主函数中将对象实例化，对对象中的成员变量和函数进行调用实现移动、击杀等操作；本节实现飞船和子弹类和基本功能</p>
 <p>在构建子弹类时，用到了继承的概念，当在参与大型项目开发设计时，继承是一个非常关键的概念。继承是对已有类的一种复用，子类继承父类，可以对父类中的方法和数据进行重写，也可以新定义只属于子类的成员变量。当项目中有许多类具有相同的基本属性时，可以考虑将这些基本属性抽象为一个父类，子类通过继承父类而拥有父类中的数据和方法，这会提高代码的可读性，也省去很多重复的代码</p>
