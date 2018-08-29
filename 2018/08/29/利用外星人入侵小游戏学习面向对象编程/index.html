@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "094fd489"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="游戏,python," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言：python游戏实践，面向对象编程，框架pygame">
+<meta name="keywords" content="游戏,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用外星人入侵小游戏学习面向对象编程">
+<meta property="og:url" content="https://AlisaBen.github.io/2018/08/29/利用外星人入侵小游戏学习面向对象编程/index.html">
+<meta property="og:site_name" content="AlisaBen&#39;s Blog">
+<meta property="og:description" content="前言：python游戏实践，面向对象编程，框架pygame">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/29/利用外星人入侵小游戏学习面向对象编程/2.png">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/29/利用外星人入侵小游戏学习面向对象编程/3.png">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/29/利用外星人入侵小游戏学习面向对象编程/4.png">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/29/利用外星人入侵小游戏学习面向对象编程/alien_invasion.png">
+<meta property="og:updated_time" content="2018-08-29T06:41:46.914Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用外星人入侵小游戏学习面向对象编程">
+<meta name="twitter:description" content="前言：python游戏实践，面向对象编程，框架pygame">
+<meta name="twitter:image" content="https://alisaben.github.io/2018/08/29/利用外星人入侵小游戏学习面向对象编程/2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'cool girl'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://AlisaBen.github.io/2018/08/29/利用外星人入侵小游戏学习面向对象编程/"/>
+
+
+
+
+
+  <title>利用外星人入侵小游戏学习面向对象编程 | AlisaBen's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4425f02e3aceec56c86c2be922faf390";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+     <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = $(document.getElementById(url)).text() + ': 0';
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+});
+</script>
+  
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AlisaBen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">自诩为有益之事，永不知生之有涯</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://AlisaBen.github.io/2018/08/29/利用外星人入侵小游戏学习面向对象编程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AlisaBen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://pd2lvob9v.bkt.clouddn.com/10797029.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlisaBen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">利用外星人入侵小游戏学习面向对象编程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-29T13:08:06+08:00">
+                2018-08-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/29/利用外星人入侵小游戏学习面向对象编程/" class="leancloud_visitors" data-flag-title="利用外星人入侵小游戏学习面向对象编程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,823 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前言：python游戏实践，面向对象编程，框架pygame</p>
+<a id="more"></a>
+<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p><a href="https://github.com/AlisaBen/fun_python/tree/master/alien_invasion" target="_blank" rel="noopener">GitHub源代码</a></p>
+<p>效果图<br><img src="/2018/08/29/利用外星人入侵小游戏学习面向对象编程/2.png" alt="image"><br>游戏简介：在游戏《外星人入侵》中，玩家控制着一艘最初出现在屏幕底部中央的飞船。玩家 可以使用箭头键左右移动飞船，还可使用空格键进行射击。游戏开始时，一群外星人出 现在天空中，他们在屏幕中向下移动。玩家的任务是射杀这些外星人。玩家将所有外星 人都消灭干净后，将出现一群新的外星人，他们移动的速度更快。只要有外星人撞到了 玩家的飞船或到达了屏幕底部，玩家就损失一艘飞船。玩家损失三艘飞船后，游戏结束。</p>
+<p>游戏用例图（第一次画用例图，不是很准确……）<br><img src="/2018/08/29/利用外星人入侵小游戏学习面向对象编程/3.png" alt="image"><br>分析该项目，飞船、子弹、外星人可以分别划分为具有共同属性的一类，类中定义各自的属性，包括图像、形状、位置、更新位置、绘制图像等；在主函数中将对象实例化，对对象中的成员变量和函数进行调用实现移动、击杀等操作；本节实现飞船和子弹类和基本功能</p>
+<p><img src="/2018/08/29/利用外星人入侵小游戏学习面向对象编程/4.png" alt="image"></p>
+<p>当前新建一下几个文件<br>|文件名|功能|备注|<br>|—|—|—|<br>|<code>alien-invasion.py</code>|主函数||<br>|<code>ship.py</code>|飞船类||<br>|<code>bullet.py</code>|子弹类||<br>|<code>game_functions.py</code>|许多函数|主函数文件访问|<br>|<code>settings.py</code>|配置文件|常量|</p>
+<p>目录结构<br><img src="/2018/08/29/利用外星人入侵小游戏学习面向对象编程/alien_invasion.png" alt="image"></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><code>alien-invasion.py</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"><span class="keyword">from</span> settings <span class="keyword">import</span> Settings</span><br><span class="line"><span class="keyword">from</span> ship <span class="keyword">import</span> Ship</span><br><span class="line"><span class="keyword">import</span> game_functions <span class="keyword">as</span> gf</span><br><span class="line"><span class="keyword">from</span> pygame.sprite <span class="keyword">import</span> Group</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_game</span><span class="params">()</span>:</span></span><br><span class="line">	pygame.init()</span><br><span class="line">	<span class="comment"># 获取配置</span></span><br><span class="line">	game_settings = Settings()</span><br><span class="line">	<span class="comment"># 绘制屏幕</span></span><br><span class="line">	screen = pygame.display.set_mode((game_settings.screen_width,game_settings.screen_height))</span><br><span class="line">	backgound_color = (<span class="number">220</span>,<span class="number">230</span>,<span class="number">230</span>)</span><br><span class="line">	pygame.display.set_caption(<span class="string">"Alien Invasion"</span>)</span><br><span class="line">	<span class="comment"># 飞船实例化</span></span><br><span class="line">	ship = Ship(game_settings,screen)</span><br><span class="line">	<span class="comment"># 子弹编组，管理屏幕中所有的子弹，保存继承Sprite类的Bullet实例</span></span><br><span class="line">	bullets = Group()</span><br><span class="line">	<span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">		<span class="comment"># 检测飞船事件：左移右移发射子弹</span></span><br><span class="line">		gf.check_events(ship,game_settings,screen,bullets)  <span class="comment"># 修改飞船移动标志</span></span><br><span class="line">		ship.update()  <span class="comment"># 根据飞船移动标志重新计算飞船中心位置</span></span><br><span class="line">		<span class="comment"># 更新所有子弹位置</span></span><br><span class="line">		gf.update_bullets(bullets)</span><br><span class="line">		<span class="comment"># 绘制飞船子弹</span></span><br><span class="line">		gf.update_screen(game_settings,screen,ship,bullets)  </span><br><span class="line"></span><br><span class="line">run_game()</span><br></pre></td></tr></table></figure></p>
+<p><code>ship.py</code>类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ship</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="string">"""docstring for Ship"""</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, game_settings,screen)</span>:</span></span><br><span class="line">		super(Ship, self).__init__()</span><br><span class="line">		self.game_settings = game_settings</span><br><span class="line">		self.screen = screen  <span class="comment"># screen游戏界面</span></span><br><span class="line">		self.image = pygame.image.load(<span class="string">'images/外星飞船.png'</span>).convert_alpha()  <span class="comment"># 加载飞船图像</span></span><br><span class="line">		<span class="comment"># 修改图像大小</span></span><br><span class="line">		self.width,self.height = self.image.get_size()</span><br><span class="line">		self.image = pygame.transform.smoothscale(self.image,(self.width//<span class="number">2</span>,self.height//<span class="number">2</span>))</span><br><span class="line">		self.rect = self.image.get_rect()</span><br><span class="line">		self.screen_rect = screen.get_rect()</span><br><span class="line">		<span class="comment"># 获取游戏界面的中心x坐标和底部位置便可确定飞船位置</span></span><br><span class="line">		self.rect.centerx = self.screen_rect.centerx</span><br><span class="line">		self.rect.bottom = self.screen_rect.bottom - game_settings.screen_height / <span class="number">5</span></span><br><span class="line">		self.center = float(self.rect.centerx)  <span class="comment"># centerx中只能表示整数</span></span><br><span class="line">		<span class="comment"># 移动标志</span></span><br><span class="line">		self.moving_right = <span class="keyword">False</span></span><br><span class="line">		self.moving_left = <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="string">"""</span></span><br><span class="line"><span class="string">		根据移动标志调整飞船位置</span></span><br><span class="line"><span class="string">		更改为根据self.center更新位置</span></span><br><span class="line"><span class="string">		"""</span></span><br><span class="line">		<span class="keyword">if</span> self.moving_right <span class="keyword">and</span> self.rect.right &lt; self.screen_rect.right:</span><br><span class="line">			<span class="comment"># self.rect.centerx += 1</span></span><br><span class="line">			self.center += self.game_settings.ship_speed_factor</span><br><span class="line">		<span class="keyword">if</span> self.moving_left <span class="keyword">and</span> self.rect.left &gt; <span class="number">0</span>:</span><br><span class="line">			<span class="comment"># self.rect.centerx -= 1</span></span><br><span class="line">			self.center -= self.game_settings.ship_speed_factor</span><br><span class="line">		<span class="comment"># 更新centerx，因为绘制图形是根据self.rect()</span></span><br><span class="line">		<span class="comment"># self.rect()定位需要根据centerx，bottom</span></span><br><span class="line">		self.rect.centerx = self.center  </span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">blitme</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="string">"""在self.rect位置绘制图像"""</span></span><br><span class="line">		self.screen.blit(self.image,self.rect)</span><br></pre></td></tr></table></figure>
+<p><code>bullet.py</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"><span class="keyword">from</span> pygame.sprite <span class="keyword">import</span> Sprite</span><br><span class="line"></span><br><span class="line"><span class="comment"># 继承Sprite类，完善自己的代码</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bullet</span><span class="params">(Sprite)</span>:</span></span><br><span class="line">	<span class="string">"""docstring for Bullet"""</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, game_settings,screen,ship)</span>:</span></span><br><span class="line">		super(Bullet, self).__init__()</span><br><span class="line">		self.screen = screen</span><br><span class="line">		<span class="comment"># # 在0，0位置创建bullet，并设置宽高</span></span><br><span class="line">		<span class="comment"># self.rect = pygame.Rect(0,0,game_settings.bullet_width,game_settings.bullet_height)</span></span><br><span class="line"></span><br><span class="line">		<span class="comment"># # 调整子弹位置到飞船所在位置，调整top相同，中心x坐标相同</span></span><br><span class="line">		<span class="comment"># self.rect.centerx = ship.rect.centerx</span></span><br><span class="line">		<span class="comment"># self.rect.top = ship.rect.top</span></span><br><span class="line">		<span class="comment"># # 将y坐标存储为小数值，以便能够微调子弹的速度</span></span><br><span class="line">		<span class="comment"># self.y = float(self.rect.y)</span></span><br><span class="line">		<span class="comment"># self.color = game_settings.bullet_color</span></span><br><span class="line">		<span class="comment"># self.speed_factor = game_settings.bullet_speed_factor</span></span><br><span class="line">		<span class="comment"># 把子弹换成一个好玩的图片,把图片转换成位图</span></span><br><span class="line">		self.image = pygame.image.load(<span class="string">'images/生气.png'</span>).convert_alpha()</span><br><span class="line">		<span class="comment"># 修改图像大小</span></span><br><span class="line">		self.width,self.height = self.image.get_size()</span><br><span class="line">		self.image = pygame.transform.smoothscale(self.image,(self.width//<span class="number">10</span>,self.height//<span class="number">10</span>))</span><br><span class="line">		self.rect = self.image.get_rect()</span><br><span class="line">		<span class="comment"># 调整子弹位置到飞船所在位置，调整top相同，中心x坐标相同</span></span><br><span class="line">		self.rect.centerx = ship.rect.centerx</span><br><span class="line">		self.rect.top = ship.rect.top</span><br><span class="line">		<span class="comment"># 将y坐标存储为小数值，以便能够微调子弹的速度</span></span><br><span class="line">		self.y = float(self.rect.y)</span><br><span class="line">		self.speed_factor = game_settings.bullet_speed_factor</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="string">"""向上移动子弹"""</span></span><br><span class="line">		<span class="comment"># 更新一次坐标y向上移动speed_factor个像素</span></span><br><span class="line">		self.y -= self.speed_factor</span><br><span class="line">		<span class="comment"># 更新子弹的rect位置</span></span><br><span class="line">		self.rect.y = self.y</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">draw_bullet</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="comment"># """</span></span><br><span class="line">		<span class="comment"># API:rect(Surface,color,Rect,width=0)-&gt;Rect</span></span><br><span class="line">		<span class="comment"># draw a rectangular shape on the Surgace</span></span><br><span class="line">		<span class="comment"># The width argument is the thickness to draw the outer edge. </span></span><br><span class="line">		<span class="comment"># If width is zero then the rectangle will be filled.</span></span><br><span class="line">		<span class="comment"># """</span></span><br><span class="line">		<span class="comment"># pygame.draw.rect(self.screen,self.color,self.rect)</span></span><br><span class="line">		<span class="string">"""在self.rect位置绘制图像"""</span></span><br><span class="line">		self.screen.blit(self.image,self.rect)</span><br></pre></td></tr></table></figure></p>
+<p><code>game_functions.py</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> bullet <span class="keyword">import</span> Bullet</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_keydown_events</span><span class="params">(event,ship,game_settings,screen,bullets)</span>:</span></span><br><span class="line">	<span class="string">"""</span></span><br><span class="line"><span class="string">	按下键盘事件：右移，左移，发射子弹</span></span><br><span class="line"><span class="string">	"""</span></span><br><span class="line">	<span class="keyword">if</span> event.key == pygame.K_RIGHT:</span><br><span class="line">		ship.moving_right = <span class="keyword">True</span></span><br><span class="line">	<span class="keyword">elif</span> event.key == pygame.K_LEFT:</span><br><span class="line">		ship.moving_left = <span class="keyword">True</span></span><br><span class="line">	<span class="keyword">elif</span> event.key == pygame.K_SPACE:</span><br><span class="line">		fire_bullet(game_settings,screen,ship,bullets)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fire_bullet</span><span class="params">(game_settings,screen,ship,bullets)</span>:</span></span><br><span class="line">	<span class="string">"""</span></span><br><span class="line"><span class="string">	如果没有超过当前屏幕显示的最多子弹数，实例化子弹，添加到子弹编组中</span></span><br><span class="line"><span class="string">	"""</span></span><br><span class="line">	<span class="keyword">if</span>(len(bullets) &lt; game_settings.bullet_allowed):</span><br><span class="line">		bullet = Bullet(game_settings,screen,ship)</span><br><span class="line">		bullets.add(bullet)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_keyup_events</span><span class="params">(event,ship)</span>:</span></span><br><span class="line">	<span class="string">"""</span></span><br><span class="line"><span class="string">	抬起键，抬起空格不发生任何事</span></span><br><span class="line"><span class="string">	"""</span></span><br><span class="line">	<span class="keyword">if</span> event.key == pygame.K_RIGHT:</span><br><span class="line">		ship.moving_right = <span class="keyword">False</span></span><br><span class="line">	<span class="keyword">elif</span> event.key == pygame.K_LEFT:</span><br><span class="line">		ship.moving_left = <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_events</span><span class="params">(ship,game_settings,screen,bullets)</span>:</span></span><br><span class="line">	<span class="keyword">for</span> event <span class="keyword">in</span> pygame.event.get():</span><br><span class="line">		<span class="keyword">if</span> event.type == pygame.QUIT:</span><br><span class="line">			sys.exit()</span><br><span class="line">		<span class="keyword">elif</span> event.type == pygame.KEYDOWN:</span><br><span class="line">			check_keydown_events(event,ship,game_settings,screen,bullets)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">elif</span> event.type == pygame.KEYUP:</span><br><span class="line">			check_keyup_events(event,ship)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_screen</span><span class="params">(game_settings,screen,ship,bullets)</span>:</span></span><br><span class="line">	screen.fill(game_settings.background_color)</span><br><span class="line">	ship.blitme()</span><br><span class="line">	<span class="string">"""</span></span><br><span class="line"><span class="string">	API:pygame.sprite.Group.sprites</span></span><br><span class="line"><span class="string">	sprites() -&gt; sprite_list</span></span><br><span class="line"><span class="string">	bullet迭代器</span></span><br><span class="line"><span class="string">	"""</span></span><br><span class="line">	<span class="keyword">for</span> bullet <span class="keyword">in</span> bullets.sprites():</span><br><span class="line">		bullet.draw_bullet()</span><br><span class="line">	pygame.display.flip()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_bullets</span><span class="params">(bullets)</span>:</span></span><br><span class="line">	bullets.update()</span><br><span class="line">	<span class="comment"># 超出屏幕边界移除子弹</span></span><br><span class="line">	<span class="comment"># 子弹编组副本</span></span><br><span class="line">	<span class="keyword">for</span> bullet <span class="keyword">in</span> bullets.copy():</span><br><span class="line">		<span class="keyword">if</span> bullet.rect.bottom &lt;= <span class="number">0</span>:</span><br><span class="line">			bullets.remove(bullet)</span><br><span class="line">	<span class="comment"># 注释掉，调试用，耗时</span></span><br><span class="line">	<span class="comment"># print(len(bullets))</span></span><br></pre></td></tr></table></figure></p>
+<p><code>settings.py</code>配置文件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Settings</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="string">"""docstring for Settings"""</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		super(Settings, self).__init__()</span><br><span class="line">		self.screen_width = <span class="number">1200</span></span><br><span class="line">		self.screen_height = <span class="number">800</span></span><br><span class="line">		self.background_color = (<span class="number">230</span>,<span class="number">230</span>,<span class="number">230</span>)</span><br><span class="line">		self.ship_speed_factor = <span class="number">1.5</span>  <span class="comment"># 飞船一个while循环走1.5像素</span></span><br><span class="line"></span><br><span class="line">		<span class="comment"># 子弹配置</span></span><br><span class="line">		self.bullet_width = <span class="number">3</span></span><br><span class="line">		self.bullet_height = <span class="number">15</span></span><br><span class="line">		self.bullet_color = (<span class="number">120</span>,<span class="number">120</span>,<span class="number">120</span>)</span><br><span class="line">		self.bullet_speed_factor = <span class="number">3</span></span><br><span class="line">		self.bullet_allowed = <span class="number">5</span>  <span class="comment"># 最大子弹数</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="pygame接口文档总结"><a href="#pygame接口文档总结" class="headerlink" title="pygame接口文档总结"></a>pygame接口文档总结</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>接口</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pygame.init()</code></td>
+<td><code>init() -&gt; None</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pygame.display.set_mode()</code></td>
+<td><code>set_mode(resolution=(0,0), flags=0, depth=0) -&gt; Surface</code></td>
+<td>Initialize a window or screen for display</td>
+</tr>
+<tr>
+<td><code>pygame.display.set_caption()</code></td>
+<td><code>set_caption(title, icontitle=None) -&gt; None</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pygame.event.get()</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pygame.image.load()</code></td>
+<td><code>load(filename) -&gt; Surface</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>get_rect()</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>blit()</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pygame.transform.smoothscale()</code></td>
+<td><code>smoothscale(Surface, (width, height), DestSurface = None) -&gt; Surface</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pygame.display.flip()</code></td>
+<td><code>flip() -&gt; None</code></td>
+<td>Update the full display Surface to the screen</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>pygame.sprite.Group</code>编组</p>
+<p>Group(*sprites) -&gt; Group</p>
+<ul>
+<li>pygame.sprite.Group.sprites：list of the Sprites this Group contains</li>
+<li>pygame.sprite.Group.copy:duplicate the Group</li>
+<li>pygame.sprite.Group.add:add Sprites to this Group</li>
+<li>pygame.sprite.Group.remove:remove Sprites from the Group</li>
+<li>pygame.sprite.Group.update:call the update method on contained Sprites</li>
+</ul>
+<p>外星人类和积分等后续啦~</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>鼓励一下这只小可爱吧^_^</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/image/wechatpay.jpg" alt="AlisaBen 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/image/alipay.jpg" alt="AlisaBen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/游戏/" rel="tag"># 游戏</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/28/《疯狂JAVA》读书笔记/" rel="next" title="《疯狂JAVA》读书笔记">
+                <i class="fa fa-chevron-left"></i> 《疯狂JAVA》读书笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODcyMC8xNTI0OA=="></div>
+    </div>
+
+  
+
+ 
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://pd2lvob9v.bkt.clouddn.com/10797029.jpg"
+                alt="AlisaBen" />
+            
+              <p class="site-author-name" itemprop="name">AlisaBen</p>
+              <p class="site-description motion-element" itemprop="description">Folks in the stories had lots of chances of turning back, only they didn't.They kept going...because they were holding on to something</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AlisaBen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yafang1826@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/weixin_36926779" target="_blank" title="csdn">
+                      
+                        <i class="fa fa-fw fa-globe"></i>csdn</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jizhi.im/blog/post/deep_reinforcement_learning" title="深度增强学习前沿算法思想" target="_blank">深度增强学习前沿算法思想</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jizhi.im/blog/post/rl_intro" title="极简增强学习新手教程" target="_blank">极简增强学习新手教程</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jair.org/index.php/jair" title="增强学习算法调查的研究" target="_blank">增强学习算法调查的研究</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简述"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pygame接口文档总结"><span class="nav-number">3.</span> <span class="nav-text">pygame接口文档总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+    本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlisaBen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共72.5k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NcJKSoBub6MXgQCROyVJcaG0-gzGzoHsz", "pgU78721EX7Pecojr2tnPQyp");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
