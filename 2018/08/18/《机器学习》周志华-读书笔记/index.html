@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="AlisaBen&#39;s Blog">
 <meta property="og:description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.8.25，更新内容贝叶斯分类">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-28T03:04:04.343Z">
+<meta property="og:updated_time" content="2018-08-31T14:41:04.753Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《机器学习》周志华-读书笔记">
 <meta name="twitter:description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.8.25，更新内容贝叶斯分类">
@@ -492,7 +492,7 @@ $(function() {
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5,019 字
+                  5,471 字
                 </span>
               
 
@@ -508,7 +508,7 @@ $(function() {
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  21 分钟
+                  22 分钟
                 </span>
               
             </div>
@@ -663,6 +663,12 @@ $(function() {
 <h2 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h2><p>令$D_c$表示训练集D中第c类样本组成的集合，假设这些样本是独立同分布，那么参数$\theta_c$对于数据集$D_c$的似然是</p>
 <script type="math/tex; mode=display">P(D_c|\theta_c)=\Pi_{x\in {D_c}}P(x|\theta_c)</script><p>由于连乘操作容易下溢，通常使用对数似然，对上式取对数</p>
 <p>这种参数化的方法的估计结果的准确性严重依赖于所假设的概率分布形式是否符合真实数据分布。</p>
+<h2 id="朴素贝叶斯拓展应用"><a href="#朴素贝叶斯拓展应用" class="headerlink" title="朴素贝叶斯拓展应用"></a>朴素贝叶斯拓展应用</h2><p>高斯朴素贝叶斯（GaussianNB）：在高斯朴素贝叶斯中，每个特征都是连续的，并且都呈高斯分布。高斯分布又称为正态分布。 GaussianNB 实现了运用于分类的高斯朴素贝叶斯算法。特征的可能性(即概率)假设为高斯分布。参数和使用最大似然法估计。</p>
+<p>多项分布朴素贝叶斯（MultinomialNB）：实现服从多项分布数据（multinomially）的贝叶斯算法，是一个经典的朴素贝叶斯文本分类中使用的变种（其中的数据是通常表示为词向量的数量，虽然TF-IDF向量在实际项目中表现得很好），对于每一个y来说，分布通过向量参数化，n是类别的数目（在文本分类中，表示词汇量的长度） 表示标签i出现的样本属于类别y的概率。<br>alpha：浮点型可选参数，默认为1.0，其实就是添加拉普拉斯平滑，即为上述公式中的λ ，如果这个参数设置为0，就是不添加平滑；<br>fit_prior：布尔型可选参数，默认为True。布尔参数fit_prior表示是否要考虑先验概率，如果是false,则所有的样本类别输出都有相同的类别先验概率。否则可以自己用第三个参数class_prior输入先验概率，或者不输入第三个参数class_prior让MultinomialNB自己从训练集样本来计算先验概率，此时的先验概率为P(Y=Ck)=mk/m。其中m为训练集样本总数量，mk为输出为第k类别的训练集样本数。<br>class_prior：可选参数，默认为None。</p>
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO:"></a>TODO:</h2><ol>
+<li>朴素贝叶斯代码实现</li>
+<li>SVM总结</li>
+</ol>
 
       
     </div>
@@ -956,7 +962,7 @@ $(function() {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性模型"><span class="nav-number">1.</span> <span class="nav-text">线性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对数几率回归"><span class="nav-number">1.1.</span> <span class="nav-text">对数几率回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定对数几率回归中的w和b"><span class="nav-number">1.2.</span> <span class="nav-text">确定对数几率回归中的w和b</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性判别分析（LDA）"><span class="nav-number">1.3.</span> <span class="nav-text">线性判别分析（LDA）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归分类器sklearn-LogisticRegression"><span class="nav-number">1.4.</span> <span class="nav-text">逻辑回归分类器sklearn-LogisticRegression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习实战-第5章"><span class="nav-number">1.5.</span> <span class="nav-text">机器学习实战 第5章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax回归"><span class="nav-number">1.6.</span> <span class="nav-text">Softmax回归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯分类器"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯分类器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯分类器"><span class="nav-number">2.1.</span> <span class="nav-text">朴素贝叶斯分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯概率模型"><span class="nav-number">2.2.</span> <span class="nav-text">朴素贝叶斯概率模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从概率模型中构造分类器"><span class="nav-number">2.3.</span> <span class="nav-text">从概率模型中构造分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯决策论"><span class="nav-number">2.4.</span> <span class="nav-text">贝叶斯决策论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#极大似然估计"><span class="nav-number">2.5.</span> <span class="nav-text">极大似然估计</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性模型"><span class="nav-number">1.</span> <span class="nav-text">线性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对数几率回归"><span class="nav-number">1.1.</span> <span class="nav-text">对数几率回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定对数几率回归中的w和b"><span class="nav-number">1.2.</span> <span class="nav-text">确定对数几率回归中的w和b</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性判别分析（LDA）"><span class="nav-number">1.3.</span> <span class="nav-text">线性判别分析（LDA）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归分类器sklearn-LogisticRegression"><span class="nav-number">1.4.</span> <span class="nav-text">逻辑回归分类器sklearn-LogisticRegression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习实战-第5章"><span class="nav-number">1.5.</span> <span class="nav-text">机器学习实战 第5章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax回归"><span class="nav-number">1.6.</span> <span class="nav-text">Softmax回归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯分类器"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯分类器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯分类器"><span class="nav-number">2.1.</span> <span class="nav-text">朴素贝叶斯分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯概率模型"><span class="nav-number">2.2.</span> <span class="nav-text">朴素贝叶斯概率模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从概率模型中构造分类器"><span class="nav-number">2.3.</span> <span class="nav-text">从概率模型中构造分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯决策论"><span class="nav-number">2.4.</span> <span class="nav-text">贝叶斯决策论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#极大似然估计"><span class="nav-number">2.5.</span> <span class="nav-text">极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯拓展应用"><span class="nav-number">2.6.</span> <span class="nav-text">朴素贝叶斯拓展应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">2.7.</span> <span class="nav-text">TODO:</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1011,7 +1017,7 @@ $(function() {
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共73.5k字</span>
+  <span class="post-count">博客全站共73.9k字</span>
 </div>
 
         
