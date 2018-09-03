@@ -87,18 +87,21 @@
 
 
 
-<meta name="description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.8.25，更新内容贝叶斯分类">
+<meta name="description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.8.31，更新内容贝叶斯分类">
 <meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《机器学习》周志华-读书笔记">
 <meta property="og:url" content="https://AlisaBen.github.io/2018/08/18/《机器学习》周志华-读书笔记/index.html">
 <meta property="og:site_name" content="AlisaBen&#39;s Blog">
-<meta property="og:description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.8.25，更新内容贝叶斯分类">
+<meta property="og:description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.8.31，更新内容贝叶斯分类">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-31T14:41:04.753Z">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/18/《机器学习》周志华-读书笔记/%22/《机器学习》周志华-读书笔记/svm1.png%22">
+<meta property="og:image" content="https://alisaben.github.io/2018/08/18/《机器学习》周志华-读书笔记/%22/《机器学习》周志华-读书笔记/svm2.png%22">
+<meta property="og:updated_time" content="2018-09-03T12:55:58.028Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《机器学习》周志华-读书笔记">
-<meta name="twitter:description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.8.25，更新内容贝叶斯分类">
+<meta name="twitter:description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.8.31，更新内容贝叶斯分类">
+<meta name="twitter:image" content="https://alisaben.github.io/2018/08/18/《机器学习》周志华-读书笔记/%22/《机器学习》周志华-读书笔记/svm1.png%22">
 
 
 
@@ -492,7 +495,7 @@ $(function() {
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5,471 字
+                  5,921 字
                 </span>
               
 
@@ -508,7 +511,7 @@ $(function() {
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  22 分钟
+                  24 分钟
                 </span>
               
             </div>
@@ -530,7 +533,7 @@ $(function() {
 
       
         <blockquote>
-<p>《机器学习-周志华》+《机器学习实战》<br>最新更新时间2018.8.25，更新内容贝叶斯分类</p>
+<p>《机器学习-周志华》+《机器学习实战》<br>最新更新时间2018.8.31，更新内容贝叶斯分类</p>
 </blockquote>
 <a id="more"></a>
 <h1 id="线性模型"><a href="#线性模型" class="headerlink" title="线性模型"></a>线性模型</h1><h2 id="对数几率回归"><a href="#对数几率回归" class="headerlink" title="对数几率回归"></a>对数几率回归</h2><p>对数几率回归的初衷：找到一个单调可微的函数将分类任务的真实标记和线性回归模型预测值联系起来，比如sigmoid函数</p>
@@ -669,6 +672,20 @@ $(function() {
 <li>朴素贝叶斯代码实现</li>
 <li>SVM总结</li>
 </ol>
+<h1 id="支持向量机SVM"><a href="#支持向量机SVM" class="headerlink" title="支持向量机SVM"></a>支持向量机SVM</h1><p>在样本空间中，划分超平面可以通过如下线性方程来描述：</p>
+<script type="math/tex; mode=display">w^Tx+b=0</script><p>那么样本空间中任意点x到超平面的距离可以写为</p>
+<script type="math/tex; mode=display">r=\frac {|w^Tx+b|}{||w||}</script><p>假设超平面(w,b)能够将训练样本正确分类，对于任意$(x_i,y_i)\in D$,如果$y_i=+1$,那么$w^Tx_i+b&gt;0$,如果$y_i=-1$,那么$w^Tx_i+b&lt;0$</p>
+<p>距离超平面最近的几个训练样本点使等号成立，被称为“支持向量”，“间隔”为</p>
+<script type="math/tex; mode=display">\gamma =\frac {2}{||w||}</script><p>目的是让间隔最大的超平面</p>
+<script type="math/tex; mode=display">max_{w,b}\frac {2}{||w||}</script><script type="math/tex; mode=display">s.t. y_i(w^Tx_i+b)>=1,i=1,2,...,m</script><p>上式可以重写为</p>
+<script type="math/tex; mode=display">min_{w,b}\frac {1}{2}{||w||}^2</script><script type="math/tex; mode=display">s.t. y_i(w^Tx_i+b)>=1,i=1,2,...,m</script><p>这是支持向量机的基本型</p>
+<h2 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h2><p>对于支持向量机的基本型，可以使用拉格朗日乘子法得到“对偶问题”。</p>
+<script type="math/tex; mode=display">L(w,b,\alpha)=\frac {1}{2}{||w||}^2+\sum_{i=1}^{m}\alpha_i(1-y_i(w^Tx_i+b))</script><p>令$L(w,b,\alpha)$对w和b的偏导数为零得：</p>
+<script type="math/tex; mode=display">w=\sum_{i=1}^{m}\alpha_iy_ix_i</script><script type="math/tex; mode=display">0=\sum_{i=1}^{m}\alpha_iy_i</script><p>将w,b消去，得到对偶问题：</p>
+<script type="math/tex; mode=display">max_\alpha \sum_{i=1}^{m}\alpha_i-\frac {1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}\alpha_i\alpha_jy_iy_jx_i^Tx_j</script><script type="math/tex; mode=display">s.t. \sum_{i=1}^{m}\alpha_iy_i=0</script><script type="math/tex; mode=display">\alpha_i>=0,i=1,2,...,m</script><p>该问题得规模正比于训练样本数，会在实际任务中造成很大得开销，SMO(Sequential Minimal Optimization)算法就是解决这个问题的<br>SMO的基本思路是先固定$\alpha_i$之外的所有参数，求$\alpha_i$上的极值。由于$\sum_{i=1}{m}\alpha_iy_i=0$。所以选择两个变量，固定其他参数。</p>
+<h2 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h2><p>前面的讨论是假设训练样本线性可分，现实任务中，可能不存在一个正确划分两类样本的超平面。解决方法是将样本从原始空间映射到一个更高维的样本空间，在这个特征空间线性可分。</p>
+<h2 id="软间隔与正则化"><a href="#软间隔与正则化" class="headerlink" title="软间隔与正则化"></a>软间隔与正则化</h2><p>所有样本必须划分正确，称为硬间隔，软间隔是衡量对样本分错类别的容忍度。</p>
+<h2 id="支持向量回归SVR"><a href="#支持向量回归SVR" class="headerlink" title="支持向量回归SVR"></a>支持向量回归SVR</h2><h2 id="拓展阅读：拉格朗日乘子法"><a href="#拓展阅读：拉格朗日乘子法" class="headerlink" title="拓展阅读：拉格朗日乘子法"></a>拓展阅读：拉格朗日乘子法</h2><p><img src="/2018/08/18/《机器学习》周志华-读书笔记/&quot;/《机器学习》周志华-读书笔记/svm1.png&quot;" alt="image"><br><img src="/2018/08/18/《机器学习》周志华-读书笔记/&quot;/《机器学习》周志华-读书笔记/svm2.png&quot;" alt="image"><br><a href="https://blog.csdn.net/lijil168/article/details/69395023" target="_blank" rel="noopener">https://blog.csdn.net/lijil168/article/details/69395023</a></p>
 
       
     </div>
@@ -962,7 +979,7 @@ $(function() {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性模型"><span class="nav-number">1.</span> <span class="nav-text">线性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对数几率回归"><span class="nav-number">1.1.</span> <span class="nav-text">对数几率回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定对数几率回归中的w和b"><span class="nav-number">1.2.</span> <span class="nav-text">确定对数几率回归中的w和b</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性判别分析（LDA）"><span class="nav-number">1.3.</span> <span class="nav-text">线性判别分析（LDA）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归分类器sklearn-LogisticRegression"><span class="nav-number">1.4.</span> <span class="nav-text">逻辑回归分类器sklearn-LogisticRegression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习实战-第5章"><span class="nav-number">1.5.</span> <span class="nav-text">机器学习实战 第5章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax回归"><span class="nav-number">1.6.</span> <span class="nav-text">Softmax回归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯分类器"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯分类器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯分类器"><span class="nav-number">2.1.</span> <span class="nav-text">朴素贝叶斯分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯概率模型"><span class="nav-number">2.2.</span> <span class="nav-text">朴素贝叶斯概率模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从概率模型中构造分类器"><span class="nav-number">2.3.</span> <span class="nav-text">从概率模型中构造分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯决策论"><span class="nav-number">2.4.</span> <span class="nav-text">贝叶斯决策论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#极大似然估计"><span class="nav-number">2.5.</span> <span class="nav-text">极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯拓展应用"><span class="nav-number">2.6.</span> <span class="nav-text">朴素贝叶斯拓展应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">2.7.</span> <span class="nav-text">TODO:</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性模型"><span class="nav-number">1.</span> <span class="nav-text">线性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对数几率回归"><span class="nav-number">1.1.</span> <span class="nav-text">对数几率回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定对数几率回归中的w和b"><span class="nav-number">1.2.</span> <span class="nav-text">确定对数几率回归中的w和b</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性判别分析（LDA）"><span class="nav-number">1.3.</span> <span class="nav-text">线性判别分析（LDA）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归分类器sklearn-LogisticRegression"><span class="nav-number">1.4.</span> <span class="nav-text">逻辑回归分类器sklearn-LogisticRegression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习实战-第5章"><span class="nav-number">1.5.</span> <span class="nav-text">机器学习实战 第5章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax回归"><span class="nav-number">1.6.</span> <span class="nav-text">Softmax回归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯分类器"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯分类器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯分类器"><span class="nav-number">2.1.</span> <span class="nav-text">朴素贝叶斯分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯概率模型"><span class="nav-number">2.2.</span> <span class="nav-text">朴素贝叶斯概率模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从概率模型中构造分类器"><span class="nav-number">2.3.</span> <span class="nav-text">从概率模型中构造分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯决策论"><span class="nav-number">2.4.</span> <span class="nav-text">贝叶斯决策论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#极大似然估计"><span class="nav-number">2.5.</span> <span class="nav-text">极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯拓展应用"><span class="nav-number">2.6.</span> <span class="nav-text">朴素贝叶斯拓展应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">2.7.</span> <span class="nav-text">TODO:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机SVM"><span class="nav-number">3.</span> <span class="nav-text">支持向量机SVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对偶问题"><span class="nav-number">3.1.</span> <span class="nav-text">对偶问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核函数"><span class="nav-number">3.2.</span> <span class="nav-text">核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔与正则化"><span class="nav-number">3.3.</span> <span class="nav-text">软间隔与正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持向量回归SVR"><span class="nav-number">3.4.</span> <span class="nav-text">支持向量回归SVR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓展阅读：拉格朗日乘子法"><span class="nav-number">3.5.</span> <span class="nav-text">拓展阅读：拉格朗日乘子法</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1017,7 +1034,7 @@ $(function() {
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共73.9k字</span>
+  <span class="post-count">博客全站共74.4k字</span>
 </div>
 
         
