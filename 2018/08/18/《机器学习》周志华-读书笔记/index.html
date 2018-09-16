@@ -87,20 +87,20 @@
 
 
 
-<meta name="description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.8.31，更新内容贝叶斯分类">
+<meta name="description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.9.16，更新内容集成学习">
 <meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《机器学习》周志华-读书笔记">
 <meta property="og:url" content="https://AlisaBen.github.io/2018/08/18/《机器学习》周志华-读书笔记/index.html">
 <meta property="og:site_name" content="AlisaBen&#39;s Blog">
-<meta property="og:description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.8.31，更新内容贝叶斯分类">
+<meta property="og:description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.9.16，更新内容集成学习">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://alisaben.github.io/2018/08/18/《机器学习》周志华-读书笔记/%22/《机器学习》周志华-读书笔记/svm1.png%22">
 <meta property="og:image" content="https://alisaben.github.io/2018/08/18/《机器学习》周志华-读书笔记/%22/《机器学习》周志华-读书笔记/svm2.png%22">
-<meta property="og:updated_time" content="2018-09-03T12:55:58.028Z">
+<meta property="og:updated_time" content="2018-09-16T15:24:03.160Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《机器学习》周志华-读书笔记">
-<meta name="twitter:description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.8.31，更新内容贝叶斯分类">
+<meta name="twitter:description" content="《机器学习-周志华》+《机器学习实战》最新更新时间2018.9.16，更新内容集成学习">
 <meta name="twitter:image" content="https://alisaben.github.io/2018/08/18/《机器学习》周志华-读书笔记/%22/《机器学习》周志华-读书笔记/svm1.png%22">
 
 
@@ -495,7 +495,7 @@ $(function() {
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5,921 字
+                  6,697 字
                 </span>
               
 
@@ -511,7 +511,7 @@ $(function() {
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  24 分钟
+                  27 分钟
                 </span>
               
             </div>
@@ -533,7 +533,7 @@ $(function() {
 
       
         <blockquote>
-<p>《机器学习-周志华》+《机器学习实战》<br>最新更新时间2018.8.31，更新内容贝叶斯分类</p>
+<p>《机器学习-周志华》+《机器学习实战》<br>最新更新时间2018.9.16，更新内容集成学习</p>
 </blockquote>
 <a id="more"></a>
 <h1 id="线性模型"><a href="#线性模型" class="headerlink" title="线性模型"></a>线性模型</h1><h2 id="对数几率回归"><a href="#对数几率回归" class="headerlink" title="对数几率回归"></a>对数几率回归</h2><p>对数几率回归的初衷：找到一个单调可微的函数将分类任务的真实标记和线性回归模型预测值联系起来，比如sigmoid函数</p>
@@ -686,6 +686,28 @@ $(function() {
 <h2 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h2><p>前面的讨论是假设训练样本线性可分，现实任务中，可能不存在一个正确划分两类样本的超平面。解决方法是将样本从原始空间映射到一个更高维的样本空间，在这个特征空间线性可分。</p>
 <h2 id="软间隔与正则化"><a href="#软间隔与正则化" class="headerlink" title="软间隔与正则化"></a>软间隔与正则化</h2><p>所有样本必须划分正确，称为硬间隔，软间隔是衡量对样本分错类别的容忍度。</p>
 <h2 id="支持向量回归SVR"><a href="#支持向量回归SVR" class="headerlink" title="支持向量回归SVR"></a>支持向量回归SVR</h2><h2 id="拓展阅读：拉格朗日乘子法"><a href="#拓展阅读：拉格朗日乘子法" class="headerlink" title="拓展阅读：拉格朗日乘子法"></a>拓展阅读：拉格朗日乘子法</h2><p><img src="/2018/08/18/《机器学习》周志华-读书笔记/&quot;/《机器学习》周志华-读书笔记/svm1.png&quot;" alt="image"><br><img src="/2018/08/18/《机器学习》周志华-读书笔记/&quot;/《机器学习》周志华-读书笔记/svm2.png&quot;" alt="image"><br><a href="https://blog.csdn.net/lijil168/article/details/69395023" target="_blank" rel="noopener">https://blog.csdn.net/lijil168/article/details/69395023</a></p>
+<h2 id="支持向量机补充阅读"><a href="#支持向量机补充阅读" class="headerlink" title="支持向量机补充阅读"></a>支持向量机补充阅读</h2><p><a href="http://scikit-learn.org/stable/modules/svm.html" target="_blank" rel="noopener">http://scikit-learn.org/stable/modules/svm.html</a><br>支持向量机（SVM）是一组用于分类，回归和异常值检测的监督学习方法。<br>支持向量机的优点是：</p>
+<ul>
+<li>在高维空间有效。</li>
+<li>在尺寸数量大于样本数量的情况下仍然有效。</li>
+<li>在决策函数中使用训练点的子集（称为支持向量），因此它也具有内存效率。</li>
+<li>多功能：可以为决策功能指定不同的内核功能。 提供了通用内核，但也可以指定自定义内核。</li>
+</ul>
+<p>支持向量机的缺点包括:</p>
+<ul>
+<li>如果特征数量比样本数量大得多,在选择核函数 核函数 时要避免过拟合,<br>而且正则化项是非常重要的.</li>
+<li>支持向量机不直接提供概率估计,这些都是使用昂贵的五次交叉验算计算的. (详情见 Scores and probabilities, 在下文中).</li>
+</ul>
+<p>分类</p>
+<p><code>SVC</code>, <code>NuSVC</code> 和 <code>LinearSVC</code> 能在数据集中实现多元分类.<br><code>SVC</code> 和 <code>NuSVC</code> 是相似的方法, 但是接受稍许不同的参数设置并且有不同的数学方程(在这部分看 数学公式). 另一方面, <code>LinearSVC</code> 是另一个实现线性核函数的支持向量分类. 记住 <code>LinearSVC</code> 不接受关键词 <code>kernel</code>, 因为它被假设为线性的. 它也缺少一些 <code>SVC</code> 和 <code>NuSVC</code> 的成员(members) 比如 <code>support_</code></p>
+<p>SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些支持向量的部分特性可以在 <code>support_vectors_</code>, <code>support_</code> 和 <code>n_support</code> 找到:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</span><br><span class="line">x = [[<span class="number">0</span>,<span class="number">0</span>],[<span class="number">1</span>,<span class="number">1</span>]]</span><br><span class="line">y = [<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line">clf = svm.SVC()</span><br><span class="line">clf.fit(x,y)</span><br><span class="line">res = clf.predict([[<span class="number">2.</span>,<span class="number">2.</span>],[<span class="number">3.</span>,<span class="number">4.</span>],[<span class="number">0.</span>,<span class="number">1.</span>]])</span><br><span class="line">print(res)</span><br><span class="line">sup_vec = clf.support_vectors_</span><br><span class="line">print(sup_vec)  <span class="comment"># 支持向量</span></span><br><span class="line">sup_index = clf.support_</span><br><span class="line">print(sup_index)  <span class="comment"># 支持向量索引</span></span><br><span class="line">n_sup = clf.n_support_</span><br><span class="line">print(n_sup)  <span class="comment"># 支持向量数量</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="集成学习"><a href="#集成学习" class="headerlink" title="集成学习"></a>集成学习</h1><h2 id="个体与集成"><a href="#个体与集成" class="headerlink" title="个体与集成"></a>个体与集成</h2><p>集成学习（ensemble learning）通过构建并结合多个学习器来完成学习任务。</p>
+<p>同质集成中的个体学习器称“基学习器”（base learner），相应的学习算法称为“基学习算法”</p>
+<p>异质集成中的个体学习器由不同的学习算法生成，个体学习器一般不称为基学习器，常称为组件学习器</p>
+<p>学习器要有一定的准确性，学习器之间具有差异性</p>
+<p>随着集成中个体分类器数目增大，集成的错误率将指数级下降，最终趋于零，前提是基学习器的误差相互独立！</p>
+<p>集成学习方法大致分为两大类，个体学习器间存在强依赖关系、必须串行生成的序列化方法，以及个体学习器间不存在强依赖关系，可同时生成的并行化方法；前者代表是Boosting,后者代表是bagging和随机森林</p>
+<h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><p>根据基学习器的表现对训练样本分布进行调整，使得先前基学习器做错的训练样本在后续受到更多关注</p>
 
       
     </div>
@@ -979,7 +1001,7 @@ $(function() {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性模型"><span class="nav-number">1.</span> <span class="nav-text">线性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对数几率回归"><span class="nav-number">1.1.</span> <span class="nav-text">对数几率回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定对数几率回归中的w和b"><span class="nav-number">1.2.</span> <span class="nav-text">确定对数几率回归中的w和b</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性判别分析（LDA）"><span class="nav-number">1.3.</span> <span class="nav-text">线性判别分析（LDA）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归分类器sklearn-LogisticRegression"><span class="nav-number">1.4.</span> <span class="nav-text">逻辑回归分类器sklearn-LogisticRegression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习实战-第5章"><span class="nav-number">1.5.</span> <span class="nav-text">机器学习实战 第5章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax回归"><span class="nav-number">1.6.</span> <span class="nav-text">Softmax回归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯分类器"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯分类器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯分类器"><span class="nav-number">2.1.</span> <span class="nav-text">朴素贝叶斯分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯概率模型"><span class="nav-number">2.2.</span> <span class="nav-text">朴素贝叶斯概率模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从概率模型中构造分类器"><span class="nav-number">2.3.</span> <span class="nav-text">从概率模型中构造分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯决策论"><span class="nav-number">2.4.</span> <span class="nav-text">贝叶斯决策论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#极大似然估计"><span class="nav-number">2.5.</span> <span class="nav-text">极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯拓展应用"><span class="nav-number">2.6.</span> <span class="nav-text">朴素贝叶斯拓展应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">2.7.</span> <span class="nav-text">TODO:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机SVM"><span class="nav-number">3.</span> <span class="nav-text">支持向量机SVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对偶问题"><span class="nav-number">3.1.</span> <span class="nav-text">对偶问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核函数"><span class="nav-number">3.2.</span> <span class="nav-text">核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔与正则化"><span class="nav-number">3.3.</span> <span class="nav-text">软间隔与正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持向量回归SVR"><span class="nav-number">3.4.</span> <span class="nav-text">支持向量回归SVR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓展阅读：拉格朗日乘子法"><span class="nav-number">3.5.</span> <span class="nav-text">拓展阅读：拉格朗日乘子法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性模型"><span class="nav-number">1.</span> <span class="nav-text">线性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对数几率回归"><span class="nav-number">1.1.</span> <span class="nav-text">对数几率回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定对数几率回归中的w和b"><span class="nav-number">1.2.</span> <span class="nav-text">确定对数几率回归中的w和b</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性判别分析（LDA）"><span class="nav-number">1.3.</span> <span class="nav-text">线性判别分析（LDA）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归分类器sklearn-LogisticRegression"><span class="nav-number">1.4.</span> <span class="nav-text">逻辑回归分类器sklearn-LogisticRegression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习实战-第5章"><span class="nav-number">1.5.</span> <span class="nav-text">机器学习实战 第5章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax回归"><span class="nav-number">1.6.</span> <span class="nav-text">Softmax回归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯分类器"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯分类器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯分类器"><span class="nav-number">2.1.</span> <span class="nav-text">朴素贝叶斯分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯概率模型"><span class="nav-number">2.2.</span> <span class="nav-text">朴素贝叶斯概率模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从概率模型中构造分类器"><span class="nav-number">2.3.</span> <span class="nav-text">从概率模型中构造分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯决策论"><span class="nav-number">2.4.</span> <span class="nav-text">贝叶斯决策论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#极大似然估计"><span class="nav-number">2.5.</span> <span class="nav-text">极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯拓展应用"><span class="nav-number">2.6.</span> <span class="nav-text">朴素贝叶斯拓展应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">2.7.</span> <span class="nav-text">TODO:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机SVM"><span class="nav-number">3.</span> <span class="nav-text">支持向量机SVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对偶问题"><span class="nav-number">3.1.</span> <span class="nav-text">对偶问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核函数"><span class="nav-number">3.2.</span> <span class="nav-text">核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔与正则化"><span class="nav-number">3.3.</span> <span class="nav-text">软间隔与正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持向量回归SVR"><span class="nav-number">3.4.</span> <span class="nav-text">支持向量回归SVR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓展阅读：拉格朗日乘子法"><span class="nav-number">3.5.</span> <span class="nav-text">拓展阅读：拉格朗日乘子法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持向量机补充阅读"><span class="nav-number">3.6.</span> <span class="nav-text">支持向量机补充阅读</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集成学习"><span class="nav-number">4.</span> <span class="nav-text">集成学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#个体与集成"><span class="nav-number">4.1.</span> <span class="nav-text">个体与集成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Boosting"><span class="nav-number">4.2.</span> <span class="nav-text">Boosting</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1034,7 +1056,7 @@ $(function() {
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共74.4k字</span>
+  <span class="post-count">博客全站共75.1k字</span>
 </div>
 
         
